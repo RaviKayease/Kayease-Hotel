@@ -3,7 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import HeroIamge from "@/public/HeroImage.png";
 import { Cormorant_Garamond } from "next/font/google";
-import { MapPin, CalendarDays, Users, Search } from "lucide-react";
+import {
+  MapPin,
+  CalendarDays,
+  Users,
+  ArrowUpRight,
+  Search,
+} from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -34,6 +40,8 @@ const HomePage = () => {
   const [showOccupancy, setShowOccupancy] = useState(false);
 
   const [searchError, setSearchError] = useState("");
+
+  const [showMobileSearchPanel, setShowMobileSearchPanel] = useState(false);
 
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
@@ -95,7 +103,7 @@ const HomePage = () => {
             </h1>
           </div>
 
-          <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[55vh] w-full">
+          <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[55vh] w-full border">
             {/* Hero Image */}
             <div className="relative h-full w-full overflow-hidden rounded-4xl lg:rounded-[50px]">
               <Image
@@ -103,7 +111,7 @@ const HomePage = () => {
                 alt="Hero Image"
                 fill
                 priority
-                className="object-cover"
+                className="object-contain md:object-cover"
                 style={{
                   maskImage:
                     "linear-gradient(to bottom, transparent 0%, black 40%)",
@@ -126,8 +134,12 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2"
+              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-white/30"
             >
+              <p className="md:hidden flex-1 whitespace-nowrap text-sm pl-4 text-white/80">
+                Start your search...
+              </p>
+
               <div className="relative w-full border-r border-gray-400/100">
                 <button
                   onClick={() => {
@@ -136,23 +148,27 @@ const HomePage = () => {
                     setShowDates(false);
                     setSearchError("");
                   }}
-                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <MapPin className="text-orange-500" size={18} />
 
-                    <span className="hidden xl:block md:text-sm lg:text-base">
+                    <span className="text-sm lg:text-base">
                       Choose Destination
                     </span>
                   </div>
 
-                  <span className="hidden md:block text-sm lg:text-base font-semibold">
+                  <span className="text-sm lg:text-base font-semibold">
                     {destination || "Where to?"}
                   </span>
                 </button>
 
                 {showDestinations && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-3 shadow-xl text-left md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-3 text-left shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
+                    <p className="px-3 pb-2 pt-1 text-[11px] font-semibold tracking-widest text-[#332C26]/55">
+                      POPULAR DESTINATIONS
+                    </p>
+
                     {destinations.map((place) => (
                       <button
                         key={place}
@@ -161,9 +177,19 @@ const HomePage = () => {
                           setShowDestinations(false);
                           setSearchError("");
                         }}
-                        className="block w-full rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 text-left"
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
+                          destination === place
+                            ? "bg-[#B8754D]/15 text-[#B8754D]"
+                            : "text-[#332C26] hover:bg-[#E2E0DF] hover:text-[#B8754D]"
+                        }`}
                       >
-                        {place}
+                        <MapPin size={16} className="shrink-0 text-[#B8754D]" />
+
+                        <span className="flex-1">{place}</span>
+
+                        {destination === place && (
+                          <span className="text-[#B8754D]">✓</span>
+                        )}
                       </button>
                     ))}
                   </div>
@@ -178,16 +204,14 @@ const HomePage = () => {
                     setShowOccupancy(false);
                     setSearchError("");
                   }}
-                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <CalendarDays className="text-orange-500" size={18} />
-                    <span className="hidden xl:block md:text-sm lg:text-base">
-                      Select Dates
-                    </span>
+                    <span className="text-sm lg:text-base">Select Dates</span>
                   </div>
 
-                  <span className="hidden md:block text-sm lg:text-base font-semibold">
+                  <span className="text-sm lg:text-base font-semibold">
                     {checkIn && checkOut
                       ? `${checkIn} - ${checkOut}`
                       : "Check-in / Check-out"}
@@ -195,53 +219,72 @@ const HomePage = () => {
                 </button>
 
                 {showDates && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-5 shadow-xl text-gray-800 md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
-                    <h3 className="text-lg font-semibold mb-4">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-5 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
+                    <h3 className="mb-4 text-lg font-semibold text-[#332C26]">
                       Choose Your Stay
                     </h3>
 
                     <div className="flex flex-col gap-4">
+                      {/* Check-in */}
                       <div>
-                        <label className="block text-sm font-medium mb-2">
+                        <label className="mb-2 block text-sm font-medium text-[#332C26]/70">
                           Check-in
                         </label>
-                        <input
-                          type="date"
-                          value={checkIn}
-                          min={today || undefined}
-                          onChange={(e) => {
-                            setCheckIn(e.target.value);
-                            setSearchError("");
 
-                            if (checkOut && e.target.value >= checkOut) {
-                              setCheckOut("");
-                            }
-                          }}
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                        />
+                        <div className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30">
+                          <CalendarDays
+                            size={17}
+                            className="shrink-0 text-[#B8754D]"
+                          />
+
+                          <input
+                            type="date"
+                            value={checkIn}
+                            min={today || undefined}
+                            onChange={(e) => {
+                              setCheckIn(e.target.value);
+                              setSearchError("");
+
+                              if (checkOut && e.target.value >= checkOut) {
+                                setCheckOut("");
+                              }
+                            }}
+                            className="w-full min-w-0 bg-transparent text-sm text-[#332C26] outline-none"
+                          />
+                        </div>
                       </div>
 
+                      {/* Check-out */}
                       <div>
-                        <label className="block text-sm font-medium mb-2">
+                        <label className="mb-2 block text-sm font-medium text-[#332C26]/70">
                           Check-out
                         </label>
-                        <input
-                          type="date"
-                          value={checkOut}
-                          min={checkIn || today || undefined}
-                          onChange={(e) => {
-                            setCheckOut(e.target.value);
-                            setSearchError("");
-                          }}
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                        />
+
+                        <div className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30">
+                          <CalendarDays
+                            size={17}
+                            className="shrink-0 text-[#B8754D]"
+                          />
+
+                          <input
+                            type="date"
+                            value={checkOut}
+                            min={checkIn || today || undefined}
+                            onChange={(e) => {
+                              setCheckOut(e.target.value);
+                              setSearchError("");
+                            }}
+                            className="w-full min-w-0 bg-transparent text-sm text-[#332C26] outline-none"
+                          />
+                        </div>
                       </div>
                     </div>
 
+                    {/* Apply Dates */}
                     <button
                       onClick={() => setShowDates(false)}
                       disabled={!checkIn || !checkOut}
-                      className="mt-5 w-full rounded-xl bg-orange-500 py-3 text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="mt-5 w-full rounded-xl bg-[#B8754D] py-3 text-sm font-semibold text-white shadow-md shadow-[#B8754D]/15 transition hover:bg-[#A56543] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Apply Dates
                     </button>
@@ -256,38 +299,50 @@ const HomePage = () => {
                     setShowDestinations(false);
                     setShowDates(false);
                   }}
-                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <Users className="text-orange-500" size={18} />
-                    <span className="hidden xl:block md:text-sm lg:text-base">
+                    <span className="text-sm lg:text-base">
                       Choose Occupancy
                     </span>
                   </div>
 
-                  <span className="hidden md:block text-sm lg:text-base font-semibold">
+                  <span className="text-sm lg:text-base font-semibold">
                     {adults + children} Guests, {rooms}{" "}
                     {rooms === 1 ? "Room" : "Rooms"}
                   </span>
                 </button>
 
                 {showOccupancy && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-4 shadow-xl text-gray-800 md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
+                    <div className="mb-3">
+                      <h3 className="text-lg font-semibold text-[#332C26]">
+                        Guests & Rooms
+                      </h3>
+                      <p className="mt-1 text-xs text-[#332C26]/55">
+                        Choose who is joining your stay.
+                      </p>
+                    </div>
+
                     {[
                       {
                         label: "Adults",
+                        description: "Age 13 or above",
                         value: adults,
                         setValue: setAdults,
                         min: 1,
                       },
                       {
                         label: "Children",
+                        description: "Age 0–12",
                         value: children,
                         setValue: setChildren,
                         min: 0,
                       },
                       {
                         label: "Rooms",
+                        description: "Number of rooms",
                         value: rooms,
                         setValue: setRooms,
                         min: 1,
@@ -295,25 +350,35 @@ const HomePage = () => {
                     ].map((item) => (
                       <div
                         key={item.label}
-                        className="flex items-center justify-between py-3 border-b last:border-0"
+                        className="flex items-center justify-between border-b border-[#D0CCCA]/70 py-3 last:border-0"
                       >
-                        <span className="font-medium">{item.label}</span>
+                        <div>
+                          <p className="text-sm font-medium text-[#332C26]">
+                            {item.label}
+                          </p>
+                          <p className="text-[11px] text-[#332C26]/55">
+                            {item.description}
+                          </p>
+                        </div>
 
                         <div className="flex items-center gap-3">
                           <button
                             onClick={() =>
                               item.setValue(Math.max(item.min, item.value - 1))
                             }
-                            className="h-7 w-7 rounded-full border border-orange-500 text-orange-500"
+                            disabled={item.value <= item.min}
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#B8754D] text-[#B8754D] transition hover:bg-[#B8754D]/10 disabled:cursor-not-allowed disabled:opacity-30"
                           >
-                            -
+                            −
                           </button>
 
-                          <span>{item.value}</span>
+                          <span className="w-5 text-center text-sm font-semibold text-[#332C26]">
+                            {item.value}
+                          </span>
 
                           <button
                             onClick={() => item.setValue(item.value + 1)}
-                            className="h-7 w-7 rounded-full bg-orange-500 text-white"
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#B8754D] text-white transition hover:bg-[#A56543]"
                           >
                             +
                           </button>
@@ -323,7 +388,7 @@ const HomePage = () => {
 
                     <button
                       onClick={() => setShowOccupancy(false)}
-                      className="mt-3 w-full rounded-lg bg-orange-500 py-2 text-white hover:bg-orange-600 transition"
+                      className="mt-4 w-full rounded-xl bg-[#B8754D] py-3 text-sm font-semibold text-white shadow-md shadow-[#B8754D]/15 transition hover:bg-[#A56543] active:scale-[0.98]"
                     >
                       Apply
                     </button>
@@ -331,28 +396,34 @@ const HomePage = () => {
                 )}
               </div>
 
+              {/* Search Error */}
               {searchError && (
                 <div
                   ref={errorRef}
-                  className="fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-4 shadow-xl text-gray-800 md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
+                  className="fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600">
+                    {/* Warning Icon */}
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#B8754D]/25 bg-[#B8754D]/10 text-[#B8754D]">
                       !
                     </div>
 
+                    {/* Error Message */}
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-800">
+                      <p className="text-sm font-semibold text-[#332C26]">
                         Almost there!
                       </p>
-                      <p className="mt-1 text-xs leading-relaxed text-gray-500">
+
+                      <p className="mt-1 text-xs leading-relaxed text-[#332C26]/60">
                         {searchError}
                       </p>
                     </div>
 
+                    {/* Close Button */}
                     <button
                       onClick={() => setSearchError("")}
-                      className="text-gray-400 hover:text-gray-700"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[#332C26]/50 transition hover:bg-[#E2E0DF] hover:text-[#332C26]"
+                      aria-label="Close error message"
                     >
                       ×
                     </button>
@@ -360,6 +431,7 @@ const HomePage = () => {
                 </div>
               )}
 
+              {/* Search Button */}
               <button
                 onClick={() => {
                   setSearchError("");
@@ -378,11 +450,261 @@ const HomePage = () => {
                     return;
                   }
                 }}
-                className="bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
+                className="hidden md:block bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
               >
                 <Search className="text-white size-5 sm:size-7" />
               </button>
+
+              {/* Open Search Panel Button On Mobile */}
+              <button
+                onClick={() => setShowMobileSearchPanel(true)}
+                className="md:hidden shrink-0 bg-orange-500 p-2 rounded-xl cursor-pointer"
+              >
+                <ArrowUpRight className="text-white size-5" />
+              </button>
             </div>
+
+            {/* MOBILE BOOKING PANEL */}
+            {showMobileSearchPanel && (
+              <div
+                className="md:hidden fixed inset-0 z-[200] flex items-end bg-[#332C26]/40 backdrop-blur-sm"
+                onClick={() => setShowMobileSearchPanel(false)}
+              >
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Search your stay"
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-white/60 bg-[#F5F2EF]/95 backdrop-blur-2xl shadow-[0_-10px_50px_rgba(51,44,38,0.18)] animate-[slideUp_0.3s_ease-out]"
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between px-6 pt-5 pb-4">
+                    <div>
+                      <p
+                        className={`${cormorant.className} text-2xl font-semibold text-[#332C26]`}
+                      >
+                        Find your escape
+                      </p>
+                      <p className="mt-1 text-xs text-[#332C26]/60">
+                        Let's plan your perfect stay.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => setShowMobileSearchPanel(false)}
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E2E0DF] text-[#332C26] text-xl hover:bg-[#D0CCCA]"
+                      aria-label="Close search panel"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="max-h-[calc(90dvh-155px)] overflow-y-auto px-5 pb-5">
+                    {/* Destination */}
+                    <div className="mb-3 rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
+                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                        DESTINATION
+                      </label>
+
+                      <div className="flex items-center gap-3">
+                        <MapPin className="shrink-0 text-[#B8754D]" size={20} />
+
+                        <input
+                          type="text"
+                          value={destination}
+                          onChange={(e) => {
+                            setDestination(e.target.value);
+                            setSearchError("");
+                          }}
+                          placeholder="Where would you like to go?"
+                          className="w-full bg-transparent text-sm text-[#332C26] placeholder:text-[#332C26]/45 outline-none"
+                        />
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {destinations.map((place) => (
+                          <button
+                            key={place}
+                            onClick={() => {
+                              setDestination(place);
+                              setSearchError("");
+                            }}
+                            className={`rounded-full border px-3 py-2 text-xs transition ${
+                              destination === place
+                                ? "border-[#B8754D] bg-[#B8754D]/15 text-[#B8754D]"
+                                : "border-[#D0CCCA] bg-[#F5F2EF]/70 text-[#332C26]/75"
+                            }`}
+                          >
+                            {place}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Dates */}
+                    <div className="mb-3 rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
+                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                        YOUR STAY
+                      </label>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="min-w-0">
+                          <label className="mb-2 block text-xs text-[#332C26]/60">
+                            Check-in
+                          </label>
+
+                          <div className="flex items-center gap-2">
+                            <CalendarDays
+                              size={17}
+                              className="shrink-0 text-[#B8754D]"
+                            />
+                            <input
+                              type="date"
+                              value={checkIn}
+                              min={today || undefined}
+                              onChange={(e) => {
+                                setCheckIn(e.target.value);
+                                setSearchError("");
+
+                                if (checkOut && e.target.value >= checkOut) {
+                                  setCheckOut("");
+                                }
+                              }}
+                              className="w-full min-w-0 bg-transparent text-xs text-[#332C26] outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="min-w-0">
+                          <label className="mb-2 block text-xs text-[#332C26]/60">
+                            Check-out
+                          </label>
+
+                          <div className="flex items-center gap-2">
+                            <CalendarDays
+                              size={17}
+                              className="shrink-0 text-[#B8754D]"
+                            />
+                            <input
+                              type="date"
+                              value={checkOut}
+                              min={checkIn || today || undefined}
+                              onChange={(e) => {
+                                setCheckOut(e.target.value);
+                                setSearchError("");
+                              }}
+                              className="w-full min-w-0 bg-transparent text-xs text-[#332C26] outline-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Occupancy */}
+                    <div className="rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
+                      <label className="mb-2 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                        GUESTS & ROOMS
+                      </label>
+
+                      {[
+                        {
+                          label: "Adults",
+                          description: "Age 13 or above",
+                          value: adults,
+                          setValue: setAdults,
+                          min: 1,
+                        },
+                        {
+                          label: "Children",
+                          description: "Age 0–12",
+                          value: children,
+                          setValue: setChildren,
+                          min: 0,
+                        },
+                        {
+                          label: "Rooms",
+                          description: "Number of rooms",
+                          value: rooms,
+                          setValue: setRooms,
+                          min: 1,
+                        },
+                      ].map((item) => (
+                        <div
+                          key={item.label}
+                          className="flex items-center justify-between border-b border-[#D0CCCA]/70 py-3 last:border-0"
+                        >
+                          <div>
+                            <p className="text-sm font-medium text-[#332C26]">
+                              {item.label}
+                            </p>
+                            <p className="text-[11px] text-[#332C26]/55">
+                              {item.description}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-4">
+                            <button
+                              onClick={() =>
+                                item.setValue(
+                                  Math.max(item.min, item.value - 1),
+                                )
+                              }
+                              disabled={item.value <= item.min}
+                              className="h-8 w-8 rounded-full border border-[#B8754D] text-[#B8754D] disabled:opacity-30"
+                            >
+                              −
+                            </button>
+
+                            <span className="w-4 text-center text-sm font-semibold text-[#332C26]">
+                              {item.value}
+                            </span>
+
+                            <button
+                              onClick={() => item.setValue(item.value + 1)}
+                              className="h-8 w-8 rounded-full bg-[#B8754D] text-white transition hover:bg-[#A56543]"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {searchError && (
+                      <p className="mt-3 text-xs text-red-600 text-center">{searchError}</p>
+                    )}
+                  </div>
+
+                  {/* Sticky Search Button */}
+                  <div className="border-t border-[#D0CCCA] bg-[#F5F2EF]/95 px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+                    <button
+                      onClick={() => {
+                        if (!destination || !checkIn || !checkOut) {
+                          setSearchError(
+                            "Please select your destination and travel dates.",
+                          );
+                          return;
+                        }
+
+                        if (checkOut <= checkIn) {
+                          setSearchError("Check-out must be after check-in.");
+                          return;
+                        }
+
+                        setSearchError("");
+                        setShowMobileSearchPanel(false);
+
+                        // Add your booking search/navigation logic here.
+                      }}
+                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#B8754D] py-4 text-sm font-semibold text-white shadow-lg shadow-[#B8754D]/20 transition hover:bg-[#A56543] active:scale-[0.98]"
+                    >
+                      <Search size={19} />
+                      Search Stays
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
