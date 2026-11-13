@@ -90,12 +90,12 @@ const HomePage = () => {
 
         <div className="relative w-full flex flex-col items-center">
           <div className="relative z-0 mt-2 overflow-hidden">
-            <h1 className="dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[10vw] leading-none">
+            <h1 className="dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none">
               Dream Stay
             </h1>
           </div>
 
-          <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] w-full">
+          <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[55vh] w-full">
             {/* Hero Image */}
             <div className="relative h-full w-full overflow-hidden rounded-4xl lg:rounded-[50px]">
               <Image
@@ -126,9 +126,9 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-xl flex justify-between items-stretch p-2 gap-2"
+              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2"
             >
-              <div className="relative flex-1 min-w-0 border-r border-gray-400/100">
+              <div className="relative w-full border-r border-gray-400/100">
                 <button
                   onClick={() => {
                     setShowDestinations(!showDestinations);
@@ -136,23 +136,23 @@ const HomePage = () => {
                     setShowDates(false);
                     setSearchError("");
                   }}
-                  className="w-full min-h-16 flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <MapPin className="text-orange-500" size={18} />
 
-                    <span className="hidden md:block md:text-sm lg:text-base">
+                    <span className="hidden xl:block md:text-sm lg:text-base">
                       Choose Destination
                     </span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="hidden md:block text-sm lg:text-base font-semibold">
                     {destination || "Where to?"}
                   </span>
                 </button>
 
                 {showDestinations && (
-                  <div className="absolute top-full mt-4 left-1/2 -translate-x-1/2 z-50 w-64 rounded-2xl bg-white p-3 shadow-xl text-left">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-3 shadow-xl text-left md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
                     {destinations.map((place) => (
                       <button
                         key={place}
@@ -170,7 +170,7 @@ const HomePage = () => {
                 )}
               </div>
 
-              <div className="relative z-40 flex-1 min-w-0 border-r border-gray-400/100">
+              <div className="relative z-40 w-full border-r border-gray-400/100">
                 <button
                   onClick={() => {
                     setShowDates(!showDates);
@@ -178,16 +178,16 @@ const HomePage = () => {
                     setShowOccupancy(false);
                     setSearchError("");
                   }}
-                  className="w-full min-h-16 flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <CalendarDays className="text-orange-500" size={18} />
-                    <span className="hidden md:block md:text-sm lg:text-base">
+                    <span className="hidden xl:block md:text-sm lg:text-base">
                       Select Dates
                     </span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="hidden md:block text-sm lg:text-base font-semibold">
                     {checkIn && checkOut
                       ? `${checkIn} - ${checkOut}`
                       : "Check-in / Check-out"}
@@ -195,7 +195,7 @@ const HomePage = () => {
                 </button>
 
                 {showDates && (
-                  <div className="absolute top-full mt-4 left-1/2 -translate-x-1/2 z-[100] w-72 rounded-2xl bg-white p-5 shadow-xl text-gray-800">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-5 shadow-xl text-gray-800 md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
                     <h3 className="text-lg font-semibold mb-4">
                       Choose Your Stay
                     </h3>
@@ -249,30 +249,30 @@ const HomePage = () => {
                 )}
               </div>
 
-              <div className="relative z-50 flex-1 min-w-0">
+              <div className="relative z-50 w-full">
                 <button
                   onClick={() => {
                     setShowOccupancy(!showOccupancy);
                     setShowDestinations(false);
                     setShowDates(false);
                   }}
-                  className="w-full min-h-16 flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <Users className="text-orange-500" size={18} />
-                    <span className="hidden md:block md:text-sm lg:text-base">
+                    <span className="hidden xl:block md:text-sm lg:text-base">
                       Choose Occupancy
                     </span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="hidden md:block text-sm lg:text-base font-semibold">
                     {adults + children} Guests, {rooms}{" "}
                     {rooms === 1 ? "Room" : "Rooms"}
                   </span>
                 </button>
 
                 {showOccupancy && (
-                  <div className="absolute top-full mt-4 right-0 z-[100] w-72 rounded-2xl border border-gray-200 bg-white p-4 shadow-xl text-gray-800">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-4 shadow-xl text-gray-800 md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
                     {[
                       {
                         label: "Adults",
@@ -334,7 +334,7 @@ const HomePage = () => {
               {searchError && (
                 <div
                   ref={errorRef}
-                  className="absolute bottom-full right-0 mb-4 z-[200] w-72 rounded-2xl border border-orange-200 bg-white/95 p-4 shadow-xl backdrop-blur-md"
+                  className="fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl bg-white p-4 shadow-xl text-gray-800 md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
                 >
                   <div className="flex items-start gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600">
@@ -363,6 +363,9 @@ const HomePage = () => {
               <button
                 onClick={() => {
                   setSearchError("");
+                  setShowDestinations(false);
+                  setShowDates(false);
+                  setShowOccupancy(false);
 
                   if (!destination || !checkIn || !checkOut) {
                     setSearchError(
@@ -375,7 +378,7 @@ const HomePage = () => {
                     return;
                   }
                 }}
-                className="bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer hover:bg-orange-600 transition"
+                className="bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
               >
                 <Search className="text-white size-5 sm:size-7" />
               </button>
