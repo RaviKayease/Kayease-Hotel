@@ -43,7 +43,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button className="hidden md:block font-semibold bg-black rounded-full px-4 py-1 text-white">
+        <button className="hidden md:block font-semibold rounded-full px-4 py-1 bg-[#332C26] text-white">
           Login
         </button>
 

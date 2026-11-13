@@ -20,9 +20,11 @@ const HomePage = () => {
         </p>
 
         <div className="relative w-full flex flex-col items-center">
-          <h1 className="relative z-0 font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[10vw] leading-none mt-2">
-            Dream Stay
-          </h1>
+          <div className="relative z-0 mt-2 overflow-hidden">
+            <h1 className="dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[10vw] leading-none">
+              Dream Stay
+            </h1>
+          </div>
 
           <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] w-full">
             {/* Hero Image */}
@@ -52,7 +54,7 @@ const HomePage = () => {
               />
             </div>
 
-            {/* Bottom card */}
+            {/* Bottom glass card */}
             <div className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-xl flex justify-around items-center p-2">
               <div className="flex flex-col items-center w-full border-r">
                 <div className="flex flex-col justify-center lg:flex-row items-center gap-2">
