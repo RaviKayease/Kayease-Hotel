@@ -7,6 +7,9 @@
   --foreground: #332c26;
   --primary: #b8754d;
   --border: #d0ccca;
+  --glass: 255 255 255;
+  --glass-border: 255 255 255;
+  --glass-text: 255 255 255;
 }
 
 [data-theme="earth"] {
@@ -15,6 +18,9 @@
   --foreground: #332c26;
   --primary: #b8754d;
   --border: #d0ccca;
+  --glass: 255 255 255;
+  --glass-border: 255 255 255;
+  --glass-text: 255 255 255;
 }
 
 [data-theme="ocean"] {
@@ -23,6 +29,9 @@
   --foreground: #26364d;
   --primary: #4776c7;
   --border: #cbd5e5;
+  --glass: 235 243 255;
+  --glass-border: 210 225 255;
+  --glass-text: 38 54 77;
 }
 
 [data-theme="forest"] {
@@ -31,6 +40,9 @@
   --foreground: #293b2c;
   --primary: #64866a;
   --border: #cbd7ca;
+  --glass: 239 247 235;
+  --glass-border: 210 225 205;
+  --glass-text: 41 59 44;
 }
 
 [data-theme="purple"] {
@@ -39,6 +51,9 @@
   --foreground: #382c46;
   --primary: #8865b5;
   --border: #d6cbe2;
+  --glass: 247 239 255;
+  --glass-border: 225 210 245;
+  --glass-text: 56 44 70;
 }
 
 [data-theme="rose"] {
@@ -47,6 +62,9 @@
   --foreground: #493136;
   --primary: #c36c78;
   --border: #e2cdd0;
+  --glass: 255 239 241;
+  --glass-border: 245 215 220;
+  --glass-text: 73 49 54;
 }
 
 [data-theme="dark"] {
@@ -55,6 +73,9 @@
   --foreground: #f3f0ed;
   --primary: #d19b65;
   --border: #555762;
+  --glass: 55 57 70;
+  --glass-border: 130 130 150;
+  --glass-text: 243 240 237;
 }
 
 @theme inline {

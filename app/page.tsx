@@ -134,7 +134,7 @@ const HomePage = () => {
               />
 
               <div
-                className="absolute inset-x-0 top-0 h-[40%] bg-white/15 backdrop-blur-sm lg:backdrop-blur-xl"
+                className="absolute inset-x-0 top-0 h-[40%] bg-[rgb(var(--glass)/0.16)] backdrop-blur-sm lg:backdrop-blur-xl transition-colors duration-500"
                 style={{
                   maskImage:
                     "linear-gradient(to bottom, black 0%, black 35%, transparent 100%)",
@@ -147,9 +147,9 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[var(--surface)]/20 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-white/30"
+              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[rgb(var(--glass)/0.22)] backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-[rgb(var(--glass-border)/0.35)] shadow-lg transition-colors duration-500"
             >
-              <p className="lg:hidden flex-1 whitespace-nowrap text-sm pl-4 text-white/80">
+              <p className="lg:hidden flex-1 whitespace-nowrap text-sm pl-4 text-[rgb(var(--glass-text)/0.85)]">
                 Start your search...
               </p>
 
@@ -503,7 +503,7 @@ const HomePage = () => {
                   aria-modal="true"
                   aria-label="Search your stay"
                   onClick={(e) => e.stopPropagation()}
-                  className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-2xl shadow-xl animate-[slideUp_0.3s_ease-out]"
+                  className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-[rgb(var(--glass-border)/0.5)] bg-[rgb(var(--glass)/0.88)] text-[var(--glass-text)] backdrop-blur-2xl shadow-xl transition-colors duration-500 animate-[slideUp_0.3s_ease-out]"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 pt-5 pb-4">
