@@ -29,6 +29,9 @@ const HomePage = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
+  const checkInRef = useRef<HTMLInputElement>(null);
+  const checkOutRef = useRef<HTMLInputElement>(null);
+
   const [today, setToday] = useState("");
   const [showDates, setShowDates] = useState(false);
 
@@ -50,7 +53,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (!searchError) return;
+    if (!searchError || showMobileSearchPanel) return;
 
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -66,7 +69,7 @@ const HomePage = () => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [searchError]);
+  }, [searchError, showMobileSearchPanel]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -103,15 +106,14 @@ const HomePage = () => {
             </h1>
           </div>
 
-          <div className="absolute top-[70%] z-10 h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[55vh] w-full border">
+          <div className="absolute top-[70%] z-10 w-full">
             {/* Hero Image */}
-            <div className="relative h-full w-full overflow-hidden rounded-4xl lg:rounded-[50px]">
+            <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh] w-full overflow-hidden rounded-4xl lg:rounded-[50px] border border-white/30">
               <Image
                 src={HeroIamge}
                 alt="Hero Image"
-                fill
                 priority
-                className="object-contain md:object-cover"
+                className="h-full w-full object-cover"
                 style={{
                   maskImage:
                     "linear-gradient(to bottom, transparent 0%, black 40%)",
@@ -136,10 +138,11 @@ const HomePage = () => {
               ref={bookingRef}
               className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-white/30"
             >
-              <p className="md:hidden flex-1 whitespace-nowrap text-sm pl-4 text-white/80">
+              <p className="lg:hidden flex-1 whitespace-nowrap text-sm pl-4 text-white/80">
                 Start your search...
               </p>
 
+              {/* Destination */}
               <div className="relative w-full border-r border-gray-400/100">
                 <button
                   onClick={() => {
@@ -148,17 +151,17 @@ const HomePage = () => {
                     setShowDates(false);
                     setSearchError("");
                   }}
-                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <MapPin className="text-orange-500" size={18} />
 
-                    <span className="text-sm lg:text-base">
+                    <span className="text-sm xl:text-base">
                       Choose Destination
                     </span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="text-sm xl:text-base font-semibold">
                     {destination || "Where to?"}
                   </span>
                 </button>
@@ -196,6 +199,7 @@ const HomePage = () => {
                 )}
               </div>
 
+              {/* Dates */}
               <div className="relative z-40 w-full border-r border-gray-400/100">
                 <button
                   onClick={() => {
@@ -204,14 +208,14 @@ const HomePage = () => {
                     setShowOccupancy(false);
                     setSearchError("");
                   }}
-                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <CalendarDays className="text-orange-500" size={18} />
-                    <span className="text-sm lg:text-base">Select Dates</span>
+                    <span className="text-sm xl:text-base">Select Dates</span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="text-sm xl:text-base font-semibold">
                     {checkIn && checkOut
                       ? `${checkIn} - ${checkOut}`
                       : "Check-in / Check-out"}
@@ -231,13 +235,17 @@ const HomePage = () => {
                           Check-in
                         </label>
 
-                        <div className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30">
+                        <div
+                          onClick={() => checkInRef.current?.showPicker()}
+                          className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30"
+                        >
                           <CalendarDays
                             size={17}
                             className="shrink-0 text-[#B8754D]"
                           />
 
                           <input
+                            ref={checkInRef}
                             type="date"
                             value={checkIn}
                             min={today || undefined}
@@ -260,13 +268,17 @@ const HomePage = () => {
                           Check-out
                         </label>
 
-                        <div className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30">
+                        <div
+                          onClick={() => checkOutRef.current?.showPicker()}
+                          className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30"
+                        >
                           <CalendarDays
                             size={17}
                             className="shrink-0 text-[#B8754D]"
                           />
 
                           <input
+                            ref={checkOutRef}
                             type="date"
                             value={checkOut}
                             min={checkIn || today || undefined}
@@ -292,6 +304,7 @@ const HomePage = () => {
                 )}
               </div>
 
+              {/* Occupancy */}
               <div className="relative z-50 w-full">
                 <button
                   onClick={() => {
@@ -299,16 +312,16 @@ const HomePage = () => {
                     setShowDestinations(false);
                     setShowDates(false);
                   }}
-                  className="hidden md:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
                     <Users className="text-orange-500" size={18} />
-                    <span className="text-sm lg:text-base">
+                    <span className="text-sm xl:text-base">
                       Choose Occupancy
                     </span>
                   </div>
 
-                  <span className="text-sm lg:text-base font-semibold">
+                  <span className="text-sm xl:text-base font-semibold">
                     {adults + children} Guests, {rooms}{" "}
                     {rooms === 1 ? "Room" : "Rooms"}
                   </span>
@@ -400,7 +413,7 @@ const HomePage = () => {
               {searchError && (
                 <div
                   ref={errorRef}
-                  className="fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
+                  className="hidden lg:block fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
                 >
                   <div className="flex items-start gap-3">
                     {/* Warning Icon */}
@@ -450,7 +463,7 @@ const HomePage = () => {
                     return;
                   }
                 }}
-                className="hidden md:block bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
+                className="hidden lg:block bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
               >
                 <Search className="text-white size-5 sm:size-7" />
               </button>
@@ -458,7 +471,7 @@ const HomePage = () => {
               {/* Open Search Panel Button On Mobile */}
               <button
                 onClick={() => setShowMobileSearchPanel(true)}
-                className="md:hidden shrink-0 bg-orange-500 p-2 rounded-xl cursor-pointer"
+                className="lg:hidden shrink-0 bg-orange-500 p-2 rounded-xl cursor-pointer"
               >
                 <ArrowUpRight className="text-white size-5" />
               </button>
@@ -467,7 +480,7 @@ const HomePage = () => {
             {/* MOBILE BOOKING PANEL */}
             {showMobileSearchPanel && (
               <div
-                className="md:hidden fixed inset-0 z-[200] flex items-end bg-[#332C26]/40 backdrop-blur-sm"
+                className="lg:hidden fixed inset-0 z-[200] flex items-end bg-[#332C26]/40 backdrop-blur-sm"
                 onClick={() => setShowMobileSearchPanel(false)}
               >
                 <div
@@ -553,12 +566,16 @@ const HomePage = () => {
                             Check-in
                           </label>
 
-                          <div className="flex items-center gap-2">
+                          <div
+                            onClick={() => checkInRef.current?.showPicker()}
+                            className="flex items-center gap-2"
+                          >
                             <CalendarDays
                               size={17}
                               className="shrink-0 text-[#B8754D]"
                             />
                             <input
+                              ref={checkInRef}
                               type="date"
                               value={checkIn}
                               min={today || undefined}
@@ -580,12 +597,16 @@ const HomePage = () => {
                             Check-out
                           </label>
 
-                          <div className="flex items-center gap-2">
+                          <div
+                            onClick={() => checkOutRef.current?.showPicker()}
+                            className="flex items-center gap-2"
+                          >
                             <CalendarDays
                               size={17}
                               className="shrink-0 text-[#B8754D]"
                             />
                             <input
+                              ref={checkOutRef}
                               type="date"
                               value={checkOut}
                               min={checkIn || today || undefined}
@@ -671,7 +692,9 @@ const HomePage = () => {
                     </div>
 
                     {searchError && (
-                      <p className="mt-3 text-xs text-red-600 text-center">{searchError}</p>
+                      <p className="mt-3 text-xs text-red-600 text-center">
+                        {searchError}
+                      </p>
                     )}
                   </div>
 
