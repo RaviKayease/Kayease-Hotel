@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import HeroIamge from "@/public/HeroImage.png";
 import { Cormorant_Garamond } from "next/font/google";
 import {
@@ -112,7 +111,9 @@ const HomePage = () => {
 
         <div className="relative w-full flex flex-col items-center">
           <div className="relative z-0 mt-2 overflow-hidden">
-            <h1 className="dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none">
+            <h1
+              className={`${cormorant.className} dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
+            >
               Dream Stay
             </h1>
           </div>

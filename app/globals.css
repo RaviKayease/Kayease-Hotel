@@ -149,7 +149,7 @@ html::-webkit-scrollbar {
   border: 1px solid rgb(var(--glass-border) / 0.75);
 
   box-shadow:
-    0 8px 32px rgb(0 0 0 / 0.10),
+    0 8px 32px rgb(0 0 0 / 0.1),
     inset 0 1px 0 rgb(255 255 255 / 0.65),
     inset 0 -1px 0 rgb(255 255 255 / 0.18);
 

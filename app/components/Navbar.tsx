@@ -17,7 +17,7 @@ const Navbar = () => {
     <>
       {/* Desktop Navbar */}
       <div
-        className={`flex justify-between items-center text-sm mb-4 text-[var(--foreground)] transition-colors duration-300 ${isMenuOpen ? "hidden" : ""}`}
+        className={` flex justify-between items-center text-sm mb-4 text-[var(--foreground)] transition-colors duration-300 ${isMenuOpen ? "hidden" : ""}`}
       >
         <Logo />
 
