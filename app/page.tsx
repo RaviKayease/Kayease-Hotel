@@ -147,9 +147,9 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="booking-glass absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[rgb(var(--glass)/)] backdrop-blur-md lg:backdrop-blur-lg flex items-center p-2 gap-2 border border-[rgb(var(--glass-border)/0.35)] shadow-lg transition-colors duration-500"
+              className="booking-glass absolute -bottom-5 sm:-bottom-6 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[rgb(var(--glass)/)] backdrop-blur-md lg:backdrop-blur-lg flex items-center p-1 sm:p-2 gap-2 border border-[rgb(var(--glass-border)/0.35)] shadow-lg transition-colors duration-500"
             >
-              <p className="lg:hidden flex-1 whitespace-nowrap text-sm pl-4 text-[rgb(var(--glass-text)/0.85)]">
+              <p className="lg:hidden flex-1 whitespace-nowrap text-xs md:text-sm pl-4 text-[rgb(var(--glass-text)/0.85)]">
                 Start your search...
               </p>
 
@@ -488,7 +488,7 @@ const HomePage = () => {
                 onClick={() => setShowMobileSearchPanel(true)}
                 className="lg:hidden bg-[var(--primary)] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer transition hover:brightness-90"
               >
-                <ArrowUpRight className="text-white size-5" />
+                <ArrowUpRight className="text-white size-4 md:size-5" />
               </button>
             </div>
 

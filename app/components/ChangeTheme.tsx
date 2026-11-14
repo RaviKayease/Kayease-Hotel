@@ -16,14 +16,14 @@ export default function ChangeTheme() {
   const [selected, setSelected] = useState("earth");
   const [open, setOpen] = useState(false);
 
-useEffect(() => {
-  const saved = localStorage.getItem("website-theme") || "earth";
+  useEffect(() => {
+    const saved = localStorage.getItem("website-theme") || "earth";
 
-  const validThemes = themes.map((theme) => theme.id);
-  const activeTheme = validThemes.includes(saved) ? saved : "earth";
+    const validThemes = themes.map((theme) => theme.id);
+    const activeTheme = validThemes.includes(saved) ? saved : "earth";
 
-  setSelected(activeTheme);
-}, []);
+    setSelected(activeTheme);
+  }, []);
 
   const changeTheme = (theme: string) => {
     setSelected(theme);
