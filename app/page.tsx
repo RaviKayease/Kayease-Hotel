@@ -120,10 +120,10 @@ const HomePage = () => {
           <div className="absolute top-[70%] z-10 w-full">
             {/* Hero Image */}
             <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh] w-full overflow-hidden rounded-4xl lg:rounded-[50px] border border-[var(--border)]/70 transition-colors duration-500">
-              <Image
-                src={HeroIamge}
+              <img
+                src={HeroIamge.src}
                 alt="Hero Image"
-                priority
+                fetchPriority="high"
                 className="h-full w-full object-cover"
                 style={{
                   maskImage:
@@ -134,7 +134,7 @@ const HomePage = () => {
               />
 
               <div
-                className="hero-glass absolute inset-x-0 top-0 h-[40%] bg-[rgb(var(--glass)/)] backdrop-blur-sm lg:backdrop-blur-md transition-colors duration-500"
+                className="hero-glass absolute inset-x-0 top-0 h-[40%] bg-[rgb(var(--glass)/0.16)] backdrop-blur-sm lg:backdrop-blur-md transition-colors duration-500"
                 style={{
                   maskImage:
                     "linear-gradient(to bottom, black 0%, black 35%, transparent 100%)",
@@ -147,7 +147,7 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="booking-glass absolute -bottom-5 sm:-bottom-6 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[rgb(var(--glass)/)] backdrop-blur-md lg:backdrop-blur-lg flex items-center p-1 sm:p-2 gap-2 border border-[rgb(var(--glass-border)/0.35)] shadow-lg transition-colors duration-500"
+              className="booking-glass absolute -bottom-5 sm:-bottom-6 lg:-bottom-8 xl:-bottom-9 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[rgb(var(--glass)/)] backdrop-blur-md lg:backdrop-blur-lg flex items-center p-1 sm:p-2 gap-2 border border-[rgb(var(--glass-border)/0.35)] shadow-lg transition-colors duration-500"
             >
               <p className="lg:hidden flex-1 whitespace-nowrap text-xs md:text-sm pl-4 text-[rgb(var(--glass-text)/0.85)]">
                 Start your search...
