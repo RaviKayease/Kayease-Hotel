@@ -35,7 +35,7 @@ useEffect(() => {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-[var(--foreground)]"
+        className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-1 lg:px-4 lg:py-2 text-[var(--foreground)]"
       >
         <Palette size={18} />
         <ChevronDown size={16} />

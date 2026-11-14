@@ -68,14 +68,16 @@
 }
 
 [data-theme="dark"] {
-  --background: #292a32;
-  --surface: #383a45;
-  --foreground: #f3f0ed;
-  --primary: #d19b65;
-  --border: #555762;
-  --glass: 55 57 70;
-  --glass-border: 130 130 150;
-  --glass-text: 243 240 237;
+  --background: #211f1d;
+  --surface: #2d2925;
+  --foreground: #f5efe6;
+  --primary: #d6a675;
+  --border: #49413a;
+
+  /* Light champagne glass */
+  --glass: 248 240 228;
+  --glass-border: 255 255 255;
+  --glass-text: 55 43 34;
 }
 
 @theme inline {
@@ -134,4 +136,22 @@ html::-webkit-scrollbar {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Dark theme - enhanced champagne frosted glass */
+[data-theme="dark"] .hero-glass,
+[data-theme="dark"] .booking-glass {
+  background: rgb(var(--glass) / 0.7);
+
+  backdrop-filter: blur(12px) saturate(100%);
+  -webkit-backdrop-filter: blur(28px) saturate(175%);
+
+  border: 1px solid rgb(255 255 255 / 0.75);
+
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -1px 0 rgb(255 255 255 / 0.18);
+
+  color: rgb(var(--glass-text));
 }

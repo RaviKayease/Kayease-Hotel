@@ -21,7 +21,8 @@ const Navbar = () => {
       >
         <Logo />
 
-        <div className="hidden md:flex md:gap-[4vw] font-medium">
+        {/* Page Navgation Buttons */}
+        <div className="hidden lg:flex md:gap-[4vw] font-medium">
           {[
             { name: "Rooms", href: "/rooms" },
             { name: "About Us", href: "/about-us" },
@@ -45,20 +46,23 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-2">
+          {/* Change Theme Button */}
           <ChangeTheme />
 
-          <button className="hidden md:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
+          {/* Login Button */}
+          <button className="hidden lg:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
             Login
           </button>
-        </div>
 
-        <button
-          onClick={() => setIsMenuOpen(true)}
-          className="md:hidden"
-          aria-label="Open menu"
-        >
-          <Menu size={20} strokeWidth={1.5} />
-        </button>
+          {/* Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="lg:hidden"
+            aria-label="Open menu"
+          >
+            <Menu size={20} strokeWidth={1.5} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
