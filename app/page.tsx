@@ -102,15 +102,16 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center mt-10 lg:mt-20">
+      {/* Hero Section */}
+      <section className="flex flex-col items-center mt-10 lg:mt-15">
         <p
           className={`${cormorant.className} text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide italic`}
         >
           Unforgettable Stay Experiences
         </p>
 
-        <div className="relative w-full flex flex-col items-center">
-          <div className="relative z-0 mt-2 overflow-hidden">
+        <div className="relative w-full flex flex-col items-center mt-2">
+          <div className="relative z-0 overflow-hidden">
             <h1
               className={`${cormorant.className} dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
             >
@@ -118,7 +119,7 @@ const HomePage = () => {
             </h1>
           </div>
 
-          <div className="absolute top-[70%] z-10 w-full">
+          <div className="absolute top-[95%] z-10 w-full">
             {/* Hero Image */}
             <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh] w-full overflow-hidden rounded-4xl lg:rounded-[50px] border border-[var(--border)]/70 transition-colors duration-500">
               <img
@@ -752,7 +753,7 @@ const HomePage = () => {
             )}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
