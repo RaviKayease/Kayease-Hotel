@@ -9,6 +9,54 @@
   --border: #d0ccca;
 }
 
+[data-theme="earth"] {
+  --background: #e2e0df;
+  --surface: #f5f2ef;
+  --foreground: #332c26;
+  --primary: #b8754d;
+  --border: #d0ccca;
+}
+
+[data-theme="ocean"] {
+  --background: #e8edf5;
+  --surface: #f7f9fc;
+  --foreground: #26364d;
+  --primary: #4776c7;
+  --border: #cbd5e5;
+}
+
+[data-theme="forest"] {
+  --background: #e4e9e3;
+  --surface: #f4f7f2;
+  --foreground: #293b2c;
+  --primary: #64866a;
+  --border: #cbd7ca;
+}
+
+[data-theme="purple"] {
+  --background: #e9e3ee;
+  --surface: #f7f3fa;
+  --foreground: #382c46;
+  --primary: #8865b5;
+  --border: #d6cbe2;
+}
+
+[data-theme="rose"] {
+  --background: #f0e4e5;
+  --surface: #fff6f5;
+  --foreground: #493136;
+  --primary: #c36c78;
+  --border: #e2cdd0;
+}
+
+[data-theme="dark"] {
+  --background: #292a32;
+  --surface: #383a45;
+  --foreground: #f3f0ed;
+  --primary: #d19b65;
+  --border: #555762;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -20,6 +68,17 @@ body {
   line-height: 1.6;
   background: var(--background);
   color: var(--foreground);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button,
+input {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 @keyframes dreamStayReveal {

@@ -9,7 +9,34 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (function () {
+          try {
+            const theme = localStorage.getItem("website-theme") || "earth";
+            const validThemes = [
+              "earth",
+              "ocean",
+              "forest",
+              "purple",
+              "rose",
+              "dark"
+            ];
+
+            document.documentElement.dataset.theme =
+              validThemes.includes(theme) ? theme : "earth";
+          } catch (error) {
+            document.documentElement.dataset.theme = "earth";
+          }
+        })();
+      `,
+          }}
+        />
+      </head>
+
       <body>
         <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-2 md:py-4">
           <Navbar />

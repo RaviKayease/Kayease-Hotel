@@ -4,6 +4,7 @@ import { Menu, X, Plus, Minus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import ChangeTheme from "@/app/components/ChangeTheme";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +17,7 @@ const Navbar = () => {
     <>
       {/* Desktop Navbar */}
       <div
-        className={`flex justify-between items-center text-sm mb-4 ${isMenuOpen ? "hidden" : ""}`}
+        className={`flex justify-between items-center text-sm mb-4 text-[var(--foreground)] transition-colors duration-300 ${isMenuOpen ? "hidden" : ""}`}
       >
         <Logo />
 
@@ -35,7 +36,7 @@ const Navbar = () => {
               {item.name}
 
               <span
-                className={`bg-orange-500 h-[2px] w-1/2 rounded-md transition-opacity ${
+                className={`bg-[var(--primary)] h-[2px] w-1/2 rounded-md transition-opacity ${
                   pathname === item.href ? "opacity-100" : "opacity-0"
                 }`}
               />
@@ -43,9 +44,13 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button className="hidden md:block font-semibold rounded-full px-4 py-1 bg-[#332C26] text-white">
-          Login
-        </button>
+        <div className="flex gap-2">
+          <ChangeTheme />
+
+          <button className="hidden md:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
+            Login
+          </button>
+        </div>
 
         <button
           onClick={() => setIsMenuOpen(true)}

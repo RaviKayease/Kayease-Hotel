@@ -32,6 +32,9 @@ const HomePage = () => {
   const checkInRef = useRef<HTMLInputElement>(null);
   const checkOutRef = useRef<HTMLInputElement>(null);
 
+  const mobileCheckInRef = useRef<HTMLInputElement>(null);
+  const mobileCheckOutRef = useRef<HTMLInputElement>(null);
+
   const [today, setToday] = useState("");
   const [showDates, setShowDates] = useState(false);
 
@@ -48,8 +51,16 @@ const HomePage = () => {
 
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    setToday(new Date().toISOString().split("T")[0]);
+    const date = new Date();
+    const localDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000,
+    )
+      .toISOString()
+      .split("T")[0];
+
+    setToday(localDate);
   }, []);
 
   useEffect(() => {
@@ -108,7 +119,7 @@ const HomePage = () => {
 
           <div className="absolute top-[70%] z-10 w-full">
             {/* Hero Image */}
-            <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh] w-full overflow-hidden rounded-4xl lg:rounded-[50px] border border-white/30">
+            <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh] w-full overflow-hidden rounded-4xl lg:rounded-[50px] ">
               <Image
                 src={HeroIamge}
                 alt="Hero Image"
@@ -136,14 +147,14 @@ const HomePage = () => {
             {/* Bottom glass card */}
             <div
               ref={bookingRef}
-              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-white-15 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-white/30"
+              className="absolute -bottom-6 sm:-bottom-7 lg:-bottom-8 xl:-bottom-9 2xl:-bottom-10 left-1/2 z-20 w-[80%] -translate-x-1/2 rounded-2xl lg:rounded-3xl bg-[var(--surface)]/20 backdrop-blur-md lg:backdrop-blur-xl flex items-center p-2 gap-2 border border-white/30"
             >
               <p className="lg:hidden flex-1 whitespace-nowrap text-sm pl-4 text-white/80">
                 Start your search...
               </p>
 
               {/* Destination */}
-              <div className="relative w-full border-r border-gray-400/100">
+              <div className="relative w-full border-r border-[var(--border)]/60">
                 <button
                   onClick={() => {
                     setShowDestinations(!showDestinations);
@@ -151,10 +162,10 @@ const HomePage = () => {
                     setShowDates(false);
                     setSearchError("");
                   }}
-                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden w-full lg:flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
-                    <MapPin className="text-orange-500" size={18} />
+                    <MapPin className="text-[var(--primary)]" size={18} />
 
                     <span className="text-sm xl:text-base">
                       Choose Destination
@@ -167,8 +178,8 @@ const HomePage = () => {
                 </button>
 
                 {showDestinations && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-3 text-left shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
-                    <p className="px-3 pb-2 pt-1 text-[11px] font-semibold tracking-widest text-[#332C26]/55">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-3 text-left shadow-xl backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
+                    <p className="px-3 pb-2 pt-1 text-[11px] font-semibold tracking-widest text-[var(--foreground)]/55">
                       POPULAR DESTINATIONS
                     </p>
 
@@ -182,16 +193,19 @@ const HomePage = () => {
                         }}
                         className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
                           destination === place
-                            ? "bg-[#B8754D]/15 text-[#B8754D]"
-                            : "text-[#332C26] hover:bg-[#E2E0DF] hover:text-[#B8754D]"
+                            ? "bg-[var(--primary)]/15 text-[var(--primary)]"
+                            : "text-[var(--foreground)] hover:bg-[var(--background)] hover:text-[var(--primary)]"
                         }`}
                       >
-                        <MapPin size={16} className="shrink-0 text-[#B8754D]" />
+                        <MapPin
+                          size={16}
+                          className="shrink-0 text-[var(--primary)]"
+                        />
 
                         <span className="flex-1">{place}</span>
 
                         {destination === place && (
-                          <span className="text-[#B8754D]">✓</span>
+                          <span className="text-[var(--primary)]">✓</span>
                         )}
                       </button>
                     ))}
@@ -200,7 +214,7 @@ const HomePage = () => {
               </div>
 
               {/* Dates */}
-              <div className="relative z-40 w-full border-r border-gray-400/100">
+              <div className="relative z-40 w-full border-r border-[var(--border)]/60">
                 <button
                   onClick={() => {
                     setShowDates(!showDates);
@@ -208,10 +222,10 @@ const HomePage = () => {
                     setShowOccupancy(false);
                     setSearchError("");
                   }}
-                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden w-full lg:flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
-                    <CalendarDays className="text-orange-500" size={18} />
+                    <CalendarDays className="text-[var(--primary)]" size={18} />
                     <span className="text-sm xl:text-base">Select Dates</span>
                   </div>
 
@@ -223,25 +237,25 @@ const HomePage = () => {
                 </button>
 
                 {showDates && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-5 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
-                    <h3 className="mb-4 text-lg font-semibold text-[#332C26]">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-5 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
+                    <h3 className="mb-4 text-lg font-semibold text-[var(--foreground)]">
                       Choose Your Stay
                     </h3>
 
                     <div className="flex flex-col gap-4">
                       {/* Check-in */}
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-[#332C26]/70">
+                        <label className="mb-2 block text-sm font-medium text-[var(--foreground)]/70">
                           Check-in
                         </label>
 
                         <div
-                          onClick={() => checkInRef.current?.showPicker()}
-                          className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30"
+                          onClick={() => checkInRef.current?.showPicker?.()}
+                          className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)]/60 px-3 py-3 transition focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/30"
                         >
                           <CalendarDays
                             size={17}
-                            className="shrink-0 text-[#B8754D]"
+                            className="shrink-0 text-[var(--primary)]"
                           />
 
                           <input
@@ -257,24 +271,24 @@ const HomePage = () => {
                                 setCheckOut("");
                               }
                             }}
-                            className="w-full min-w-0 bg-transparent text-sm text-[#332C26] outline-none"
+                            className="w-full min-w-0 bg-transparent text-sm text-[var(--foreground)] outline-none"
                           />
                         </div>
                       </div>
 
                       {/* Check-out */}
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-[#332C26]/70">
+                        <label className="mb-2 block text-sm font-medium text-[var(--foreground)]/70">
                           Check-out
                         </label>
 
                         <div
                           onClick={() => checkOutRef.current?.showPicker()}
-                          className="flex items-center gap-2 rounded-xl border border-[#D0CCCA] bg-[#E2E0DF]/60 px-3 py-3 transition focus-within:border-[#B8754D] focus-within:ring-1 focus-within:ring-[#B8754D]/30"
+                          className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)]/60 px-3 py-3 transition focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/30"
                         >
                           <CalendarDays
                             size={17}
-                            className="shrink-0 text-[#B8754D]"
+                            className="shrink-0 text-[var(--primary)]"
                           />
 
                           <input
@@ -286,7 +300,7 @@ const HomePage = () => {
                               setCheckOut(e.target.value);
                               setSearchError("");
                             }}
-                            className="w-full min-w-0 bg-transparent text-sm text-[#332C26] outline-none"
+                            className="w-full min-w-0 bg-transparent text-sm text-[var(--foreground)] outline-none"
                           />
                         </div>
                       </div>
@@ -296,7 +310,7 @@ const HomePage = () => {
                     <button
                       onClick={() => setShowDates(false)}
                       disabled={!checkIn || !checkOut}
-                      className="mt-5 w-full rounded-xl bg-[#B8754D] py-3 text-sm font-semibold text-white shadow-md shadow-[#B8754D]/15 transition hover:bg-[#A56543] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                      className="mt-5 w-full rounded-xl bg-[var(--primary)] py-3 text-sm font-semibold text-white shadow-md transition hover:brightness-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Apply Dates
                     </button>
@@ -312,10 +326,10 @@ const HomePage = () => {
                     setShowDestinations(false);
                     setShowDates(false);
                   }}
-                  className="hidden lg:block w-full flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
+                  className="hidden w-full lg:flex flex-col items-center justify-center gap-1 text-center cursor-pointer"
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-center gap-2">
-                    <Users className="text-orange-500" size={18} />
+                    <Users className="text-[var(--primary)]" size={18} />
                     <span className="text-sm xl:text-base">
                       Choose Occupancy
                     </span>
@@ -328,12 +342,12 @@ const HomePage = () => {
                 </button>
 
                 {showOccupancy && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-4 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
                     <div className="mb-3">
-                      <h3 className="text-lg font-semibold text-[#332C26]">
+                      <h3 className="text-lg font-semibold text-[var(--foreground)]">
                         Guests & Rooms
                       </h3>
-                      <p className="mt-1 text-xs text-[#332C26]/55">
+                      <p className="mt-1 text-xs text-[var(--foreground)]/55">
                         Choose who is joining your stay.
                       </p>
                     </div>
@@ -363,13 +377,13 @@ const HomePage = () => {
                     ].map((item) => (
                       <div
                         key={item.label}
-                        className="flex items-center justify-between border-b border-[#D0CCCA]/70 py-3 last:border-0"
+                        className="flex items-center justify-between border-b border-[var(--border)] py-3 last:border-0"
                       >
                         <div>
-                          <p className="text-sm font-medium text-[#332C26]">
+                          <p className="text-sm font-medium text-[var(--foreground)]">
                             {item.label}
                           </p>
-                          <p className="text-[11px] text-[#332C26]/55">
+                          <p className="text-[11px] text-[var(--foreground)]/55">
                             {item.description}
                           </p>
                         </div>
@@ -380,18 +394,18 @@ const HomePage = () => {
                               item.setValue(Math.max(item.min, item.value - 1))
                             }
                             disabled={item.value <= item.min}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#B8754D] text-[#B8754D] transition hover:bg-[#B8754D]/10 disabled:cursor-not-allowed disabled:opacity-30"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--primary)] text-[var(--primary)] transition hover:bg-[var(--primary)]/10 disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             −
                           </button>
 
-                          <span className="w-5 text-center text-sm font-semibold text-[#332C26]">
+                          <span className="w-5 text-center text-sm font-semibold text-[var(--foreground)]">
                             {item.value}
                           </span>
 
                           <button
                             onClick={() => item.setValue(item.value + 1)}
-                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#B8754D] text-white transition hover:bg-[#A56543]"
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-white transition hover:brightness-90"
                           >
                             +
                           </button>
@@ -401,7 +415,7 @@ const HomePage = () => {
 
                     <button
                       onClick={() => setShowOccupancy(false)}
-                      className="mt-4 w-full rounded-xl bg-[#B8754D] py-3 text-sm font-semibold text-white shadow-md shadow-[#B8754D]/15 transition hover:bg-[#A56543] active:scale-[0.98]"
+                      className="mt-4 w-full rounded-xl bg-[var(--primary)] py-3 text-sm font-semibold text-white shadow-md transition hover:brightness-90 active:scale-[0.98]"
                     >
                       Apply
                     </button>
@@ -413,21 +427,21 @@ const HomePage = () => {
               {searchError && (
                 <div
                   ref={errorRef}
-                  className="hidden lg:block fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[#D0CCCA] bg-[#F5F2EF]/95 p-4 text-[#332C26] shadow-[0_12px_35px_rgba(51,44,38,0.15)] backdrop-blur-xl md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
+                  className="hidden lg:block fixed left-1/2 top-15 sm:top-17 z-[110] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-4 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:bottom-full md:left-auto md:right-0 md:top-auto md:mb-3 md:w-auto md:max-w-none md:translate-x-0"
                 >
                   <div className="flex items-start gap-3">
                     {/* Warning Icon */}
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#B8754D]/25 bg-[#B8754D]/10 text-[#B8754D]">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--primary)]/25 bg-[var(--primary)]/10 text-[var(--primary)]">
                       !
                     </div>
 
                     {/* Error Message */}
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-[#332C26]">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">
                         Almost there!
                       </p>
 
-                      <p className="mt-1 text-xs leading-relaxed text-[#332C26]/60">
+                      <p className="mt-1 text-xs leading-relaxed text-[var(--foreground)]/60">
                         {searchError}
                       </p>
                     </div>
@@ -435,7 +449,7 @@ const HomePage = () => {
                     {/* Close Button */}
                     <button
                       onClick={() => setSearchError("")}
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[#332C26]/50 transition hover:bg-[#E2E0DF] hover:text-[#332C26]"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[var(--foreground)]/50 transition hover:bg-[var(--background)] hover:text-[var(--foreground)]"
                       aria-label="Close error message"
                     >
                       ×
@@ -444,7 +458,7 @@ const HomePage = () => {
                 </div>
               )}
 
-              {/* Search Button */}
+              {/* Desktop Search Button */}
               <button
                 onClick={() => {
                   setSearchError("");
@@ -452,18 +466,19 @@ const HomePage = () => {
                   setShowDates(false);
                   setShowOccupancy(false);
 
-                  if (!destination || !checkIn || !checkOut) {
+                  if (!destination.trim() || !checkIn || !checkOut) {
                     setSearchError(
                       "Please select your destination and travel dates.",
                     );
                     return;
                   }
+
                   if (checkOut <= checkIn) {
                     setSearchError("Check-out must be after check-in.");
                     return;
                   }
                 }}
-                className="hidden lg:block bg-orange-500 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer"
+                className="hidden lg:block bg-[var(--primary)] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer transition hover:brightness-90"
               >
                 <Search className="text-white size-5 sm:size-7" />
               </button>
@@ -471,7 +486,7 @@ const HomePage = () => {
               {/* Open Search Panel Button On Mobile */}
               <button
                 onClick={() => setShowMobileSearchPanel(true)}
-                className="lg:hidden shrink-0 bg-orange-500 p-2 rounded-xl cursor-pointer"
+                className="lg:hidden bg-[var(--primary)] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer transition hover:brightness-90"
               >
                 <ArrowUpRight className="text-white size-5" />
               </button>
@@ -480,7 +495,7 @@ const HomePage = () => {
             {/* MOBILE BOOKING PANEL */}
             {showMobileSearchPanel && (
               <div
-                className="lg:hidden fixed inset-0 z-[200] flex items-end bg-[#332C26]/40 backdrop-blur-sm"
+                className="lg:hidden fixed inset-0 z-[200] flex items-end bg-[var(--foreground)]/40 backdrop-blur-sm"
                 onClick={() => setShowMobileSearchPanel(false)}
               >
                 <div
@@ -488,24 +503,24 @@ const HomePage = () => {
                   aria-modal="true"
                   aria-label="Search your stay"
                   onClick={(e) => e.stopPropagation()}
-                  className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-white/60 bg-[#F5F2EF]/95 backdrop-blur-2xl shadow-[0_-10px_50px_rgba(51,44,38,0.18)] animate-[slideUp_0.3s_ease-out]"
+                  className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-2xl shadow-xl animate-[slideUp_0.3s_ease-out]"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 pt-5 pb-4">
                     <div>
                       <p
-                        className={`${cormorant.className} text-2xl font-semibold text-[#332C26]`}
+                        className={`${cormorant.className} text-2xl font-semibold text-[var(--foreground)]`}
                       >
                         Find your escape
                       </p>
-                      <p className="mt-1 text-xs text-[#332C26]/60">
+                      <p className="mt-1 text-xs text-[var(--foreground)]/60">
                         Let's plan your perfect stay.
                       </p>
                     </div>
 
                     <button
                       onClick={() => setShowMobileSearchPanel(false)}
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E2E0DF] text-[#332C26] text-xl hover:bg-[#D0CCCA]"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--background)] text-[var(--foreground)] text-xl hover:brightness-95"
                       aria-label="Close search panel"
                     >
                       ×
@@ -514,14 +529,16 @@ const HomePage = () => {
 
                   <div className="max-h-[calc(90dvh-155px)] overflow-y-auto px-5 pb-5">
                     {/* Destination */}
-                    <div className="mb-3 rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
-                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                    <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
                         DESTINATION
                       </label>
 
                       <div className="flex items-center gap-3">
-                        <MapPin className="shrink-0 text-[#B8754D]" size={20} />
-
+                        <MapPin
+                          className="shrink-0 text-[var(--primary)]"
+                          size={20}
+                        />
                         <input
                           type="text"
                           value={destination}
@@ -530,7 +547,7 @@ const HomePage = () => {
                             setSearchError("");
                           }}
                           placeholder="Where would you like to go?"
-                          className="w-full bg-transparent text-sm text-[#332C26] placeholder:text-[#332C26]/45 outline-none"
+                          className="w-full bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground)]/45 outline-none"
                         />
                       </div>
 
@@ -544,8 +561,8 @@ const HomePage = () => {
                             }}
                             className={`rounded-full border px-3 py-2 text-xs transition ${
                               destination === place
-                                ? "border-[#B8754D] bg-[#B8754D]/15 text-[#B8754D]"
-                                : "border-[#D0CCCA] bg-[#F5F2EF]/70 text-[#332C26]/75"
+                                ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--primary)]"
+                                : "border-[var(--border)] bg-[var(--surface)]/70 text-[var(--foreground)]/75 hover:border-[var(--primary)]"
                             }`}
                           >
                             {place}
@@ -555,27 +572,29 @@ const HomePage = () => {
                     </div>
 
                     {/* Dates */}
-                    <div className="mb-3 rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
-                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                    <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
                         YOUR STAY
                       </label>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div className="min-w-0">
-                          <label className="mb-2 block text-xs text-[#332C26]/60">
+                          <label className="mb-2 block text-xs text-[var(--foreground)]/60">
                             Check-in
                           </label>
 
                           <div
-                            onClick={() => checkInRef.current?.showPicker()}
+                            onClick={() =>
+                              mobileCheckInRef.current?.showPicker()
+                            }
                             className="flex items-center gap-2"
                           >
                             <CalendarDays
                               size={17}
-                              className="shrink-0 text-[#B8754D]"
+                              className="shrink-0 text-[var(--primary)]"
                             />
                             <input
-                              ref={checkInRef}
+                              ref={mobileCheckInRef}
                               type="date"
                               value={checkIn}
                               min={today || undefined}
@@ -587,26 +606,28 @@ const HomePage = () => {
                                   setCheckOut("");
                                 }
                               }}
-                              className="w-full min-w-0 bg-transparent text-xs text-[#332C26] outline-none"
+                              className="w-full min-w-0 bg-transparent text-xs text-[var(--foreground)] outline-none"
                             />
                           </div>
                         </div>
 
                         <div className="min-w-0">
-                          <label className="mb-2 block text-xs text-[#332C26]/60">
+                          <label className="mb-2 block text-xs text-[var(--foreground)]/60">
                             Check-out
                           </label>
 
                           <div
-                            onClick={() => checkOutRef.current?.showPicker()}
+                            onClick={() =>
+                              mobileCheckOutRef.current?.showPicker()
+                            }
                             className="flex items-center gap-2"
                           >
                             <CalendarDays
                               size={17}
-                              className="shrink-0 text-[#B8754D]"
+                              className="shrink-0 text-[var(--primary)]"
                             />
                             <input
-                              ref={checkOutRef}
+                              ref={mobileCheckOutRef}
                               type="date"
                               value={checkOut}
                               min={checkIn || today || undefined}
@@ -614,7 +635,7 @@ const HomePage = () => {
                                 setCheckOut(e.target.value);
                                 setSearchError("");
                               }}
-                              className="w-full min-w-0 bg-transparent text-xs text-[#332C26] outline-none"
+                              className="w-full min-w-0 bg-transparent text-xs text-[var(--foreground)] outline-none"
                             />
                           </div>
                         </div>
@@ -622,8 +643,8 @@ const HomePage = () => {
                     </div>
 
                     {/* Occupancy */}
-                    <div className="rounded-2xl border border-[#D0CCCA] bg-[#E2E0DF]/60 p-4">
-                      <label className="mb-2 block text-xs font-semibold tracking-widest text-[#332C26]/60">
+                    <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                      <label className="mb-3 block text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
                         GUESTS & ROOMS
                       </label>
 
@@ -652,13 +673,13 @@ const HomePage = () => {
                       ].map((item) => (
                         <div
                           key={item.label}
-                          className="flex items-center justify-between border-b border-[#D0CCCA]/70 py-3 last:border-0"
+                          className="flex items-center justify-between border-b border-[var(--border)] py-3 last:border-0"
                         >
                           <div>
-                            <p className="text-sm font-medium text-[#332C26]">
+                            <p className="text-sm font-medium text-[var(--foreground)]">
                               {item.label}
                             </p>
-                            <p className="text-[11px] text-[#332C26]/55">
+                            <p className="text-[11px] text-[var(--foreground)]/55">
                               {item.description}
                             </p>
                           </div>
@@ -671,18 +692,18 @@ const HomePage = () => {
                                 )
                               }
                               disabled={item.value <= item.min}
-                              className="h-8 w-8 rounded-full border border-[#B8754D] text-[#B8754D] disabled:opacity-30"
+                              className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--primary)] text-[var(--primary)] transition hover:bg-[var(--primary)]/10 disabled:cursor-not-allowed disabled:opacity-30"
                             >
                               −
                             </button>
 
-                            <span className="w-4 text-center text-sm font-semibold text-[#332C26]">
+                            <span className="w-4 text-center text-sm font-semibold text-[var(--foreground)]">
                               {item.value}
                             </span>
 
                             <button
                               onClick={() => item.setValue(item.value + 1)}
-                              className="h-8 w-8 rounded-full bg-[#B8754D] text-white transition hover:bg-[#A56543]"
+                              className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-white transition hover:brightness-90"
                             >
                               +
                             </button>
@@ -699,10 +720,10 @@ const HomePage = () => {
                   </div>
 
                   {/* Sticky Search Button */}
-                  <div className="border-t border-[#D0CCCA] bg-[#F5F2EF]/95 px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+                  <div className="border-t border-[var(--border)] bg-[var(--surface)]/95 px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
                     <button
                       onClick={() => {
-                        if (!destination || !checkIn || !checkOut) {
+                        if (!destination.trim() || !checkIn || !checkOut) {
                           setSearchError(
                             "Please select your destination and travel dates.",
                           );
@@ -719,7 +740,7 @@ const HomePage = () => {
 
                         // Add your booking search/navigation logic here.
                       }}
-                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#B8754D] py-4 text-sm font-semibold text-white shadow-lg shadow-[#B8754D]/20 transition hover:bg-[#A56543] active:scale-[0.98]"
+                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] py-4 text-sm font-semibold text-white shadow-lg transition hover:brightness-90 active:scale-[0.98]"
                     >
                       <Search size={19} />
                       Search Stays
