@@ -8,8 +8,6 @@ import {
   Users,
   ArrowUpRight,
   Search,
-  Star,
-  Sparkles,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -98,6 +96,53 @@ const editorialHotels = [
   },
 ];
 
+const editorialSlides = [
+  {
+    eyebrow: "YOUR PRIVATE ESCAPE",
+    title: "A stay that feels",
+    highlight: "like a beautiful escape.",
+    description:
+      "Discover thoughtfully designed spaces, breathtaking surroundings, and moments of comfort that stay with you long after your journey ends. Every stay is an invitation to slow down and experience something extraordinary.",
+    image:
+      "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=1200",
+    alt: "Beautiful A-frame cabin surrounded by a forest",
+    caption: "Where moments become memories",
+  },
+  {
+    eyebrow: "OCEANFRONT LIVING",
+    title: "Wake up where",
+    highlight: "the ocean meets the sky.",
+    description:
+      "Experience the beauty of coastal living, where endless ocean views, calming sea breezes, and thoughtfully designed spaces create the perfect escape from everyday life.",
+    image:
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+    alt: "Luxury tropical resort with a beautiful swimming pool",
+    caption: "A world beyond the ordinary",
+  },
+  {
+    eyebrow: "MOUNTAIN SERENITY",
+    title: "Find peace",
+    highlight: "above the ordinary.",
+    description:
+      "Surrounded by breathtaking mountain landscapes, discover a quieter kind of luxury. Slow mornings, beautiful views, and meaningful moments make every stay unforgettable.",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200",
+    alt: "Peaceful wooden mountain cabin surrounded by nature",
+    caption: "A little closer to nature",
+  },
+  {
+    eyebrow: "TIMELESS ELEGANCE",
+    title: "Experience",
+    highlight: "the art of refined living.",
+    description:
+      "Step into a world of understated elegance, beautiful architecture, and exceptional hospitality. Every detail is thoughtfully considered to make your stay truly special.",
+    image:
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+    alt: "Elegant luxury boutique hotel interior",
+    caption: "Elegance in every detail",
+  },
+];
+
 const HomePage = () => {
   const [destination, setDestination] = useState("");
   const [activeCategory, setActiveCategory] = useState("All Stays");
@@ -123,6 +168,8 @@ const HomePage = () => {
   const [searchError, setSearchError] = useState("");
 
   const [showMobileSearchPanel, setShowMobileSearchPanel] = useState(false);
+
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
@@ -175,6 +222,16 @@ const HomePage = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((current) => (current + 1) % editorialSlides.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentSlide = editorialSlides[activeSlide];
 
   return (
     <div>
@@ -1186,9 +1243,9 @@ const HomePage = () => {
 
       {/* Editorial Destination Showcase */}
       <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 py-10 text-[var(--foreground)] sm:py-12 lg:py-8">
-        {/* Brand Title */}
-        <div className="relative z-20 mx-auto mb-6 w-full max-w-[1400px] px-5 text-center sm:mb-8 lg:mb-6">
-          <p className="mb-6 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
+        {/* Brand Title - Always Visible */}
+        <div className="relative z-20 mx-auto mb-8 w-full max-w-[1400px] px-5 text-center sm:mb-10 lg:mb-8">
+          <p className="mb-5 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
             A NEW WAY TO EXPERIENCE HOSPITALITY
           </p>
 
@@ -1199,66 +1256,158 @@ const HomePage = () => {
           </h2>
         </div>
 
-        {/* Three Image Sections - Shared Top Position */}
-        <div className="relative grid w-full px-[15vw] grid-cols-1 items-center lg:grid-cols-2">
+        {/* Editorial Slide */}
+        <div className="relative mx-auto grid w-full max-w-[1250px] grid-cols-1 items-center gap-10 px-5 lg:grid-cols-2 lg:gap-16">
           {/* Left Content */}
-          <div className="order-2 flex flex-col items-start lg:order-1">
+          <div
+            key={`content-${activeSlide}`}
+            className="editorial-slide-content order-2 flex flex-col items-start lg:order-1"
+          >
+            {/* Heading */}
             <h2
               className={`${cormorant.className} max-w-[550px] text-5xl leading-[1.05] text-[var(--foreground)] sm:text-6xl lg:text-7xl`}
             >
-              A stay that feels
+              {currentSlide.title}
+
               <span className="block italic text-[var(--primary)]">
-                like a beautiful escape.
+                {currentSlide.highlight}
               </span>
             </h2>
 
+            {/* Description */}
             <p className="mt-5 max-w-[440px] text-sm leading-7 text-[var(--foreground)]/65 sm:text-base sm:leading-7">
-              Discover thoughtfully designed spaces, breathtaking surroundings,
-              and moments of comfort that stay with you long after your journey
-              ends. Every stay is an invitation to slow down and experience
-              something extraordinary.
+              {currentSlide.description}
             </p>
 
             {/* Explore Button */}
-            <button className="group mt-6 inline-flex items-center gap-6 border-b border-[var(--primary)]/60 pb-2 text-[var(--foreground)]">
-              <span className="text-[11px] font-medium tracking-[0.22em]">
+            <button className="group mt-7 inline-flex items-center gap-6 border-b border-[var(--primary)]/60 pb-2 text-[var(--foreground)]">
+              <span className="text-[10px] font-medium tracking-[0.22em] sm:text-[11px]">
                 DISCOVER OUR COLLECTION
               </span>
 
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--primary)]/60 text-[var(--primary)]">
-                <ArrowUpRight size={19} strokeWidth={1.4} />
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--primary)]/60 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
+                <ArrowUpRight
+                  size={19}
+                  strokeWidth={1.4}
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
               </span>
             </button>
           </div>
 
-          {/* Right Image */}
+          {/* Right Image - Premium Stacked Card Deck */}
           <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
             <div className="relative w-full max-w-[460px]">
-              {/* Decorative Background Shape */}
-              <div className="absolute -right-3 -top-3 h-full w-full rounded-t-[250px] border border-[var(--primary)]/35 sm:-right-5 sm:-top-5" />
+              {/* Decorative Backplate - Outer Arch */}
+              <div
+                className="absolute -right-5 -top-5 h-[95%] w-[95%] rounded-t-[250px] border border-[var(--primary)]/30 sm:-right-7 sm:-top-5"
+                style={{
+                  background: "var(--editorial-background)",
+                  transform: "rotate(11deg)",
+                }}
+              />
 
-              {/* Main Image */}
-              <div className="relative h-[320px] w-full overflow-hidden rounded-t-[250px] rounded-b-sm border border-[var(--border)]/50 shadow-2xl sm:h-[400px] lg:h-[600px]">
-                <img
-                  src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=1200"
-                  alt="Luxury boutique hotel surrounded by nature"
-                  className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
-                />
+              {/* Decorative Backplate - Inner Arch */}
+              <div
+                className="absolute -right-2 -top-2 h-[99%] w-[99%] rounded-t-[250px] border border-[var(--primary)]/20"
+                style={{
+                  background: "var(--surface)",
+                  transform: "rotate(1.5deg)",
+                }}
+              />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/5" />
+              {/* Card Deck */}
+              <div className="editorial-card-deck relative z-10 h-[360px] w-full sm:h-[440px] lg:h-[600px]">
+                {editorialSlides.map((slide, index) => {
+                  const position =
+                    (index - activeSlide + editorialSlides.length) %
+                    editorialSlides.length;
 
-                {/* Image Caption */}
-                <div className="absolute bottom-5 left-6 text-white">
-                  <p className="text-[9px] tracking-[0.3em] text-white/75">
-                    YOUR PRIVATE ESCAPE
-                  </p>
+                  const isActive = position === 0;
 
-                  <p
-                    className={`${cormorant.className} mt-2 text-3xl sm:text-4xl`}
-                  >
-                    Where moments become memories
-                  </p>
-                </div>
+                  const cardTransforms = [
+                    "translate3d(0px, 0px, 0) rotate(0deg) scale(1)",
+                    "translate3d(12px, -11px, 0) rotate(2deg) scale(0.985)",
+                    "translate3d(23px, -21px, 0) rotate(3.8deg) scale(0.97)",
+                    "translate3d(33px, -30px, 0) rotate(5.5deg) scale(0.955)",
+                  ];
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => !isActive && setActiveSlide(index)}
+                      aria-label={`Show ${slide.eyebrow}`}
+                      className={`editorial-stack-card absolute inset-0 overflow-hidden rounded-t-[250px] rounded-b-sm border ${
+                        isActive
+                          ? "z-10 border-white/40 shadow-[0_28px_65px_-20px_rgba(35,25,18,0.42)]"
+                          : "border-white/30 shadow-[0_12px_30px_-15px_rgba(35,25,18,0.3)]"
+                      } ${isActive ? "cursor-default" : "cursor-pointer"}`}
+                      style={{
+                        zIndex: editorialSlides.length - position,
+                        transform: cardTransforms[position],
+                        filter: isActive ? "brightness(1)" : "brightness(0.82)",
+                      }}
+                    >
+                      {/* Hotel Image */}
+                      <img
+                        src={slide.image}
+                        alt={slide.alt}
+                        draggable="false"
+                        className={`h-full w-full object-cover ${
+                          isActive ? "editorial-active-image" : ""
+                        }`}
+                      />
+
+                      {/* Only Front Card Gets Overlay Details */}
+                      {isActive && (
+                        <>
+                          {/* Cinematic Gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/75" />
+
+                          {/* Top Details */}
+                          <div className="absolute left-6 right-6 top-7 flex items-center justify-between sm:left-7 sm:right-7">
+                            <span className="border border-white/40 bg-black/15 px-3 py-2 text-[8px] font-medium tracking-[0.22em] text-white backdrop-blur-sm">
+                              ORAVILLES
+                            </span>
+
+                            <span className="text-[9px] tracking-[0.2em] text-white/85">
+                              0{index + 1} / 0{editorialSlides.length}
+                            </span>
+                          </div>
+
+                          {/* Bottom Editorial Caption */}
+                          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                            <div className="mb-3 flex items-center gap-3">
+                              <span className="h-px w-7 bg-[var(--primary)]" />
+
+                              <p className="text-[9px] font-medium tracking-[0.3em] text-white/80">
+                                {slide.eyebrow}
+                              </p>
+                            </div>
+
+                            <div className="flex items-end justify-between gap-3">
+                              <p
+                                className={`${cormorant.className} max-w-[340px] text-3xl leading-[1.08] text-white sm:text-4xl`}
+                              >
+                                {slide.caption}
+                              </p>
+
+                              <span className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/50 text-white transition-all duration-300 hover:bg-white hover:text-black">
+                                <ArrowUpRight size={18} strokeWidth={1.3} />
+                              </span>
+                            </div>
+
+                            <div className="mt-5 h-px w-full bg-white/30" />
+
+                            <p className="mt-3 text-[8px] tracking-[0.23em] text-white/65">
+                              DISCOVER EXTRAORDINARY PLACES
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
