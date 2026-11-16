@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Cormorant_Garamond } from "next/font/google";
 import DecorativeLeaf from "@/public/FooterImage/image.png";
 import Image from "next/image";
+import Logo from "./Logo";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full bg-[var(--background)] px-4 py-8 transition-colors duration-500 sm:px-6 lg:px-10 lg:py-10">
+    <footer className="w-full bg-[var(--background)] px-4 py-8 transition-colors duration-500 sm:px-6 lg:px-10 lg:py-10 mt-5">
       {/* Main Footer Container */}
       <div className="relative mx-auto max-w-[1450px] overflow-hidden rounded-[22px] border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
         {/* Decorative Leaf Image */}
@@ -54,13 +55,7 @@ const Footer = () => {
         <div className="relative z-10 grid grid-cols-2 gap-x-8 gap-y-10 px-6 py-10 sm:grid-cols-4 sm:gap-6 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
           {/* Brand */}
           <div className="col-span-2 flex flex-col items-start sm:col-span-1">
-            <Link href="/" className="group">
-              <h2
-                className={`${cormorant.className} text-4xl font-medium tracking-wide text-[#f5eee2] transition-colors duration-300 group-hover:text-[#c8b18b] sm:text-[38px]`}
-              >
-                Oravilles
-              </h2>
-            </Link>
+            <Logo variant="footer" />
 
             <p className="mt-2 max-w-[230px] text-[11px] leading-6 tracking-wide text-[#c5c0b5] sm:text-xs">
               Live Beautiful, Live Extraordinary.

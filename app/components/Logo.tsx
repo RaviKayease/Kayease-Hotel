@@ -7,19 +7,31 @@ const cormorant = Cormorant_Garamond({
   weight: ["400", "500"],
 });
 
-const Logo = ({ name = "Oravilles" }) => {
+const Logo = ({ name = "Oravilles", variant = "default" }) => {
   const brandName = name.trim() || "Oravilles";
+  const isFooter = variant === "footer";
 
   return (
-    <Link href="/" aria-label={brandName} className="inline-flex items-center">
-      {/* Mobile & Tablet Logo */}
-      <div className="flex items-end gap-[2px] text-[var(--foreground)]">
-        <span className="text-[var(--primary)] text-md leading-none mb-[2px]">
+    <Link
+      href="/"
+      aria-label={brandName}
+      className="group inline-flex items-center"
+    >
+      <div
+        className={`flex items-center gap-[2px] ${
+          isFooter ? "text-[#f5eee2]" : "text-[var(--foreground)]"
+        }`}
+      >
+        <span className="relative top-[3px] text-md leading-none text-[var(--primary)]">
           ✦
         </span>
 
         <span
-          className={`${cormorant.className} text-2xl md:text-3xl leading-none font-normal tracking-[-0.8px] whitespace-nowrap`}
+          className={`${cormorant.className} ${
+            isFooter
+              ? "text-4xl font-medium tracking-wide sm:text-[38px] group-hover:text-[#c8b18b]"
+              : "text-2xl font-normal tracking-[-0.8px] md:text-3xl"
+          } relative -top-[3px] block leading-[0.8] whitespace-nowrap transition-colors duration-300`}
         >
           {brandName}
         </span>

@@ -831,7 +831,7 @@ const HomePage = () => {
       </section>
 
       {/* Featured Hotels */}
-      <section className="w-full bg-[var(--background)] text-[var(--foreground)] px-4 py-16 lg:px-10 lg:py-20 transition-colors duration-500">
+      <section className="w-full bg-[var(--background)] text-[var(--foreground)] px-4 py-16 lg:px-10 lg:py-15 mt-10 transition-colors duration-500">
         {/* Heading */}
         <div className="mb-12 text-center">
           <h2
@@ -1189,7 +1189,7 @@ const HomePage = () => {
       <section className="relative flex min-h-[850px] w-full flex-col items-center overflow-hidden bg-[var(--background)] px-5 py-16 text-[var(--foreground)] transition-colors duration-500 sm:min-h-[950px] sm:pt-20 lg:min-h-[900px] lg:py-15">
         {/* Brand Title */}
         <div className="relative z-20 mb-10 text-center sm:mb-12 lg:mb-14">
-          <p className="mb-12 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
+          <p className="mb-20 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
             A NEW WAY TO EXPERIENCE HOSPITALITY
           </p>
 
@@ -1345,7 +1345,7 @@ const HomePage = () => {
         </div>
 
         {/* Bottom Tagline */}
-        <div className="absolute inset-x-0 bottom-16 z-20 flex flex-col items-center px-5 sm:bottom-10">
+        <div className="absolute inset-x-0 bottom- z-20 flex flex-col items-center px-5 sm:bottom-5">
           <div className="flex w-full max-w-[650px] items-center justify-between gap-3">
             {["Discover", "Stay", "Relax", "Repeat"].map((word, index) => (
               <span
