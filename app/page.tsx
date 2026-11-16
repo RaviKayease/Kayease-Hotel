@@ -23,8 +23,46 @@ const destinations = [
   "Jaipur, India",
 ];
 
+const hotelCategories = [
+  "All Stays",
+  "Luxury Hotels",
+  "Resorts",
+  "Boutique Hotels",
+];
+
+const featuredHotels = [
+  {
+    id: 1,
+    name: "Oceanfront Luxury Resort",
+    location: "Goa, India",
+    category: "Resorts",
+    price: 8500,
+    rating: 4.9,
+    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
+  },
+  {
+    id: 2,
+    name: "The Heritage Boutique",
+    location: "Jaipur, India",
+    category: "Boutique Hotels",
+    price: 5200,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900",
+  },
+  {
+    id: 3,
+    name: "Mountain Escape Retreat",
+    location: "Manali, India",
+    category: "Luxury Hotels",
+    price: 6000,
+    rating: 4.7,
+    image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
+  },
+];
+
 const HomePage = () => {
   const [destination, setDestination] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All Stays");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
@@ -103,7 +141,7 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="flex flex-col items-center mt-10 lg:mt-15">
+      <section className="flex flex-col items-center mt-10 lg:mt-15 pb-[calc(25vh+2rem)] sm:pb-[calc(35vh+2rem)] md:pb-[calc(45vh+2rem)] lg:pb-[calc(55vh+2rem)]">
         <p
           className={`${cormorant.className} text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide italic`}
         >
@@ -751,6 +789,136 @@ const HomePage = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Hotels */}
+      <section className="w-full bg-[var(--background)] text-[var(--foreground)] px-4 py-16 lg:px-10 lg:py-20 transition-colors duration-500">
+        {/* Heading */}
+        <div className="mb-12 text-center">
+          <h2
+            className={`${cormorant.className} text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-wide mb-14`}
+          >
+            Discover Exceptional Stays
+          </h2>
+
+          {/* Category Tabs */}
+          <div className="mx-auto mt-8 flex w-fit max-w-full flex-wrap items-center justify-center gap-1 sm:gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)]/70 p-1.5 shadow-lg backdrop-blur-md transition-colors duration-500">
+            {hotelCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`whitespace-nowrap rounded-full px-3 sm:px-5 lg:px-7 py-2.5 sm:py-3 text-xs sm:text-sm transition-all duration-300 ${
+                  activeCategory === category
+                    ? "bg-[var(--primary)] text-white shadow-md"
+                    : "text-[var(--foreground)]/65 hover:bg-[var(--background)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Hotel Cards */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredHotels
+            .filter(
+              (hotel) =>
+                activeCategory === "All Stays" ||
+                hotel.category === activeCategory,
+            )
+            .map((hotel) => (
+              <div
+                key={hotel.id}
+                className="group overflow-hidden rounded-3xl lg:rounded-[35px] border border-[var(--border)]/60 bg-[var(--surface)] shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+              >
+                {/* Hotel Image */}
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={hotel.image}
+                    alt={hotel.name}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
+                    {hotel.category}
+                  </span>
+                </div>
+
+                {/* Hotel Details */}
+                <div className="p-4 lg:p-5">
+                  <h3
+                    className={`${cormorant.className} text-2xl font-semibold`}
+                  >
+                    {hotel.name}
+                  </h3>
+
+                  <p className="mt-1 flex items-center gap-2 text-sm text-[var(--foreground)]/60">
+                    <MapPin size={15} className="text-[var(--primary)]" />
+                    {hotel.location}
+                  </p>
+
+                  <div className="mt-4 flex items-center justify-between gap-2">
+                    {/* Rating */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-base tracking-wide text-[var(--primary)]">
+                        {"★".repeat(Math.floor(hotel.rating))}
+                        <span className="text-[var(--foreground)]/20">
+                          {"★".repeat(5 - Math.floor(hotel.rating))}
+                        </span>
+                      </span>
+
+                      <span className="text-xs font-medium text-[var(--foreground)]/60">
+                        {hotel.rating}
+                      </span>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-right">
+                      <p
+                        className={`${cormorant.className} text-2xl font-semibold`}
+                      >
+                        ₹{hotel.price.toLocaleString("en-IN")}
+                      </p>
+                      <p className="text-[10px] text-[var(--foreground)]/50">
+                        Per night
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          {/* Promotional Card */}
+          <div className="relative flex min-h-[350px] flex-col overflow-hidden rounded-3xl lg:rounded-[35px] bg-[var(--primary)] p-7 lg:p-8 text-white shadow-lg transition-all duration-500">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
+              Your next getaway
+            </p>
+
+            <h3
+              className={`${cormorant.className} mt-5 text-4xl lg:text-5xl font-semibold leading-tight`}
+            >
+              Find Your Perfect Stay
+            </h3>
+
+            <p className="mt-5 max-w-[220px] text-sm sm:text-base leading-relaxed text-white/85">
+              Discover beautiful destinations and handpicked places to stay.
+            </p>
+
+            {/* Decorative Background */}
+            <div className="pointer-events-none absolute -bottom-12 -left-8 text-[180px] text-white/[0.08]">
+              ✦
+            </div>
+
+            {/* Explore Button */}
+            <a
+              className="absolute bottom-7 right-7 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-full bg-white text-[var(--primary)] shadow-md transition-transform duration-300 hover:scale-110"
+              aria-label="Explore all hotels"
+            >
+              <ArrowUpRight size={27} />
+            </a>
           </div>
         </div>
       </section>
