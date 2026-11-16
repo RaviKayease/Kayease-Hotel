@@ -37,9 +37,9 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full bg-[var(--background)] px-4 py-8 transition-colors duration-500 sm:px-6 lg:px-10 lg:py-10 mt-5">
+    <footer className="w-full bg-[var(--background)] py-8 transition-colors duration-500 lg:py-10 mt-5">
       {/* Main Footer Container */}
-      <div className="relative mx-auto max-w-[1450px] overflow-hidden rounded-[22px] border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
+      <div className="relative  overflow-hidden rounded-4xl border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
         {/* Decorative Leaf Image */}
         <div className="pointer-events-none absolute -right-5 -top-4 z-0 h-[300px] w-[225px] sm:-right-4 sm:-top-5 sm:h-[370px] sm:w-[278px] lg:h-[400px] lg:w-[300px]">
           <Image

@@ -6,6 +6,7 @@
   --surface: #f5f2ef;
   --foreground: #332c26;
   --primary: #b8754d;
+   --editorial-background: #d5cec6;
   --border: #d0ccca;
   --glass: 255 255 255;
   --glass-border: 255 255 255;
@@ -17,6 +18,7 @@
   --surface: #f5f2ef;
   --foreground: #332c26;
   --primary: #b8754d;
+   --editorial-background: #d5cec6;
   --border: #d0ccca;
   --glass: 255 255 255;
   --glass-border: 255 255 255;
@@ -28,6 +30,7 @@
   --surface: #f7f9fc;
   --foreground: #26364d;
   --primary: #4776c7;
+   --editorial-background: #d9e2ef;
   --border: #cbd5e5;
   --glass: 235 243 255;
   --glass-border: 210 225 255;
@@ -39,6 +42,7 @@
   --surface: #f4f7f2;
   --foreground: #293b2c;
   --primary: #64866a;
+   --editorial-background: #d5e0d3;
   --border: #cbd7ca;
   --glass: 239 247 235;
   --glass-border: 210 225 205;
@@ -50,6 +54,7 @@
   --surface: #f7f3fa;
   --foreground: #382c46;
   --primary: #8865b5;
+   --editorial-background: #ded4e8;
   --border: #d6cbe2;
   --glass: 247 239 255;
   --glass-border: 225 210 245;
@@ -61,6 +66,7 @@
   --surface: #fff6f5;
   --foreground: #493136;
   --primary: #c36c78;
+   --editorial-background: #ead5d8;
   --border: #e2cdd0;
   --glass: 255 239 241;
   --glass-border: 245 215 220;
@@ -72,12 +78,27 @@
   --surface: #2d2925;
   --foreground: #f5efe6;
   --primary: #d6a675;
+   --editorial-background: #302a25;
   --border: #49413a;
-
-  /* Light champagne glass */
   --glass: 248 240 228;
   --glass-border: 255 255 255;
   --glass-text: 55 43 34;
+}
+
+.editorial-showcase {
+  background:
+    radial-gradient(
+      ellipse at 85% 15%,
+      color-mix(in srgb, var(--primary) 9%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      var(--editorial-background) 0%,
+      var(--background) 100%
+    );
+
+  transition: background 0.5s ease;
 }
 
 @theme inline {
