@@ -8,6 +8,8 @@ import {
   Users,
   ArrowUpRight,
   Search,
+  Star,
+  Sparkles,
 } from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
@@ -56,6 +58,41 @@ const featuredHotels = [
     category: "Luxury Hotels",
     price: 6000,
     rating: 4.7,
+    image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
+  },
+];
+
+const editorialHotels = [
+  {
+    id: 1,
+    name: "The Heritage Palace",
+    location: "Jaipur, India",
+    price: 8500,
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900",
+  },
+  {
+    id: 2,
+    name: "The White Courtyard",
+    location: "Udaipur, India",
+    price: 9200,
+    rating: 4,
+    image: "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=900",
+  },
+  {
+    id: 3,
+    name: "Palm Beach Retreat",
+    location: "Goa, India",
+    price: 6500,
+    rating: 4,
+    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
+  },
+  {
+    id: 4,
+    name: "Mountain View Lodge",
+    location: "Manali, India",
+    price: 7200,
+    rating: 5,
     image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
   },
 ];
@@ -919,6 +956,405 @@ const HomePage = () => {
             >
               <ArrowUpRight size={27} />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Exclusive Hotel Collection */}
+      <section className="w-full overflow-hidden bg-[var(--background)] px-4 py-16 text-[var(--foreground)] transition-colors duration-500 sm:px-6 lg:px-10 lg:py-15">
+        <div className="mx-auto max-w-[1500px]">
+          {/* Section Heading */}
+          <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)] sm:text-xs">
+                Curated for your comfort
+              </p>
+
+              <h2
+                className={`${cormorant.className} max-w-2xl text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl`}
+              >
+                Stays that make
+                <br />
+                <span className="italic text-[var(--primary)]">
+                  every moment special.
+                </span>
+              </h2>
+            </div>
+
+            <p className="max-w-sm text-sm leading-relaxed text-[var(--foreground)]/60 lg:pb-2">
+              From peaceful retreats to remarkable destinations, discover
+              handpicked stays designed to make your journey unforgettable.
+            </p>
+          </div>
+
+          {/* Featured Hotel */}
+          {editorialHotels.length > 0 && (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
+              {/* Main Featured Image */}
+              <div className="group relative min-h-[420px] overflow-hidden rounded-[28px] sm:min-h-[520px] lg:col-span-8 lg:min-h-[580px] lg:rounded-[36px]">
+                <img
+                  src={editorialHotels[0].image}
+                  alt={editorialHotels[0].name}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/10" />
+
+                {/* Top Label */}
+                <div className="absolute left-5 top-5 sm:left-8 sm:top-8">
+                  <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                    Featured Stay
+                  </span>
+                </div>
+
+                {/* Featured Hotel Details */}
+                <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-5 text-white sm:flex-row sm:items-end sm:justify-between sm:p-8">
+                  <div>
+                    <p className="mb-2 flex items-center gap-2 text-xs text-white/75">
+                      <MapPin size={14} />
+                      {editorialHotels[0].location}
+                    </p>
+
+                    <h3
+                      className={`${cormorant.className} text-4xl font-medium sm:text-5xl lg:text-6xl`}
+                    >
+                      {editorialHotels[0].name}
+                    </h3>
+
+                    <div className="mt-3 flex items-center gap-2 text-sm text-white/80">
+                      <span className="tracking-wider text-amber-300">
+                        {"★".repeat(Math.floor(editorialHotels[0].rating))}
+                      </span>
+                      <span>{editorialHotels[0].rating} / 5</span>
+                    </div>
+                  </div>
+
+                  <div className="shrink-0 sm:text-right">
+                    <p className="text-xs text-white/65">Starting from</p>
+                    <p
+                      className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
+                    >
+                      ₹{editorialHotels[0].price.toLocaleString("en-IN")}
+                    </p>
+                    <p className="text-[10px] text-white/65">Per night</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Editorial Side Panel */}
+              <div className="flex flex-col justify-between rounded-[28px] border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
+                <div>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
+                    The Oravilles Collection
+                  </span>
+
+                  <h3
+                    className={`${cormorant.className} mt-5 text-4xl font-medium leading-tight sm:text-5xl`}
+                  >
+                    A little more
+                    <br />
+                    <span className="italic">than just a stay.</span>
+                  </h3>
+
+                  <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--foreground)]/60">
+                    Beautiful spaces, thoughtful details and destinations worth
+                    travelling for. Find a place that feels like it was made
+                    just for you.
+                  </p>
+                </div>
+
+                <div className="mt-10">
+                  <div className="mb-5 h-px w-full bg-[var(--border)]" />
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p
+                        className={`${cormorant.className} text-3xl font-medium`}
+                      >
+                        {editorialHotels.length.toString().padStart(2, "0")}
+                      </p>
+                      <p className="mt-1 text-[10px] uppercase tracking-widest text-[var(--foreground)]/50">
+                        Handpicked stays
+                      </p>
+                    </div>
+
+                    <div className="flex -space-x-3">
+                      {editorialHotels.slice(0, 3).map((hotel) => (
+                        <img
+                          key={hotel.id}
+                          src={hotel.image}
+                          alt=""
+                          className="h-11 w-11 rounded-full border-[3px] border-[var(--surface)] object-cover"
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <a
+                    href="/hotels"
+                    className="mt-7 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-4 text-sm font-medium text-white transition-all duration-300 hover:brightness-90"
+                  >
+                    Explore the collection
+                    <ArrowUpRight size={19} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* More Stays */}
+          {editorialHotels.length > 1 && (
+            <div className="mt-14 sm:mt-16">
+              <div className="mb-6 flex items-end justify-between">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
+                    More to discover
+                  </p>
+                  <h3
+                    className={`${cormorant.className} mt-1 text-3xl font-medium sm:text-4xl`}
+                  >
+                    Explore our stays
+                  </h3>
+                </div>
+
+                <span className="hidden text-xs text-[var(--foreground)]/50 sm:block">
+                  Discover somewhere extraordinary
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {editorialHotels.slice(1, 4).map((hotel, index) => (
+                  <div
+                    key={hotel.id}
+                    className="group flex gap-4 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-3 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl sm:flex-col sm:gap-0 sm:p-3"
+                  >
+                    {/* Image */}
+                    <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl sm:h-56 sm:w-full sm:rounded-[18px]">
+                      <img
+                        src={hotel.image}
+                        alt={hotel.name}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+
+                      <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-xs font-semibold text-black">
+                        0{index + 2}
+                      </span>
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex min-w-0 flex-1 flex-col justify-center py-1 sm:px-2 sm:pb-2 sm:pt-4">
+                      <h4
+                        className={`${cormorant.className} truncate text-2xl font-medium sm:text-3xl`}
+                      >
+                        {hotel.name}
+                      </h4>
+
+                      <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--foreground)]/55">
+                        <MapPin size={13} className="text-[var(--primary)]" />
+                        {hotel.location}
+                      </p>
+
+                      <div className="mt-3 flex items-end justify-between gap-2">
+                        <div>
+                          <p className="text-xs tracking-wider text-[var(--primary)]">
+                            {"★".repeat(Math.floor(hotel.rating))}
+                            <span className="text-[var(--foreground)]/20">
+                              {"★".repeat(5 - Math.floor(hotel.rating))}
+                            </span>
+                          </p>
+                          <p className="mt-1 text-[10px] text-[var(--foreground)]/50">
+                            {hotel.rating} / 5 rating
+                          </p>
+                        </div>
+
+                        <p
+                          className={`${cormorant.className} whitespace-nowrap text-2xl font-semibold`}
+                        >
+                          ₹{hotel.price.toLocaleString("en-IN")}
+                          <span className="ml-1 text-[10px] font-normal text-[var(--foreground)]/50">
+                            / night
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Editorial Destination Showcase */}
+      <section className="relative flex min-h-[850px] w-full flex-col items-center overflow-hidden bg-[var(--background)] px-5 py-16 text-[var(--foreground)] transition-colors duration-500 sm:min-h-[950px] sm:pt-20 lg:min-h-[900px] lg:py-15">
+        {/* Brand Title */}
+        <div className="relative z-20 mb-10 text-center sm:mb-12 lg:mb-14">
+          <p className="mb-12 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
+            A NEW WAY TO EXPERIENCE HOSPITALITY
+          </p>
+
+          <h2
+            className={`${cormorant.className} whitespace-nowrap text-[13vw] font-medium leading-[0.9] tracking-tight sm:text-[11vw] lg:text-[100px] xl:text-[115px]`}
+          >
+            Oravilles
+          </h2>
+        </div>
+
+        {/* Three Image Sections - Shared Top Position */}
+        <div className="relative flex w-full items-center justify-center lg:mt-6">
+          {/* Left Floating Destination Detail */}
+          <div className="pointer-events-none absolute left-[7%] top-1/2 z-10 hidden -translate-y-1/2 lg:block">
+            <svg
+              className="absolute -right-28 top-8 w-32 opacity-40"
+              viewBox="0 0 130 100"
+              fill="none"
+            >
+              <path
+                d="M0 90 C45 90 45 10 125 10"
+                stroke="var(--primary)"
+                strokeWidth="1"
+                strokeDasharray="3 5"
+              />
+              <circle cx="125" cy="10" r="3" fill="var(--primary)" />
+            </svg>
+
+            <div className="relative ml-8 h-24 w-24 overflow-hidden rounded-full border-[5px] border-[var(--surface)] shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=400"
+                alt="Beautiful luxury resort destination"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="absolute -right-2 top-1 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--primary)] shadow-md">
+              <MapPin size={16} />
+            </div>
+
+            <div className="mt-5 ml-2">
+              <p className="text-[9px] tracking-[0.3em] text-[var(--primary)]">
+                01 / DESTINATIONS
+              </p>
+
+              <p
+                className={`${cormorant.className} mt-1 text-2xl text-[var(--foreground)]`}
+              >
+                Find your escape
+              </p>
+
+              <div className="mt-2 h-px w-20 bg-[var(--primary)]/40" />
+
+              <p className="mt-2 text-[10px] tracking-wide text-[var(--foreground)]/55">
+                Places worth remembering
+              </p>
+            </div>
+          </div>
+
+          {/* Center Image + Tagline */}
+          <div className="relative z-10 flex shrink-0 flex-col items-center">
+            {/* Center Image */}
+            <div className="relative h-[300px] w-[220px] overflow-hidden rounded-t-[120px] rounded-b-sm border border-[var(--border)]/30 shadow-2xl sm:h-[370px] sm:w-[270px] sm:rounded-t-[145px] lg:h-[400px] lg:w-[290px]">
+              <img
+                src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=900"
+                alt="Luxury boutique hotel surrounded by nature"
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10" />
+            </div>
+
+            {/* Tagline Below Image */}
+            <div className="mt-6 flex items-center gap-3">
+              <span className="h-px w-10 bg-[var(--primary)]/50" />
+
+              <span className="text-[9px] tracking-[0.3em] text-[var(--foreground)]/55">
+                THE ART OF HOSPITALITY
+              </span>
+
+              <span className="h-px w-10 bg-[var(--primary)]/50" />
+            </div>
+          </div>
+
+          {/* Right Floating Hotel Detail */}
+          <div className="pointer-events-none absolute right-[7%] top-1/2 z-10 hidden -translate-y-1/2 lg:block">
+            <svg
+              className="absolute -left-28 top-10 w-32 opacity-40"
+              viewBox="0 0 130 100"
+              fill="none"
+            >
+              <path
+                d="M130 90 C85 90 85 10 5 10"
+                stroke="var(--primary)"
+                strokeWidth="1"
+                strokeDasharray="3 5"
+              />
+              <circle cx="5" cy="10" r="3" fill="var(--primary)" />
+            </svg>
+
+            <div className="mb-5 ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-lg">
+              <Sparkles size={17} />
+            </div>
+
+            <div className="w-60 rounded-2xl border border-[var(--border)]/70 bg-[var(--surface)]/80 p-3 shadow-xl backdrop-blur-xl">
+              <div className="flex items-center gap-3">
+                <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400"
+                    alt="Luxury hotel room"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+
+                <div>
+                  <p className="text-[9px] tracking-[0.2em] text-[var(--primary)]">
+                    GUEST FAVOURITE
+                  </p>
+
+                  <p
+                    className={`${cormorant.className} text-xl text-[var(--foreground)]`}
+                  >
+                    Exceptional stays
+                  </p>
+
+                  <div className="flex items-center gap-1 text-[10px] text-[var(--primary)]">
+                    <Star size={11} fill="currentColor" />
+                    <span>4.9</span>
+                    <span className="text-[var(--foreground)]/45">
+                      Guest rating
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="my-3 h-px bg-[var(--border)]" />
+
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-[var(--foreground)]/55">
+                  Your next getaway
+                </span>
+
+                <span className="text-xs font-medium text-[var(--primary)]">
+                  Explore <ArrowUpRight size={12} className="inline" />
+                </span>
+              </div>
+            </div>
+
+            <p className="mt-4 text-right text-[9px] tracking-[0.25em] text-[var(--foreground)]/50">
+              STAYS • EXPERIENCES • MEMORIES
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Tagline */}
+        <div className="absolute inset-x-0 bottom-16 z-20 flex flex-col items-center px-5 sm:bottom-10">
+          <div className="flex w-full max-w-[650px] items-center justify-between gap-3">
+            {["Discover", "Stay", "Relax", "Repeat"].map((word, index) => (
+              <span
+                key={word}
+                className={`${index % 2 === 0 ? "not-italic" : "italic"} ${cormorant.className} text-base font-medium tracking-wide sm:text-xl lg:text-2xl`}
+              >
+                {word}
+              </span>
+            ))}
           </div>
         </div>
       </section>
