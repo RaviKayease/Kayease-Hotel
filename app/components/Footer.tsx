@@ -6,6 +6,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import DecorativeLeaf from "@/public/FooterImage/image.png";
 import Image from "next/image";
 import Logo from "./Logo";
+import { BRAND_NAME } from "./brand";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -172,8 +173,8 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="relative z-10 flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-14">
-          <p className="text-[9px] tracking-wide text-[var(--foreground)]/55 sm:text-[10px]">
-            © {currentYear} Oravilles. All rights reserved.
+          <p className="text-[9px] tracking-wide text-[#aaa69c] sm:text-[10px]">
+            © {currentYear} {BRAND_NAME}. All rights reserved.
           </p>
 
           <div className="flex items-center gap-3 text-[9px] text-[#aaa69c] sm:text-[10px]">

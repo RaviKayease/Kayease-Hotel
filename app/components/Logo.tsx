@@ -1,14 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { Cormorant_Garamond } from "next/font/google";
+import { BRAND_NAME } from "./brand";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500"],
 });
 
-const Logo = ({ name = "Oravilles", variant = "default" }) => {
-  const brandName = name.trim() || "Oravilles";
+const Logo = ({ name = BRAND_NAME, variant = "default" }) => {
+  const brandName = name.trim() || BRAND_NAME;
   const isFooter = variant === "footer";
 
   return (
