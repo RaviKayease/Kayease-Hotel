@@ -8,6 +8,8 @@ import {
   Users,
   ArrowUpRight,
   Search,
+  Heart,
+  Star,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -73,7 +75,7 @@ const editorialHotels = [
   {
     id: 2,
     name: "The White Courtyard",
-    location: "Udaipur, India",
+    location: "Kyoto, Japan",
     price: 9200,
     rating: 4,
     image: "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=900",
@@ -81,7 +83,7 @@ const editorialHotels = [
   {
     id: 3,
     name: "Palm Beach Retreat",
-    location: "Goa, India",
+    location: "Venice, Italy",
     price: 6500,
     rating: 4,
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
@@ -89,7 +91,7 @@ const editorialHotels = [
   {
     id: 4,
     name: "Mountain View Lodge",
-    location: "Manali, India",
+    location: "Canberra, Australia",
     price: 7200,
     rating: 5,
     image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
@@ -171,6 +173,8 @@ const HomePage = () => {
 
   const [activeSlide, setActiveSlide] = useState(0);
 
+  const [activeHotelTab, setActiveHotelTab] = useState("Featured");
+
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
 
@@ -232,6 +236,15 @@ const HomePage = () => {
   }, []);
 
   const currentSlide = editorialSlides[activeSlide];
+
+  const hotelTabs = ["Featured", "Japan", "Italy", "Australia"];
+
+  const filteredHotels =
+    activeHotelTab === "Featured"
+      ? editorialHotels
+      : editorialHotels.filter((hotel) =>
+          hotel.location.toLowerCase().includes(activeHotelTab.toLowerCase()),
+        );
 
   return (
     <div>
@@ -1023,10 +1036,6 @@ const HomePage = () => {
         {/* Section Heading */}
         <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)] sm:text-xs">
-              Curated for your comfort
-            </p>
-
             <h2
               className={`${cormorant.className} max-w-2xl text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl`}
             >
@@ -1037,11 +1046,6 @@ const HomePage = () => {
               </span>
             </h2>
           </div>
-
-          <p className="max-w-sm text-sm leading-relaxed text-[var(--foreground)]/60 lg:pb-2">
-            From peaceful retreats to remarkable destinations, discover
-            handpicked stays designed to make your journey unforgettable.
-          </p>
         </div>
 
         {/* Featured Hotel */}
@@ -1161,83 +1165,142 @@ const HomePage = () => {
 
         {/* More Stays */}
         {editorialHotels.length > 1 && (
-          <div className="mt-14 sm:mt-16">
-            <div className="mb-6 flex items-end justify-between">
-              <div>
-                <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                  More to discover
-                </p>
-                <h3
-                  className={`${cormorant.className} mt-1 text-3xl font-medium sm:text-4xl`}
-                >
-                  Explore our stays
-                </h3>
+          <>
+            {/* Trending Hotels Worldwide */}
+            <div className="mt-16 sm:mt-20">
+              {/* Section Header */}
+              <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3
+                    className={`${cormorant.className} mt-2 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
+                  >
+                    Top trending stays worldwide
+                  </h3>
+                </div>
+
+                <button className="group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
+                  View all stays
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
+                </button>
               </div>
 
-              <span className="hidden text-xs text-[var(--foreground)]/50 sm:block">
-                Discover somewhere extraordinary
-              </span>
-            </div>
+              {/* Destination Tabs */}
+              <div className="mb-6 flex items-center gap-7 overflow-x-auto border-b border-[var(--border)]/70 scrollbar-hide">
+                {hotelTabs.map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveHotelTab(tab)}
+                    className={`relative shrink-0 pb-3 text-xs font-medium transition-colors duration-300 ${
+                      activeHotelTab === tab
+                        ? "text-[var(--primary)]"
+                        : "text-[var(--foreground)]/50 hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    {tab}
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {editorialHotels.slice(1, 4).map((hotel, index) => (
-                <div
-                  key={hotel.id}
-                  className="group flex gap-4 rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-3 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl sm:flex-col sm:gap-0 sm:p-3"
-                >
-                  {/* Image */}
-                  <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl sm:h-56 sm:w-full sm:rounded-[18px]">
-                    <img
-                      src={hotel.image}
-                      alt={hotel.name}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    {activeHotelTab === tab && (
+                      <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[var(--primary)]" />
+                    )}
+                  </button>
+                ))}
+              </div>
 
-                    <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-xs font-semibold text-black">
-                      0{index + 2}
-                    </span>
-                  </div>
+              {/* Hotel Cards */}
+              <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+                {filteredHotels.slice(0, 4).map((hotel, index) => (
+                  <div key={hotel.id} className="group min-w-0 cursor-pointer">
+                    {/* Hotel Image */}
+                    <div className="relative h-[230px] w-full overflow-hidden rounded-xl bg-[var(--border)] sm:h-[190px] lg:h-[155px] xl:h-[185px]">
+                      <img
+                        src={hotel.image}
+                        alt={hotel.name}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
 
-                  {/* Details */}
-                  <div className="flex min-w-0 flex-1 flex-col justify-center py-1 sm:px-2 sm:pb-2 sm:pt-4">
-                    <h4
-                      className={`${cormorant.className} truncate text-2xl font-medium sm:text-3xl`}
-                    >
-                      {hotel.name}
-                    </h4>
+                      {/* Image Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
 
-                    <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--foreground)]/55">
-                      <MapPin size={13} className="text-[var(--primary)]" />
-                      {hotel.location}
-                    </p>
+                      {/* Featured Label */}
+                      {index === 0 && activeHotelTab === "Featured" && (
+                        <span className="absolute left-3 top-3 bg-[var(--surface)]/90 px-3 py-1.5 text-[9px] font-medium uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
+                          Popular stay
+                        </span>
+                      )}
 
-                    <div className="mt-3 flex items-end justify-between gap-2">
-                      <div>
-                        <p className="text-xs tracking-wider text-[var(--primary)]">
-                          {"★".repeat(Math.floor(hotel.rating))}
-                          <span className="text-[var(--foreground)]/20">
-                            {"★".repeat(5 - Math.floor(hotel.rating))}
-                          </span>
-                        </p>
-                        <p className="mt-1 text-[10px] text-[var(--foreground)]/50">
-                          {hotel.rating} / 5 rating
-                        </p>
+                      {/* Favourite Icon */}
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`Add ${hotel.name} to favourites`}
+                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-[#38302A] backdrop-blur-sm transition-transform hover:scale-110"
+                      >
+                        <Heart size={15} strokeWidth={1.5} />
+                      </button>
+                    </div>
+
+                    {/* Hotel Information */}
+                    <div className="pt-3">
+                      <h4
+                        className={`${cormorant.className} truncate text-[26px] font-semibold leading-tight text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)]`}
+                      >
+                        {hotel.name}
+                      </h4>
+
+                      {/* Location */}
+                      <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[var(--foreground)]/55">
+                        <MapPin
+                          size={12}
+                          className="shrink-0 text-[var(--primary)]"
+                        />
+                        <span className="truncate">{hotel.location}</span>
+                      </p>
+
+                      {/* Rating */}
+                      <div className="mt-2 flex items-center gap-1.5">
+                        <span className="flex items-center gap-1 text-[11px] text-[var(--primary)]">
+                          <Star size={12} fill="currentColor" />
+                          {hotel.rating}
+                        </span>
+
+                        <span className="text-[10px] text-[var(--foreground)]/40">
+                          / 5.0 Guest rating
+                        </span>
                       </div>
 
-                      <p
-                        className={`${cormorant.className} whitespace-nowrap text-2xl font-semibold`}
-                      >
-                        ₹{hotel.price.toLocaleString("en-IN")}
-                        <span className="ml-1 text-[10px] font-normal text-[var(--foreground)]/50">
+                      {/* Price */}
+                      <div className="mt-3 flex items-baseline gap-1.5">
+                        <span
+                          className={`${cormorant.className} text-[25px] font-semibold text-[var(--foreground)]`}
+                        >
+                          ₹{hotel.price.toLocaleString("en-IN")}
+                        </span>
+
+                        <span className="text-[10px] text-[var(--foreground)]/50">
                           / night
                         </span>
-                      </p>
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Empty State */}
+              {filteredHotels.length === 0 && (
+                <div className="py-12 text-center">
+                  <p
+                    className={`${cormorant.className} text-2xl text-[var(--foreground)]`}
+                  >
+                    No stays found
+                  </p>
+                  <p className="mt-2 text-xs text-[var(--foreground)]/50">
+                    Explore another destination.
+                  </p>
                 </div>
-              ))}
+              )}
             </div>
-          </div>
+          </>
         )}
       </section>
 
