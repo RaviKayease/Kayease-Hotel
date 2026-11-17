@@ -898,7 +898,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* Featured Hotels */}
       <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-16 lg:py-15 mt-10 transition-colors duration-500">
         {/* Heading */}
@@ -1026,7 +1025,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* Exclusive Hotel Collection */}
       <section className="w-full overflow-hidden bg-[var(--background)] py-16 text-[var(--foreground)] transition-colors duration-500 lg:py-15">
         {/* Section Heading */}
@@ -1297,7 +1295,6 @@ const HomePage = () => {
           </>
         )}
       </section>
-
       {/* Editorial Destination Showcase */}
       <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 py-10 text-[var(--foreground)] sm:py-12 lg:py-8">
         {/* Brand Title - Always Visible */}
@@ -1314,7 +1311,7 @@ const HomePage = () => {
         </div>
 
         {/* Editorial Slide */}
-        <div className="relative mx-auto grid w-full max-w-[1250px] grid-cols-1 items-center gap-10 px-5 lg:grid-cols-2 lg:gap-16">
+        <div className="relative grid w-full max-w-[1250px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left Content */}
           <div
             key={`content-${activeSlide}`}
@@ -1441,6 +1438,52 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      {/* Newsletter Section */}
+      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:py-28">
+        {/* Newsletter Content */}
+        <div className="max-w-[750px]">
+          {/* Main Heading */}
+          <h2 className={`${sectionHeadingClass} max-w-[700px]`}>
+            Beautiful stays, delivered
+            <span className="block">straight to your inbox.</span>
+          </h2>
+
+          {/* Newsletter Form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              // Connect your newsletter subscription API here.
+            }}
+            className="mt-16 flex w-full max-w-[650px] flex-col gap-0 sm:flex-row"
+          >
+            {/* Email Input */}
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Enter Email Address"
+              className="h-[54px] min-w-0 flex-1 border border-[var(--border)] bg-[var(--surface)] px-6 text-sm text-[var(--foreground)] outline-none transition-all duration-300 placeholder:text-[var(--foreground)]/40 focus:border-[var(--primary)] sm:h-[58px]"
+            />
+
+            {/* Subscribe Button */}
+            <button
+              type="submit"
+              className="group flex h-[54px] shrink-0 items-center justify-center gap-3 border border-[var(--primary)] bg-[var(--primary)] px-7 text-sm font-medium text-white transition-all duration-300 hover:brightness-110 sm:h-[58px]"
+            >
+              Subscribe
+              <ArrowUpRight
+                size={17}
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </button>
+          </form>
+
+          {/* Privacy Note */}
+          <p className="mt-4 text-[10px] leading-5 tracking-wide text-[var(--foreground)]/45 sm:text-xs">
+            Travel inspiration and exclusive offers, straight to your inbox.
+          </p>
         </div>
       </section>
     </div>
