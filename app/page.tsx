@@ -100,7 +100,6 @@ const editorialHotels = [
 
 const editorialSlides = [
   {
-    eyebrow: "YOUR PRIVATE ESCAPE",
     title: "A stay that feels",
     highlight: "like a beautiful escape.",
     description:
@@ -111,7 +110,6 @@ const editorialSlides = [
     caption: "Where moments become memories",
   },
   {
-    eyebrow: "OCEANFRONT LIVING",
     title: "Wake up where",
     highlight: "the ocean meets the sky.",
     description:
@@ -122,7 +120,6 @@ const editorialSlides = [
     caption: "A world beyond the ordinary",
   },
   {
-    eyebrow: "MOUNTAIN SERENITY",
     title: "Find peace",
     highlight: "above the ordinary.",
     description:
@@ -133,7 +130,6 @@ const editorialSlides = [
     caption: "A little closer to nature",
   },
   {
-    eyebrow: "TIMELESS ELEGANCE",
     title: "Experience",
     highlight: "the art of refined living.",
     description:
@@ -144,6 +140,8 @@ const editorialSlides = [
     caption: "Elegance in every detail",
   },
 ];
+
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
 const HomePage = () => {
   const [destination, setDestination] = useState("");
@@ -905,9 +903,7 @@ const HomePage = () => {
       <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-16 lg:py-15 mt-10 transition-colors duration-500">
         {/* Heading */}
         <div className="mb-12 text-center">
-          <h2
-            className={`${cormorant.className} text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-wide mb-14`}
-          >
+          <h2 className={`${sectionHeadingClass} mb-10`}>
             Discover Exceptional Stays
           </h2>
 
@@ -1036,9 +1032,7 @@ const HomePage = () => {
         {/* Section Heading */}
         <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h2
-              className={`${cormorant.className} max-w-2xl text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl`}
-            >
+            <h2 className={`${sectionHeadingClass} max-w-2xl`}>
               Stays that make
               <br />
               <span className="italic text-[var(--primary)]">
@@ -1106,7 +1100,7 @@ const HomePage = () => {
             <div className="flex flex-col justify-between rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
               <div>
                 <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                  The Oravilles Collection
+                  The {BRAND_NAME} Collection
                 </span>
 
                 <h3
@@ -1327,11 +1321,8 @@ const HomePage = () => {
             className="editorial-slide-content order-2 flex flex-col items-start lg:order-1"
           >
             {/* Heading */}
-            <h2
-              className={`${cormorant.className} max-w-[550px] text-5xl leading-[1.05] text-[var(--foreground)] sm:text-6xl lg:text-7xl`}
-            >
+            <h2 className={`${sectionHeadingClass} max-w-[550px]`}>
               {currentSlide.title}
-
               <span className="block italic text-[var(--primary)]">
                 {currentSlide.highlight}
               </span>
@@ -1399,7 +1390,6 @@ const HomePage = () => {
                     <div
                       key={index}
                       onClick={() => !isActive && setActiveSlide(index)}
-                      aria-label={`Show ${slide.eyebrow}`}
                       className={`editorial-stack-card absolute inset-0 overflow-hidden rounded-t-[250px] rounded-b-sm border ${
                         isActive
                           ? "z-10 border-white/40 shadow-[0_28px_65px_-20px_rgba(35,25,18,0.42)]"
@@ -1427,37 +1417,14 @@ const HomePage = () => {
                           {/* Cinematic Gradient */}
                           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/75" />
 
-                          {/* Top Details */}
-                          <div className="absolute left-6 right-6 top-7 flex items-center justify-between sm:left-7 sm:right-7">
-                            <span className="border border-white/40 bg-black/15 px-3 py-2 text-[8px] font-medium tracking-[0.22em] text-white backdrop-blur-sm">
-                              ORAVILLES
-                            </span>
-
-                            <span className="text-[9px] tracking-[0.2em] text-white/85">
-                              0{index + 1} / 0{editorialSlides.length}
-                            </span>
-                          </div>
-
                           {/* Bottom Editorial Caption */}
                           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                            <div className="mb-3 flex items-center gap-3">
-                              <span className="h-px w-7 bg-[var(--primary)]" />
-
-                              <p className="text-[9px] font-medium tracking-[0.3em] text-white/80">
-                                {slide.eyebrow}
-                              </p>
-                            </div>
-
                             <div className="flex items-end justify-between gap-3">
                               <p
                                 className={`${cormorant.className} max-w-[340px] text-3xl leading-[1.08] text-white sm:text-4xl`}
                               >
                                 {slide.caption}
                               </p>
-
-                              <span className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/50 text-white transition-all duration-300 hover:bg-white hover:text-black">
-                                <ArrowUpRight size={18} strokeWidth={1.3} />
-                              </span>
                             </div>
 
                             <div className="mt-5 h-px w-full bg-white/30" />
