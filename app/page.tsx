@@ -70,6 +70,7 @@ const editorialHotels = [
     location: "Jaipur, India",
     price: 8500,
     rating: 5,
+    description: "A royal escape filled with timeless elegance.",
     image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900",
   },
   {
@@ -78,6 +79,7 @@ const editorialHotels = [
     location: "Kyoto, Japan",
     price: 9200,
     rating: 4,
+    description: "A peaceful retreat inspired by Japanese tradition.",
     image: "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=900",
   },
   {
@@ -86,6 +88,7 @@ const editorialHotels = [
     location: "Venice, Italy",
     price: 6500,
     rating: 4,
+    description: "A relaxing getaway with Italian coastal charm.",
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
   },
   {
@@ -94,6 +97,7 @@ const editorialHotels = [
     location: "Canberra, Australia",
     price: 7200,
     rating: 5,
+    description: "A scenic mountain escape surrounded by nature.",
     image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
   },
 ];
@@ -1164,7 +1168,7 @@ const HomePage = () => {
               <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <h3
-                    className={`${cormorant.className} mt-2 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
+                    className={`${cormorant.className} mt-12 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
                   >
                     Top trending stays worldwide
                   </h3>
@@ -1201,11 +1205,11 @@ const HomePage = () => {
               </div>
 
               {/* Hotel Cards */}
-              <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
                 {filteredHotels.slice(0, 4).map((hotel, index) => (
                   <div key={hotel.id} className="group min-w-0 cursor-pointer">
                     {/* Hotel Image */}
-                    <div className="relative h-[230px] w-full overflow-hidden rounded-xl bg-[var(--border)] sm:h-[190px] lg:h-[155px] xl:h-[185px]">
+                    <div className="relative h-[240px] w-full overflow-hidden rounded-4xl bg-[var(--border)] sm:h-[210px] lg:h-[170px] xl:h-[195px]">
                       <img
                         src={hotel.image}
                         alt={hotel.name}
@@ -1213,11 +1217,11 @@ const HomePage = () => {
                       />
 
                       {/* Image Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" />
 
                       {/* Featured Label */}
                       {index === 0 && activeHotelTab === "Featured" && (
-                        <span className="absolute left-3 top-3 bg-[var(--surface)]/90 px-3 py-1.5 text-[9px] font-medium uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
+                        <span className="absolute left-3 top-3 rounded-full bg-[var(--surface)]/90 px-3.5 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
                           Popular stay
                         </span>
                       )}
@@ -1226,52 +1230,68 @@ const HomePage = () => {
                       <button
                         onClick={(e) => e.stopPropagation()}
                         aria-label={`Add ${hotel.name} to favourites`}
-                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-[#38302A] backdrop-blur-sm transition-transform hover:scale-110"
+                        className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#38302A] backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white"
                       >
-                        <Heart size={15} strokeWidth={1.5} />
+                        <Heart size={16} strokeWidth={1.5} />
                       </button>
                     </div>
 
                     {/* Hotel Information */}
-                    <div className="pt-3">
+                    <div className="pt-4 flex flex-col gap-2">
+                      {/* Hotel Name */}
                       <h4
-                        className={`${cormorant.className} truncate text-[26px] font-semibold leading-tight text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)]`}
+                        className={`${cormorant.className} truncate text-[32px] font-semibold leading-[1.1] text-[var(--foreground)] transition-colors duration-300 group-hover:text-[var(--primary)]`}
                       >
                         {hotel.name}
                       </h4>
 
-                      {/* Location */}
-                      <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[var(--foreground)]/55">
-                        <MapPin
-                          size={12}
-                          className="shrink-0 text-[var(--primary)]"
-                        />
-                        <span className="truncate">{hotel.location}</span>
+                      {/* Description */}
+                      <p className="line-clamp-2 text-[13px] leading-[1.7] text-[var(--foreground)]/65">
+                        {hotel.description}
                       </p>
 
-                      {/* Rating */}
-                      <div className="mt-2 flex items-center gap-1.5">
-                        <span className="flex items-center gap-1 text-[11px] text-[var(--primary)]">
-                          <Star size={12} fill="currentColor" />
-                          {hotel.rating}
-                        </span>
+                      {/* Location + Rating */}
+                      <div className="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                        <p className="flex min-w-0 items-center gap-1.5 text-[12px] font-medium text-[var(--foreground)]/60">
+                          <MapPin
+                            size={14}
+                            className="shrink-0 text-[var(--primary)]"
+                          />
+                          <span className="truncate">{hotel.location}</span>
+                        </p>
 
-                        <span className="text-[10px] text-[var(--foreground)]/40">
-                          / 5.0 Guest rating
-                        </span>
+                        <div className="flex shrink-0 items-center gap-1.5">
+                          <Star
+                            size={13}
+                            fill="currentColor"
+                            className="text-[var(--primary)]"
+                          />
+                          <span className="text-[12px] font-semibold text-[var(--foreground)]">
+                            {hotel.rating}
+                          </span>
+                          <span className="text-[10px] text-[var(--foreground)]/45">
+                            / 5.0
+                          </span>
+                        </div>
                       </div>
 
                       {/* Price */}
-                      <div className="mt-3 flex items-baseline gap-1.5">
-                        <span
-                          className={`${cormorant.className} text-[25px] font-semibold text-[var(--foreground)]`}
-                        >
-                          ₹{hotel.price.toLocaleString("en-IN")}
-                        </span>
-
-                        <span className="text-[10px] text-[var(--foreground)]/50">
-                          / night
-                        </span>
+                      <div className="flex items-end justify-between border-t border-[var(--border)] pt-3">
+                        <div>
+                          <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.15em] text-[var(--foreground)]/45">
+                            Starting from
+                          </p>
+                          <div className="flex items-baseline gap-1.5">
+                            <span
+                              className={`${cormorant.className} text-[29px] font-semibold leading-none text-[var(--foreground)]`}
+                            >
+                              ₹{hotel.price.toLocaleString("en-IN")}
+                            </span>
+                            <span className="text-[11px] text-[var(--foreground)]/50">
+                              / night
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
