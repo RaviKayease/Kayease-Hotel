@@ -6,7 +6,7 @@
   --surface: #f5f2ef;
   --foreground: #332c26;
   --primary: #b8754d;
-   --editorial-background: #d5cec6;
+  --editorial-background: #d5cec6;
   --border: #d0ccca;
   --glass: 255 255 255;
   --glass-border: 255 255 255;
@@ -18,7 +18,7 @@
   --surface: #f5f2ef;
   --foreground: #332c26;
   --primary: #b8754d;
-   --editorial-background: #d5cec6;
+  --editorial-background: #d5cec6;
   --border: #d0ccca;
   --glass: 255 255 255;
   --glass-border: 255 255 255;
@@ -30,7 +30,7 @@
   --surface: #f7f9fc;
   --foreground: #26364d;
   --primary: #4776c7;
-   --editorial-background: #d9e2ef;
+  --editorial-background: #d9e2ef;
   --border: #cbd5e5;
   --glass: 235 243 255;
   --glass-border: 210 225 255;
@@ -42,7 +42,7 @@
   --surface: #f4f7f2;
   --foreground: #293b2c;
   --primary: #64866a;
-   --editorial-background: #d5e0d3;
+  --editorial-background: #d5e0d3;
   --border: #cbd7ca;
   --glass: 239 247 235;
   --glass-border: 210 225 205;
@@ -54,7 +54,7 @@
   --surface: #f7f3fa;
   --foreground: #382c46;
   --primary: #8865b5;
-   --editorial-background: #ded4e8;
+  --editorial-background: #ded4e8;
   --border: #d6cbe2;
   --glass: 247 239 255;
   --glass-border: 225 210 245;
@@ -66,7 +66,7 @@
   --surface: #fff6f5;
   --foreground: #493136;
   --primary: #c36c78;
-   --editorial-background: #ead5d8;
+  --editorial-background: #ead5d8;
   --border: #e2cdd0;
   --glass: 255 239 241;
   --glass-border: 245 215 220;
@@ -78,7 +78,7 @@
   --surface: #2d2925;
   --foreground: #f5efe6;
   --primary: #d6a675;
-   --editorial-background: #302a25;
+  --editorial-background: #302a25;
   --border: #49413a;
   --glass: 248 240 228;
   --glass-border: 255 255 255;
@@ -249,4 +249,23 @@ html::-webkit-scrollbar {
     animation: none;
     transition: none;
   }
+}
+
+/* Theme Adaptive Glass Navbar */
+.nav-glass {
+  background: rgba(var(--glass), 0.72);
+
+  backdrop-filter: blur(5px) saturate(140%);
+  -webkit-backdrop-filter: blur(5px) saturate(140%);
+
+  border-bottom: 1px solid rgba(var(--glass-border), 0.25);
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(var(--glass-border), 0.18);
+
+  transition:
+    background 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease;
 }

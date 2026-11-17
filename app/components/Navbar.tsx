@@ -17,51 +17,61 @@ const Navbar = () => {
     <>
       {/* Desktop Navbar */}
       <div
-        className={` flex justify-between items-center text-sm mb-4 text-[var(--foreground)] transition-colors duration-300 ${isMenuOpen ? "hidden" : ""}`}
+        className={`sticky top-0 z-40 w-full
+    bg-[var(--background)]/85
+    backdrop-blur-xl
+    border-b-[0.5px] border-[var(--primary)]/20
+    text-sm text-white
+    transition-all duration-300
+    ${isMenuOpen ? "hidden" : ""}`}
       >
-        <Logo />
+        <div className="mx-auto max-w-[1350px] px-5 sm:px-7 py-3 flex justify-between items-center">
+          <Logo />
 
-        {/* Page Navgation Buttons */}
-        <div className="hidden lg:flex md:gap-[4vw] font-medium">
-          {[
-            { name: "Rooms", href: "/rooms" },
-            { name: "About Us", href: "/about-us" },
-            { name: "Contact Us", href: "/contact-us" },
-            { name: "Blogs", href: "/blogs" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="flex flex-col items-center gap-1"
-            >
-              {item.name}
-
-              <span
-                className={`bg-[var(--primary)] h-[2px] w-1/2 rounded-md transition-opacity ${
-                  pathname === item.href ? "opacity-100" : "opacity-0"
+          {/* Page Navgation Buttons */}
+          <div className="hidden lg:flex md:gap-[4vw] font-medium text-[var(--foreground)]">
+            {[
+              { name: "Rooms", href: "/rooms" },
+              { name: "About Us", href: "/about-us" },
+              { name: "Contact Us", href: "/contact-us" },
+              { name: "Blogs", href: "/blogs" },
+            ].map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex flex-col items-center gap-1 transition-colors duration-300 hover:text-[var(--primary)] ${
+                  pathname === item.href ? "text-[var(--primary)]" : ""
                 }`}
-              />
-            </Link>
-          ))}
-        </div>
+              >
+                {item.name}
 
-        <div className="flex gap-2">
-          {/* Change Theme Button */}
-          <ChangeTheme />
+                <span
+                  className={`bg-[var(--primary)] h-[2px] w-1/2 rounded-md transition-all duration-300 ${
+                    pathname === item.href ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </Link>
+            ))}
+          </div>
 
-          {/* Login Button */}
-          <button className="hidden lg:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
-            Login
-          </button>
+          <div className="flex gap-2">
+            {/* Change Theme Button */}
+            <ChangeTheme />
 
-          {/* Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="lg:hidden"
-            aria-label="Open menu"
-          >
-            <Menu size={20} strokeWidth={1.5} />
-          </button>
+            {/* Login Button */}
+            <button className="hidden lg:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
+              Login
+            </button>
+
+            {/* Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="lg:hidden"
+              aria-label="Open menu"
+            >
+              <Menu size={20} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </div>
 

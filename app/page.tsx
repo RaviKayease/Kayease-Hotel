@@ -42,6 +42,7 @@ const featuredHotels = [
     price: 8500,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
+    description: "Relax by the ocean in a luxurious beachfront escape.",
   },
   {
     id: 2,
@@ -51,6 +52,7 @@ const featuredHotels = [
     price: 5200,
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900",
+    description: "Experience royal charm and timeless Rajasthani elegance.",
   },
   {
     id: 3,
@@ -59,7 +61,9 @@ const featuredHotels = [
     category: "Luxury Hotels",
     price: 6000,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?w=900",
+    image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=900",
+    description:
+      "Unwind amid stunning mountain views and peaceful surroundings.",
   },
 ];
 
@@ -957,12 +961,16 @@ const HomePage = () => {
                 {/* Hotel Details */}
                 <div className="p-4 lg:p-5">
                   <h3
-                    className={`${cormorant.className} text-2xl font-semibold`}
+                    className={`${cormorant.className} text-[32px] truncate font-semibold leading-none`}
                   >
                     {hotel.name}
                   </h3>
 
-                  <p className="mt-1 flex items-center gap-2 text-sm text-[var(--foreground)]/60">
+                  <p className="mt-1 flex items-center gap-2 text-[13px] text-[var(--foreground)]/60">
+                    {hotel.description}
+                  </p>
+
+                  <p className="mt-1 flex items-center gap-2 text-[12px] text-[var(--foreground)]/60">
                     <MapPin size={15} className="text-[var(--primary)]" />
                     {hotel.location}
                   </p>

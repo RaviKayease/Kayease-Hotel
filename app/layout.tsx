@@ -39,8 +39,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
 
       <body>
+        <Navbar />
         <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-2 md:py-4">
-          <Navbar />
           {children}
           <Footer />
         </div>
