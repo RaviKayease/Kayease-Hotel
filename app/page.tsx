@@ -1296,7 +1296,7 @@ const HomePage = () => {
         )}
       </section>
       {/* Editorial Destination Showcase */}
-      <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 py-10 text-[var(--foreground)] sm:py-12 lg:py-8">
+      <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 pt-10 text-[var(--foreground)]">
         {/* Brand Title - Always Visible */}
         <div className="relative z-20 mx-auto mb-8 w-full max-w-[1400px] px-5 text-center sm:mb-10 lg:mb-8">
           <p className="mb-5 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
@@ -1311,7 +1311,7 @@ const HomePage = () => {
         </div>
 
         {/* Editorial Slide */}
-        <div className="relative grid w-full max-w-[1250px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="relative grid w-full px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left Content */}
           <div
             key={`content-${activeSlide}`}
@@ -1348,22 +1348,13 @@ const HomePage = () => {
 
           {/* Right Image - Premium Stacked Card Deck */}
           <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-            <div className="relative w-full max-w-[460px]">
+            <div className="relative w-full max-w-[560px]">
               {/* Decorative Backplate - Outer Arch */}
               <div
-                className="absolute -right-5 -top-5 h-[95%] w-[95%] rounded-t-[250px] border border-[var(--primary)]/30 sm:-right-7 sm:-top-5"
+                className="absolute -right-5 -top-5 h-[95%] w-[95%] rounded-t-[280px] border border-[var(--primary)]/30 sm:-right-7 sm:-top-5"
                 style={{
                   background: "var(--editorial-background)",
                   transform: "rotate(11deg)",
-                }}
-              />
-
-              {/* Decorative Backplate - Inner Arch */}
-              <div
-                className="absolute -right-2 -top-2 h-[99%] w-[99%] rounded-t-[250px] border border-[var(--primary)]/20"
-                style={{
-                  background: "var(--surface)",
-                  transform: "rotate(1.5deg)",
                 }}
               />
 
@@ -1387,7 +1378,7 @@ const HomePage = () => {
                     <div
                       key={index}
                       onClick={() => !isActive && setActiveSlide(index)}
-                      className={`editorial-stack-card absolute inset-0 overflow-hidden rounded-t-[250px] rounded-b-sm border ${
+                      className={`editorial-stack-card absolute inset-0 overflow-hidden rounded-t-[280px] rounded-b-sm border ${
                         isActive
                           ? "z-10 border-white/40 shadow-[0_28px_65px_-20px_rgba(35,25,18,0.42)]"
                           : "border-white/30 shadow-[0_12px_30px_-15px_rgba(35,25,18,0.3)]"
