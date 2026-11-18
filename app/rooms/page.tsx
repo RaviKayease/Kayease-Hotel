@@ -210,7 +210,7 @@ const RoomsPage = () => {
   const [activeLocation, setActiveLocation] = useState("All Locations");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
-  const locationRef = useRef(null);
+  const locationRef = useRef<HTMLDivElement | null>(null);
 
   const filteredRooms = rooms.filter((room) => {
     const matchesCategory =
@@ -231,8 +231,11 @@ const RoomsPage = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (locationRef.current && !locationRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        locationRef.current &&
+        !locationRef.current.contains(event.target as Node)
+      ) {
         setIsLocationOpen(false);
       }
     };
