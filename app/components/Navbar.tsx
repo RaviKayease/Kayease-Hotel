@@ -14,10 +14,10 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <div>
+    <div className="sticky top-0 z-40 ">
       {/* Desktop Navbar */}
       <div
-        className={`sticky top-0 z-40 w-full
+        className={`w-full
     bg-[var(--background)]/85
     backdrop-blur-xl
     border-b-[0.5px] border-[var(--primary)]/20

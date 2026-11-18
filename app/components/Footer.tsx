@@ -37,7 +37,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full bg-[var(--background)] pb-8 transition-colors duration-500 lg:pb-10">
+    <footer className="w-full bg-[var(--background)] pb-8 transition-colors duration-500 lg:pt-10">
       {/* Main Footer Container */}
       <div className="relative overflow-hidden rounded-4xl border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
         {/* Decorative Leaf Image */}

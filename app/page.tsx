@@ -10,6 +10,7 @@ import {
   Search,
   Heart,
   Star,
+  Sparkles,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -253,7 +254,7 @@ const HomePage = () => {
         );
 
   return (
-    <div>
+    <main>
       {/* Hero Section */}
       <section className="flex flex-col items-center pt-10 lg:pt-15 pb-[calc(25vh+2rem)] sm:pb-[calc(35vh+2rem)] md:pb-[calc(45vh+2rem)] lg:pb-[calc(55vh+2rem)]">
         <p
@@ -1466,7 +1467,7 @@ const HomePage = () => {
         </div>
       </section>
       {/* Newsletter Section */}
-      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-8 lg:py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:py-28">
+      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-8 lg:py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:pt-28 lg:pb-18">
         {/* Newsletter Content */}
         <div className="max-w-[750px]">
           {/* Main Heading */}
@@ -1511,7 +1512,7 @@ const HomePage = () => {
           </p>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 
