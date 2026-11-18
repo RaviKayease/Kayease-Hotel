@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Cormorant_Garamond } from "next/font/google";
 import {
   ArrowDown,
   ArrowUpRight,
   BedDouble,
-  Check,
   Heart,
   MapPin,
-  Maximize2,
   Sparkles,
   Star,
   Users,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
@@ -22,17 +22,93 @@ const cormorant = Cormorant_Garamond({
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
-const roomCategories = ["All Rooms", "Deluxe Rooms", "Suites", "Luxury Rooms"];
+const roomCategories = [
+  "All Rooms",
+  "Deluxe Rooms",
+  "Premium Rooms",
+  "Suites",
+  "Luxury Rooms",
+];
 
 const rooms = [
+  // ================ DELUXE ROOMS ================
   {
     id: 1,
+    name: "The Garden Deluxe",
+    category: "Deluxe Rooms",
+    location: "Jaipur",
+    description:
+      "A beautifully appointed bedroom with a plush king bed, soft neutral tones and a peaceful atmosphere.",
+    image:
+      "https://www.velora-hotel.com/elegant-hotel-room-with-luxury-bedding.jpg",
+    price: 7500,
+    size: "420 sq.ft.",
+    guests: 2,
+    beds: "King Bed",
+    tag: "Garden View",
+    rating: 4.8,
+  },
+  {
+    id: 2,
+    name: "The Heritage Deluxe",
+    category: "Deluxe Rooms",
+    location: "Udaipur",
+    description:
+      "A refined guest room featuring elegant furnishings, warm textures and a comfortable king-size bed.",
+    image:
+      "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2019/09/05/1507/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.jpg/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.16x9.jpg?imwidth=2560",
+    price: 7900,
+    size: "430 sq.ft.",
+    guests: 2,
+    beds: "King Bed",
+    tag: "Heritage Charm",
+    rating: 4.9,
+  },
+
+  // ================ PREMIUM ROOMS ================
+  {
+    id: 3,
+    name: "The Premium Retreat",
+    category: "Premium Rooms",
+    location: "Jaipur",
+    description:
+      "Relax in a spacious bedroom with sophisticated interiors, a luxurious king bed and elegant details.",
+    image:
+      "https://www.gizapalace.com/images/site-specific/accommodation/rooms/deluxe-adapted/gallery/adapted-deluxe-king-S360-desktop.webp",
+    price: 9500,
+    size: "480 sq.ft.",
+    guests: 2,
+    beds: "King Bed",
+    tag: "Premium Choice",
+    rating: 4.9,
+  },
+  {
+    id: 4,
+    name: "The Executive Premium",
+    category: "Premium Rooms",
+    location: "Udaipur",
+    description:
+      "An inviting bedroom with a beautifully dressed king bed, elegant lighting and a relaxing seating corner.",
+    image:
+      "https://media.alotea.com/the-st-regis-washington-dc-washington-cover.webp",
+    price: 11000,
+    size: "540 sq.ft.",
+    guests: 2,
+    beds: "King Bed",
+    tag: "Elegant Comfort",
+    rating: 4.8,
+  },
+
+  // ================ SUITES ================
+  {
+    id: 5,
     name: "The Heritage Suite",
     category: "Suites",
+    location: "Jaipur",
     description:
-      "A beautiful blend of timeless architecture, warm interiors and modern indulgence.",
+      "A spacious suite with a luxurious king bed, refined furnishings and a beautifully designed bedroom.",
     image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+      "https://static-new.lhw.com/HotelImages/Final/LW1325/lw1325_l2885084_720x450.jpg",
     price: 12500,
     size: "650 sq.ft.",
     guests: 3,
@@ -41,28 +117,32 @@ const rooms = [
     rating: 4.9,
   },
   {
-    id: 2,
-    name: "The Garden Deluxe",
-    category: "Deluxe Rooms",
+    id: 6,
+    name: "The Signature Suite",
+    category: "Suites",
+    location: "Udaipur",
     description:
-      "Wake up to peaceful garden views and enjoy a slower, more beautiful kind of living.",
+      "Enjoy an indulgent bedroom with premium bedding, generous space and sophisticated contemporary styling.",
     image:
-      "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=1200",
-    price: 7500,
-    size: "420 sq.ft.",
-    guests: 2,
-    beds: "Queen Bed",
-    tag: "Garden View",
-    rating: 4.8,
+      "https://www.americanexpress.com/content/dam/amex/en-au/credit-cards/membership-benefits/the-platinum-card/accor/You_might_also_like_Section_FHR_Mobile.png",
+    price: 16500,
+    size: "780 sq.ft.",
+    guests: 3,
+    beds: "King Bed",
+    tag: "Signature Stay",
+    rating: 5.0,
   },
+
+  // ================ LUXURY ROOMS ================
   {
-    id: 3,
+    id: 7,
     name: "The Royal Residence",
     category: "Luxury Rooms",
+    location: "Jaipur",
     description:
-      "An intimate sanctuary featuring refined details and exceptional comfort.",
+      "Experience exceptional comfort in a grand bedroom with a king-size bed, elegant furnishings and luxurious finishes.",
     image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200",
+      "https://toc.h-cdn.co/assets/16/27/4000x2657/1-credit-the-peninsula-new-york.jpg",
     price: 15800,
     size: "820 sq.ft.",
     guests: 4,
@@ -71,48 +151,19 @@ const rooms = [
     rating: 5.0,
   },
   {
-    id: 4,
-    name: "The Courtyard Room",
-    category: "Deluxe Rooms",
-    description:
-      "Thoughtfully designed spaces that bring together understated luxury and serenity.",
-    image:
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200",
-    price: 6800,
-    size: "380 sq.ft.",
-    guests: 2,
-    beds: "Queen Bed",
-    tag: "Peaceful Escape",
-    rating: 4.7,
-  },
-  {
-    id: 5,
-    name: "The Signature Suite",
-    category: "Suites",
-    description:
-      "A spacious retreat with elegant furnishings, beautiful textures and room to unwind.",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200",
-    price: 14500,
-    size: "720 sq.ft.",
-    guests: 3,
-    beds: "King Bed",
-    tag: "Signature Stay",
-    rating: 4.9,
-  },
-  {
-    id: 6,
-    name: "The Grand Escape",
+    id: 8,
+    name: "The Maharaja Retreat",
     category: "Luxury Rooms",
+    location: "Udaipur",
     description:
-      "Experience a little more space, privacy and effortless sophistication.",
+      "A magnificent bedroom with luxurious bedding, elegant furnishings and an atmosphere of timeless sophistication.",
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200",
-    price: 18000,
-    size: "900 sq.ft.",
+      "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+    price: 19500,
+    size: "950 sq.ft.",
     guests: 4,
     beds: "King Bed",
-    tag: "Premium",
+    tag: "Royal Living",
     rating: 5.0,
   },
 ];
@@ -151,14 +202,25 @@ const guestReviews = [
   },
 ];
 
+const roomLocations = ["All Locations", "Jaipur", "Udaipur", "Goa"];
+
 const RoomsPage = () => {
   const [activeCategory, setActiveCategory] = useState("All Rooms");
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [activeLocation, setActiveLocation] = useState("All Locations");
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
 
-  const filteredRooms =
-    activeCategory === "All Rooms"
-      ? rooms
-      : rooms.filter((room) => room.category === activeCategory);
+  const locationRef = useRef(null);
+
+  const filteredRooms = rooms.filter((room) => {
+    const matchesCategory =
+      activeCategory === "All Rooms" || room.category === activeCategory;
+
+    const matchesLocation =
+      activeLocation === "All Locations" || room.location === activeLocation;
+
+    return matchesCategory && matchesLocation;
+  });
 
   const toggleFavorite = (id: number) => {
     setFavorites((current) =>
@@ -167,6 +229,20 @@ const RoomsPage = () => {
         : [...current, id],
     );
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setIsLocationOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <main>
@@ -220,33 +296,90 @@ const RoomsPage = () => {
         className="mx-auto w-full max-w-[1500px] scroll-mt-24 px-5 pb-20 sm:px-8 sm:pb-28 lg:px-12 lg:pt-15"
       >
         {/* Heading */}
-
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className={`${sectionHeadingClass}`}>Explore our collection</h2>
+            <h2 className={`${sectionHeadingClass}`}>Find Your Perfect Stay</h2>
           </div>
         </div>
 
         {/* Filters */}
+        <div className="hide-scrollbar mt-10 flex justify-between gap-5 w-full border-b items-center border-[var(--border)] pb-4 sm:mt-12">
+          <div className="min-w-0 flex-1 overflow-hidden border-r border-[var(--border)] pr-5">
+            <div className="hide-scrollbar flex w-full gap-4 overflow-x-auto overscroll-x-contain whitespace-nowrap">
+              {roomCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`shrink-0 rounded-full px-5 py-3 text-[10px] font-medium transition-all duration-300 sm:px-7 sm:text-xs ${
+                    activeCategory === category
+                      ? "bg-[var(--primary)] text-white shadow-md"
+                      : "border border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        <div className="hide-scrollbar mt-10 flex w-full items-center gap-2 overflow-x-auto border-b border-[var(--border)] pb-4 sm:mt-12 sm:gap-4">
-          {roomCategories.map((category) => (
+          {/* Location Filter */}
+          <div className="relative shrink-0">
             <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`shrink-0 rounded-full px-5 py-3 text-[10px] font-medium transition-all duration-300 sm:px-7 sm:text-xs ${
-                activeCategory === category
-                  ? "bg-[var(--primary)] text-white shadow-md"
-                  : "border border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)] hover:text-[var(--primary)]"
-              }`}
+              onClick={() => setIsLocationOpen((prev) => !prev)}
+              className="flex min-w-[190px] items-center justify-between gap-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 transition-all duration-300 hover:border-[var(--primary)]"
             >
-              {category}
+              <div className="flex items-center gap-3">
+                <MapPin
+                  size={17}
+                  className="text-[var(--primary)] leading-none"
+                />
+
+                <div className="text-left">
+                  <p className="text-xs font-semibold text-[var(--foreground)]">
+                    {activeLocation}
+                  </p>
+                </div>
+              </div>
+
+              <ChevronDown
+                size={16}
+                className={`text-[var(--foreground)]/55 transition-transform duration-300 ${
+                  isLocationOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
-          ))}
+
+            {isLocationOpen && (
+              <div
+                ref={locationRef}
+                className="absolute right-0 top-full z-30 mt-2 w-full min-w-[190px] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-xl"
+              >
+                {roomLocations.map((location) => (
+                  <button
+                    key={location}
+                    onClick={() => {
+                      setActiveLocation(location);
+                      setIsLocationOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-xs transition-colors ${
+                      activeLocation === location
+                        ? "bg-[var(--primary)]/10 font-semibold text-[var(--primary)]"
+                        : "text-[var(--foreground)]/70 hover:bg-[var(--background)]"
+                    }`}
+                  >
+                    {location}
+
+                    {activeLocation === location && (
+                      <Check size={14} className="text-[var(--primary)]" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Room Cards */}
-
         <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-16">
           {filteredRooms.map((room, index) => (
             <article key={room.id} className="group min-w-0">
@@ -263,13 +396,11 @@ const RoomsPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" />
 
                 {/* Category */}
-
                 <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-[9px] font-medium uppercase tracking-wider text-white backdrop-blur-md">
                   {room.tag}
                 </span>
 
                 {/* Favourite */}
-
                 <button
                   onClick={() => toggleFavorite(room.id)}
                   aria-label={`Toggle favourite for ${room.name}`}
@@ -285,27 +416,18 @@ const RoomsPage = () => {
                     }
                   />
                 </button>
-
-                {/* Image Number */}
-
-                <span className="absolute bottom-4 right-5 text-[10px] tracking-[0.2em] text-white/80">
-                  {String(index + 1).padStart(2, "0")} /{" "}
-                  {String(filteredRooms.length).padStart(2, "0")}
-                </span>
               </div>
 
               {/* Details */}
-
               <div className="pt-5">
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex h-[105px] items-start justify-between gap-3">
                   <div className="min-w-0">
                     <h3
-                      className={`${cormorant.className} text-3xl font-medium leading-tight transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-4xl`}
+                      className={`${cormorant.className} line-clamp-2 text-3xl font-medium leading-tight transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-4xl`}
                     >
                       {room.name}
                     </h3>
-
-                    <p className="mt-2 max-w-sm text-xs leading-6 text-[var(--foreground)]/55">
+                    <p className="mt-2 line-clamp-2 max-w-sm text-xs leading-6 text-[var(--foreground)]/55">
                       {room.description}
                     </p>
                   </div>
@@ -323,26 +445,26 @@ const RoomsPage = () => {
                 </div>
 
                 {/* Room Features */}
+                <div className="mt-5 flex flex-wrap items-center justify-between border-b border-[var(--border)] pb-5 text-[10px] text-[var(--foreground)]/60">
+                  <div className="flex gap-x-4 gap-y-3">
+                    <span className="flex items-center gap-1.5">
+                      <Users size={14} className="text-[var(--primary)]" />
+                      {room.guests} Guests
+                    </span>
 
-                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-[var(--border)] pb-5 text-[10px] text-[var(--foreground)]/60">
-                  <span className="flex items-center gap-1.5">
-                    <Maximize2 size={14} className="text-[var(--primary)]" />
-                    {room.size}
-                  </span>
+                    <span className="flex items-center gap-1.5">
+                      <BedDouble size={14} className="text-[var(--primary)]" />
+                      {room.beds}
+                    </span>
+                  </div>
 
                   <span className="flex items-center gap-1.5">
-                    <Users size={14} className="text-[var(--primary)]" />
-                    {room.guests} Guests
-                  </span>
-
-                  <span className="flex items-center gap-1.5">
-                    <BedDouble size={14} className="text-[var(--primary)]" />
-                    {room.beds}
+                    <MapPin size={14} className="text-[var(--primary)]" />
+                    {room.location}
                   </span>
                 </div>
 
                 {/* Price + Action */}
-
                 <div className="flex items-end justify-between gap-3 pt-5">
                   <div>
                     <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--foreground)]/45">

@@ -1187,7 +1187,7 @@ const HomePage = () => {
                 </div>
 
                 <a
-                  href="/hotels"
+                  href="/rooms"
                   className="mt-5 lg:mt-7 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 lg:py-4 text-xs lg:text-sm font-medium text-white transition-all duration-300 hover:brightness-90"
                 >
                   Explore the collection
@@ -1213,13 +1213,13 @@ const HomePage = () => {
                   </h3>
                 </div>
 
-                <button className="group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
+                <a href="/rooms" className="group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
                   View all stays
                   <ArrowUpRight
                     size={15}
                     className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                   />
-                </button>
+                </a>
               </div>
 
               {/* Destination Tabs */}
