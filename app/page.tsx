@@ -10,7 +10,6 @@ import {
   Search,
   Heart,
   Star,
-  Sparkles,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -27,44 +26,115 @@ const destinations = [
   "Jaipur, India",
 ];
 
-const hotelCategories = [
-  "All Stays",
-  "Luxury Hotels",
-  "Resorts",
-  "Boutique Hotels",
+const experienceCategories = [
+  "Dining",
+  "Relaxation",
+  "Celebrations",
+  "Leisure",
 ];
 
-const featuredHotels = [
+const featuredExperiences = [
+  // ================= DINING =================
   {
     id: 1,
-    name: "Oceanfront Luxury Resort",
-    location: "Goa, India",
-    category: "Resorts",
-    price: 8500,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900",
-    description: "Relax by the ocean in a luxurious beachfront escape.",
+    name: "Fine Dining",
+    category: "Dining",
+    description: "An unforgettable culinary experience",
+    image:
+      "https://storage.googleapis.com/48877118-7272-4a4d-b302-0465d8aa4548/b66f827e-2e41-49b4-91be-a94026829d46/c683e234-b298-4994-b1f9-84b0d704e054.jpg",
   },
   {
     id: 2,
-    name: "The Heritage Boutique",
-    location: "Jaipur, India",
-    category: "Boutique Hotels",
-    price: 5200,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900",
-    description: "Experience royal charm and timeless Rajasthani elegance.",
+    name: "Private Dining",
+    category: "Dining",
+    description: "Enjoy an intimate meal in an elegant setting",
+    image:
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85",
   },
   {
     id: 3,
-    name: "Mountain Escape Retreat",
-    location: "Manali, India",
-    category: "Luxury Hotels",
-    price: 6000,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=900",
-    description:
-      "Unwind amid stunning mountain views and peaceful surroundings.",
+    name: "Breakfast Experience",
+    category: "Dining",
+    description: "Begin your day with a delightful breakfast",
+    image:
+      "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=1200&q=85",
+  },
+
+  // ================= RELAXATION =================
+  {
+    id: 4,
+    name: "Poolside Escape",
+    category: "Relaxation",
+    description: "Unwind beside our beautiful pool",
+    image:
+      "https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=1200&q=85",
+  },
+  {
+    id: 5,
+    name: "Luxury Wellness",
+    category: "Relaxation",
+    description: "Rejuvenate your mind and body",
+    image:
+      "https://picasso.rosewoodhotelgroup.com/transform/c3a83944-43a6-477a-9a9c-c1fd8b37071e/RWFSL_3-0_Brand-com_Assets_Facilities_Spa_AsayaSpa_TreatmentRoom",
+  },
+  {
+    id: 6,
+    name: "Serenity Lounge",
+    category: "Relaxation",
+    description: "Find your peaceful corner to unwind",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=85",
+  },
+
+  // ================= CELEBRATIONS =================
+  {
+    id: 7,
+    name: "Private Celebrations",
+    category: "Celebrations",
+    description: "Make your special moments memorable",
+    image:
+      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=85",
+  },
+  {
+    id: 8,
+    name: "Romantic Getaway",
+    category: "Celebrations",
+    description: "Celebrate love with an unforgettable escape",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=85",
+  },
+  {
+    id: 9,
+    name: "Wedding Celebrations",
+    category: "Celebrations",
+    description: "A beautiful setting for your special day",
+    image:
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=85",
+  },
+
+  {
+    id: 10,
+    name: "Garden Retreat",
+    category: "Leisure",
+    description: "Discover peaceful moments in lush surroundings",
+    image:
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&q=85",
+  },
+  {
+    id: 11,
+    name: "Outdoor Adventure",
+    category: "Leisure",
+    description: "Explore beautiful landscapes and outdoor escapes",
+    image:
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&q=85",
+  },
+  {
+    id: 12,
+    name: "Evening Lounge",
+    category: "Leisure",
+    description: "Unwind in an inviting atmosphere after sunset",
+    image:
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1200&q=85",
   },
 ];
 
@@ -154,7 +224,7 @@ const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text
 
 const HomePage = () => {
   const [destination, setDestination] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All Stays");
+  const [activeCategory, setActiveCategory] = useState("Dining");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
@@ -912,12 +982,12 @@ const HomePage = () => {
         {/* Heading */}
         <div className="mb-12 text-center">
           <h2 className={`${sectionHeadingClass} mb-10`}>
-            Discover Exceptional Stays
+            Discover Our Experiences
           </h2>
 
           {/* Category Tabs */}
           <div className="mx-auto mt-8 flex w-fit max-w-full flex-nowrap overflow-x-auto hide-scrollbar items-center justify-center gap-1 sm:gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)]/70 p-1.5 shadow-lg backdrop-blur-md transition-colors duration-500">
-            {hotelCategories.map((category) => (
+            {experienceCategories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
@@ -935,12 +1005,8 @@ const HomePage = () => {
 
         {/* Hotel Cards */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredHotels
-            .filter(
-              (hotel) =>
-                activeCategory === "All Stays" ||
-                hotel.category === activeCategory,
-            )
+          {featuredExperiences
+            .filter((hotel) => hotel.category === activeCategory)
             .map((hotel) => (
               <div
                 key={hotel.id}
@@ -970,57 +1036,20 @@ const HomePage = () => {
                   <p className="mt-1 flex items-center gap-2 text-[13px] text-[var(--foreground)]/60">
                     {hotel.description}
                   </p>
-
-                  <p className="mt-1 flex items-center gap-2 text-[12px] text-[var(--foreground)]/60">
-                    <MapPin size={15} className="text-[var(--primary)]" />
-                    {hotel.location}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between gap-2">
-                    {/* Rating */}
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-base tracking-wide text-[var(--primary)]">
-                        {"★".repeat(Math.floor(hotel.rating))}
-                        <span className="text-[var(--foreground)]/20">
-                          {"★".repeat(5 - Math.floor(hotel.rating))}
-                        </span>
-                      </span>
-
-                      <span className="text-xs font-medium text-[var(--foreground)]/60">
-                        {hotel.rating}
-                      </span>
-                    </div>
-
-                    {/* Price */}
-                    <div className="text-right">
-                      <p
-                        className={`${cormorant.className} text-2xl font-semibold`}
-                      >
-                        ₹{hotel.price.toLocaleString("en-IN")}
-                      </p>
-                      <p className="text-[10px] text-[var(--foreground)]/50">
-                        Per night
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             ))}
 
           {/* Promotional Card */}
           <div className="relative flex min-h-[350px] flex-col overflow-hidden rounded-3xl lg:rounded-[35px] bg-[var(--primary)] p-7 lg:p-8 text-white shadow-lg transition-all duration-500">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
-              Your next getway
-            </p>
-
             <h3
-              className={`${cormorant.className} mt-5 text-4xl lg:text-5xl font-semibold leading-tight`}
+              className={`${cormorant.className} text-4xl lg:text-5xl font-semibold leading-tight`}
             >
-              Find Your Perfect Stay
+              Make Every Stay Special
             </h3>
 
             <p className="mt-5 max-w-[220px] text-sm sm:text-base leading-relaxed text-white/85">
-              Discover beautiful destinations and handpicked places to stay.
+              Discover experiences that make every stay special.
             </p>
 
             {/* Decorative Background */}
@@ -1030,6 +1059,7 @@ const HomePage = () => {
 
             {/* Explore Button */}
             <a
+              href="/rooms"
               className="absolute bottom-7 right-7 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-full bg-white text-[var(--primary)] shadow-md transition-transform duration-300 hover:scale-110"
               aria-label="Explore all hotels"
             >
