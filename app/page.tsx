@@ -255,7 +255,7 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="flex flex-col items-center mt-10 lg:mt-15 pb-[calc(25vh+2rem)] sm:pb-[calc(35vh+2rem)] md:pb-[calc(45vh+2rem)] lg:pb-[calc(55vh+2rem)]">
+      <section className="flex flex-col items-center pt-10 lg:pt-15 pb-[calc(25vh+2rem)] sm:pb-[calc(35vh+2rem)] md:pb-[calc(45vh+2rem)] lg:pb-[calc(55vh+2rem)]">
         <p
           className={`${cormorant.className} text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide italic`}
         >
@@ -907,7 +907,7 @@ const HomePage = () => {
         </div>
       </section>
       {/* Featured Hotels */}
-      <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-16 lg:py-15 mt-10 transition-colors duration-500">
+      <section className="w-full bg-[var(--background)] text-[var(--foreground)] pt-12 lg:py-15 lg:mt-10 transition-colors duration-500">
         {/* Heading */}
         <div className="mb-12 text-center">
           <h2 className={`${sectionHeadingClass} mb-10`}>
@@ -915,7 +915,7 @@ const HomePage = () => {
           </h2>
 
           {/* Category Tabs */}
-          <div className="mx-auto mt-8 flex w-fit max-w-full flex-wrap items-center justify-center gap-1 sm:gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)]/70 p-1.5 shadow-lg backdrop-blur-md transition-colors duration-500">
+          <div className="mx-auto mt-8 flex w-fit max-w-full flex-nowrap overflow-x-auto hide-scrollbar items-center justify-center gap-1 sm:gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)]/70 p-1.5 shadow-lg backdrop-blur-md transition-colors duration-500">
             {hotelCategories.map((category) => (
               <button
                 key={category}
@@ -943,7 +943,7 @@ const HomePage = () => {
             .map((hotel) => (
               <div
                 key={hotel.id}
-                className="group overflow-hidden rounded-4xl border border-[var(--border)]/60 bg-[var(--surface)] shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+                className="group overflow-hidden rounded-3xl lg:rounded-4xl border border-[var(--border)]/60 bg-[var(--surface)] shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               >
                 {/* Hotel Image */}
                 <div className="relative h-64 overflow-hidden">
@@ -1009,7 +1009,7 @@ const HomePage = () => {
           {/* Promotional Card */}
           <div className="relative flex min-h-[350px] flex-col overflow-hidden rounded-3xl lg:rounded-[35px] bg-[var(--primary)] p-7 lg:p-8 text-white shadow-lg transition-all duration-500">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
-              Your next getaway
+              Your next getway
             </p>
 
             <h3
@@ -1038,9 +1038,9 @@ const HomePage = () => {
         </div>
       </section>
       {/* Exclusive Hotel Collection */}
-      <section className="w-full overflow-hidden bg-[var(--background)] py-16 text-[var(--foreground)] transition-colors duration-500 lg:py-15">
+      <section className="w-full overflow-hidden bg-[var(--background)] pt-16 text-[var(--foreground)] transition-colors duration-500 lg:py-15">
         {/* Section Heading */}
-        <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-5 lg:mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className={`${sectionHeadingClass} max-w-2xl`}>
               Stays that make
@@ -1056,7 +1056,7 @@ const HomePage = () => {
         {editorialHotels.length > 0 && (
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
             {/* Main Featured Image */}
-            <div className="group relative min-h-[420px] overflow-hidden rounded-4xl sm:min-h-[520px] lg:col-span-8 lg:min-h-[580px] lg:rounded-[36px]">
+            <div className="group relative min-h-[420px] overflow-hidden rounded-3xl lg:rounded-4xl sm:min-h-[520px] lg:col-span-8 lg:min-h-[580px] lg:rounded-[36px]">
               <img
                 src={editorialHotels[0].image}
                 alt={editorialHotels[0].name}
@@ -1066,14 +1066,14 @@ const HomePage = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/10" />
 
               {/* Top Label */}
-              <div className="absolute left-5 top-5 sm:left-8 sm:top-8">
-                <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md">
+              <div className="absolute left-3 lg:left-5 top-3 lg:top-5 sm:left-8 sm:top-8">
+                <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-[8px] font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md">
                   Featured Stay
                 </span>
               </div>
 
               {/* Featured Hotel Details */}
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-5 text-white sm:flex-row sm:items-end sm:justify-between sm:p-8">
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 lg:gap-5 p-4 text-white sm:flex-row sm:items-end sm:justify-between sm:p-8">
                 <div>
                   <p className="mb-2 flex items-center gap-2 text-xs text-white/75">
                     <MapPin size={14} />
@@ -1081,12 +1081,12 @@ const HomePage = () => {
                   </p>
 
                   <h3
-                    className={`${cormorant.className} text-4xl font-medium sm:text-5xl lg:text-6xl`}
+                    className={`${cormorant.className} text-3xl font-medium sm:text-5xl lg:text-6xl`}
                   >
                     {editorialHotels[0].name}
                   </h3>
 
-                  <div className="mt-3 flex items-center gap-2 text-sm text-white/80">
+                  <div className="mt-1 flex items-center gap-2 text-sm text-white/80">
                     <span className="tracking-wider text-amber-300">
                       {"★".repeat(Math.floor(editorialHotels[0].rating))}
                     </span>
@@ -1107,29 +1107,29 @@ const HomePage = () => {
             </div>
 
             {/* Editorial Side Panel */}
-            <div className="flex flex-col justify-between rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
+            <div className="flex flex-col justify-between rounded-3xl lg:rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
               <div>
                 <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
                   The {BRAND_NAME} Collection
                 </span>
 
                 <h3
-                  className={`${cormorant.className} mt-5 text-4xl font-medium leading-tight sm:text-5xl`}
+                  className={`${cormorant.className} mt-2 lg:mt-5 text-4xl font-medium leading-none lg:leading-tight sm:text-5xl`}
                 >
                   A little more
                   <br />
                   <span className="italic">than just a stay.</span>
                 </h3>
 
-                <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--foreground)]/60">
+                <p className="mt-2 lg:mt-5 max-w-sm text-sm leading-6 lg:leading-7 text-[var(--foreground)]/60">
                   Beautiful spaces, thoughtful details and destinations worth
                   travelling for. Find a place that feels like it was made just
                   for you.
                 </p>
               </div>
 
-              <div className="mt-10">
-                <div className="mb-5 h-px w-full bg-[var(--border)]" />
+              <div className="mt-5 lg:mt-10">
+                <div className="mb-3 lg:mb-5 h-px w-full bg-[var(--border)]" />
 
                 <div className="flex items-center justify-between">
                   <div>
@@ -1157,7 +1157,7 @@ const HomePage = () => {
 
                 <a
                   href="/hotels"
-                  className="mt-7 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-4 text-sm font-medium text-white transition-all duration-300 hover:brightness-90"
+                  className="mt-5 lg:mt-7 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 lg:py-4 text-xs lg:text-sm font-medium text-white transition-all duration-300 hover:brightness-90"
                 >
                   Explore the collection
                   <ArrowUpRight size={19} />
@@ -1171,12 +1171,12 @@ const HomePage = () => {
         {editorialHotels.length > 1 && (
           <>
             {/* Trending Hotels Worldwide */}
-            <div className="mt-16 sm:mt-20">
+            <div className="my-12 lg:mt-16 sm:mt-20">
               {/* Section Header */}
               <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <h3
-                    className={`${cormorant.className} mt-12 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
+                    className={`${cormorant.className} lg:mt-12 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
                   >
                     Top trending stays worldwide
                   </h3>
@@ -1213,11 +1213,14 @@ const HomePage = () => {
               </div>
 
               {/* Hotel Cards */}
-              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="hide-scrollbar flex w-full gap-5 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth snap-x snap-mandatory">
                 {filteredHotels.slice(0, 4).map((hotel, index) => (
-                  <div key={hotel.id} className="group min-w-0 cursor-pointer">
+                  <div
+                    key={hotel.id}
+                    className={`group ${filteredHotels.length === 1 ? "w-full" : "w-[88%]"} shrink-0 cursor-pointer snap-start sm:w-[45%] lg:w-[calc(25%-15px)]`}
+                  >
                     {/* Hotel Image */}
-                    <div className="relative h-[240px] w-full overflow-hidden rounded-4xl bg-[var(--border)] sm:h-[210px] lg:h-[170px] xl:h-[195px]">
+                    <div className="relative h-[240px] w-full overflow-hidden rounded-3xl lg:rounded-4xl bg-[var(--border)] sm:h-[210px] lg:h-[170px] xl:h-[195px]">
                       <img
                         src={hotel.image}
                         alt={hotel.name}
@@ -1229,7 +1232,7 @@ const HomePage = () => {
 
                       {/* Featured Label */}
                       {index === 0 && activeHotelTab === "Featured" && (
-                        <span className="absolute left-3 top-3 rounded-full bg-[var(--surface)]/90 px-3.5 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
+                        <span className="absolute left-3 top-3 rounded-full bg-[var(--surface)]/90 px-3 sm:px-3.5 py-1 sm:py-2 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
                           Popular stay
                         </span>
                       )}
@@ -1238,17 +1241,20 @@ const HomePage = () => {
                       <button
                         onClick={(e) => e.stopPropagation()}
                         aria-label={`Add ${hotel.name} to favourites`}
-                        className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#38302A] backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white"
+                        className="absolute right-3 top-3 flex h-5 sm:h-9 w-5 sm:w-9 items-center justify-center rounded-full bg-white/90 text-[#38302A] backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white"
                       >
-                        <Heart size={16} strokeWidth={1.5} />
+                        <Heart
+                          className="size-[12px] sm:size-[16px]"
+                          strokeWidth={1.5}
+                        />
                       </button>
                     </div>
 
                     {/* Hotel Information */}
-                    <div className="pt-4 flex flex-col gap-2">
+                    <div className="pt-4 flex flex-col gap-1 sm:gap-2">
                       {/* Hotel Name */}
                       <h4
-                        className={`${cormorant.className} truncate text-[32px] font-semibold leading-[1.1] text-[var(--foreground)] transition-colors duration-300 group-hover:text-[var(--primary)]`}
+                        className={`${cormorant.className} truncate text-3xl lg:text-[32px] font-semibold leading-[1.1] text-[var(--foreground)] transition-colors duration-300 group-hover:text-[var(--primary)]`}
                       >
                         {hotel.name}
                       </h4>
@@ -1324,7 +1330,7 @@ const HomePage = () => {
         )}
       </section>
       {/* Editorial Destination Showcase */}
-      <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 pt-10 text-[var(--foreground)]">
+      <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 pt-8 lg:pt-10 text-[var(--foreground)]">
         {/* Brand Title - Always Visible */}
         <div className="relative z-20 mx-auto mb-8 w-full max-w-[1400px] px-5 text-center sm:mb-10 lg:mb-8">
           <p className="mb-5 text-[9px] font-medium tracking-[0.35em] text-[var(--primary)] sm:text-[10px]">
@@ -1460,7 +1466,7 @@ const HomePage = () => {
         </div>
       </section>
       {/* Newsletter Section */}
-      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:py-28">
+      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-8 lg:py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:py-28">
         {/* Newsletter Content */}
         <div className="max-w-[750px]">
           {/* Main Heading */}

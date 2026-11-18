@@ -14,7 +14,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <>
+    <div>
       {/* Desktop Navbar */}
       <div
         className={`sticky top-0 z-40 w-full
@@ -66,7 +66,7 @@ const Navbar = () => {
             {/* Menu Button */}
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="lg:hidden"
+              className="text-[var(--foreground)] lg:hidden"
               aria-label="Open menu"
             >
               <Menu size={20} strokeWidth={1.5} />
@@ -213,7 +213,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
