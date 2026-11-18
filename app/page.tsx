@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeroIamge from "@/public/HeroImage.png";
 import { Cormorant_Garamond } from "next/font/google";
+import { rooms } from "./data/roomsPageData";
 import {
   MapPin,
   CalendarDays,
@@ -1187,10 +1188,10 @@ const HomePage = () => {
                 </div>
 
                 <a
-                  href="/rooms"
-                  className="mt-5 lg:mt-7 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 lg:py-4 text-xs lg:text-sm font-medium text-white transition-all duration-300 hover:brightness-90"
+                  href="/rooms#room-collection"
+                  className="mt-5 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 text-xs font-medium text-white transition-all duration-300 hover:brightness-90 lg:mt-7 lg:py-4 lg:text-sm"
                 >
-                  Explore the collection
+                  Find your perfect stay
                   <ArrowUpRight size={19} />
                 </a>
               </div>
@@ -1204,43 +1205,46 @@ const HomePage = () => {
             {/* Trending Hotels Worldwide */}
             <div className="my-12 lg:mt-16 sm:mt-20">
               {/* Section Header */}
-              <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h3
-                    className={`${cormorant.className} lg:mt-12 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
-                  >
-                    Top trending stays worldwide
-                  </h3>
+              <div className="mb-7">
+                <h3
+                  className={`${cormorant.className} lg:mt-12 text-3xl font-medium text-[var(--foreground)] sm:text-4xl lg:text-5xl`}
+                >
+                  Top trending stays worldwide
+                </h3>
+              </div>
+
+              {/* Destination Tabs */}
+              <div className="mb-6 flex items-center justify-between border-b border-[var(--border)]/70">
+                <div className="flex items-center gap-7 overflow-x-auto scrollbar-hide">
+                  {hotelTabs.map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveHotelTab(tab)}
+                      className={`relative shrink-0 pb-3 text-xs font-medium transition-colors duration-300 ${
+                        activeHotelTab === tab
+                          ? "text-[var(--primary)]"
+                          : "text-[var(--foreground)]/50 hover:text-[var(--foreground)]"
+                      }`}
+                    >
+                      {tab}
+
+                      {activeHotelTab === tab && (
+                        <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[var(--primary)]" />
+                      )}
+                    </button>
+                  ))}
                 </div>
 
-                <a href="/rooms" className="group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
+                <a
+                  href="/rooms#room-collection"
+                  className="mb-3 group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]"
+                >
                   View all stays
                   <ArrowUpRight
                     size={15}
                     className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                   />
                 </a>
-              </div>
-
-              {/* Destination Tabs */}
-              <div className="mb-6 flex items-center gap-7 overflow-x-auto border-b border-[var(--border)]/70 scrollbar-hide">
-                {hotelTabs.map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveHotelTab(tab)}
-                    className={`relative shrink-0 pb-3 text-xs font-medium transition-colors duration-300 ${
-                      activeHotelTab === tab
-                        ? "text-[var(--primary)]"
-                        : "text-[var(--foreground)]/50 hover:text-[var(--foreground)]"
-                    }`}
-                  >
-                    {tab}
-
-                    {activeHotelTab === tab && (
-                      <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[var(--primary)]" />
-                    )}
-                  </button>
-                ))}
               </div>
 
               {/* Hotel Cards */}
