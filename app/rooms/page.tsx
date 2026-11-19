@@ -53,6 +53,7 @@ const RoomsPage = () => {
   const [minGuests, setMinGuests] = useState(1);
 
   const locationRef = useRef<HTMLDivElement | null>(null);
+  const filterRef = useRef<HTMLDivElement | null>(null);
 
   const filteredRooms = rooms.filter((room) => {
     const matchesCategory =
@@ -106,7 +107,6 @@ const RoomsPage = () => {
         !locationRef.current.contains(event.target as Node)
       ) {
         setIsLocationOpen(false);
-        setIsFilterOpen(false);
       }
     };
 
@@ -114,6 +114,23 @@ const RoomsPage = () => {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleFilterClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleFilterClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleFilterClickOutside);
     };
   }, []);
 
@@ -176,7 +193,7 @@ const RoomsPage = () => {
         </div>
 
         {/* Filters */}
-        <div className="mt-10 border-b border-[var(--border)] pb-5 sm:mt-12">
+        <div className="relative mt-10 border-b border-[var(--border)] pb-5 sm:mt-12">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             {/* Room Categories */}
             <div className="hide-scrollbar min-w-0 flex-1 overflow-x-auto">
@@ -258,7 +275,7 @@ const RoomsPage = () => {
 
               {/* Price, Rating & Guest Filter */}
               <div className="flex w-full shrink-0 gap-3 lg:w-auto">
-                <div className="relative min-w-0 flex-1 lg:flex-none">
+                <div className="w-full flex-1 lg:flex-none">
                   {/* Filters Button */}
                   <button
                     onClick={() => setIsFilterOpen(true)}
@@ -272,233 +289,208 @@ const RoomsPage = () => {
                       </span>
                     )}
                   </button>
+                </div>
+              </div>
 
-                  {/* Filter Bottom Sheet */}
-                  {isFilterOpen && (
-                    <div
-                      className="absolute right-0 top-full z-30 mt-2 w-[calc(100vw-2.5rem)] sm:w-[520px] lg:w-[520px]"
-                      onClick={() => setIsFilterOpen(false)}
-                    >
-                      <div
-                        role="dialog"
-                        aria-modal="true"
-                        aria-labelledby="filter-heading"
-                        onClick={(e) => e.stopPropagation()}
-                        className="max-h-[88vh] w-full max-w-[520px] overflow-y-auto hide-scrollbar rounded-t-[28px] border border-[var(--border)] bg-[var(--background)] p-6 shadow-2xl sm:rounded-[28px] sm:p-8"
-                      >
-                        {/* Header */}
-                        <div className="mb-7 flex items-center justify-between">
-                          <div>
-                            <h3
-                              id="filter-heading"
-                              className={`${cormorant.className} text-3xl font-medium`}
-                            >
-                              Refine Your Stay
-                            </h3>
-                            <p className="mt-1 text-[11px] text-[var(--foreground)]/50">
-                              Find the perfect room for your experience.
-                            </p>
-                          </div>
+              {/* Filter Bottom Sheet */}
+              <div
+                ref={filterRef}
+                className={`absolute left-0 right-0 top-[-35px] z-30 w-full origin-right overflow-hidden transition-transform duration-500 ease-in-out ${
+                  isFilterOpen ? "scale-x-100" : "scale-x-0"
+                }`}
+              >
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Room filters"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex w-full flex-col gap-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] px-5 py-3 sm:px-6 lg:flex-row lg:px-4 lg:py-3"
+                >
+                  {/* PRICE RANGE */}
+                  <div className="flex min-w-0 flex-[1.5] flex-col gap-2 pr-6 py-1 lg:py-0 border-r border-[var(--border)]">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/65">
+                        Price per night
+                      </p>
 
-                          <button
-                            onClick={() => setIsFilterOpen(false)}
-                            aria-label="Close filters"
-                            className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:bg-[var(--surface)]"
-                          >
-                            <X size={17} />
-                          </button>
+                      <span className="rounded-md bg-[var(--surface)] px-2 py-1 text-[10px] font-medium text-[var(--foreground)]/50">
+                        INR
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      {/* MINIMUM PRICE */}
+                      <div className="flex h-11 flex-col justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 transition-colors focus-within:border-[var(--primary)]/60">
+                        <label
+                          htmlFor="min-room-price"
+                          className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                        >
+                          Minimum price
+                        </label>
+
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm font-medium text-[var(--foreground)]/60">
+                            ₹
+                          </span>
+
+                          <input
+                            id="min-room-price"
+                            type="number"
+                            min={MIN_ROOM_PRICE}
+                            max={maxPrice}
+                            step={100}
+                            value={minPrice}
+                            onChange={(e) => {
+                              const value = Number(e.target.value);
+
+                              if (e.target.value === "") return;
+
+                              setMinPrice(
+                                Math.min(
+                                  Math.max(value, MIN_ROOM_PRICE),
+                                  maxPrice,
+                                ),
+                              );
+                            }}
+                            className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none"
+                            aria-label="Minimum price"
+                          />
                         </div>
+                      </div>
 
-                        {/* Price Range */}
-                        <div className="border-t border-[var(--border)] py-6">
-                          <div className="mb-5 flex items-center justify-between">
-                            <h4 className="text-sm font-semibold">
-                              Price per night
-                            </h4>
-                            <span className="text-[10px] text-[var(--foreground)]/50">
-                              INR
-                            </span>
-                          </div>
+                      {/* MAXIMUM PRICE */}
+                      <div className="flex h-11 flex-col justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 transition-colors focus-within:border-[var(--primary)]/60">
+                        <label
+                          htmlFor="max-room-price"
+                          className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                        >
+                          Maximum price
+                        </label>
 
-                          <div className="flex items-center justify-between gap-3">
-                            <div>
-                              <p className="mb-1 text-[10px] text-[var(--foreground)]/45">
-                                Minimum
-                              </p>
-                              <p className="text-sm font-medium">
-                                ₹{minPrice.toLocaleString("en-IN")}
-                              </p>
-                            </div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm font-medium text-[var(--foreground)]/60">
+                            ₹
+                          </span>
 
-                            <div className="h-px w-8 bg-[var(--border)]" />
+                          <input
+                            id="max-room-price"
+                            type="number"
+                            min={minPrice}
+                            max={MAX_ROOM_PRICE}
+                            step={100}
+                            value={maxPrice}
+                            onChange={(e) => {
+                              const value = Number(e.target.value);
 
-                            <div className="text-right">
-                              <p className="mb-1 text-[10px] text-[var(--foreground)]/45">
-                                Maximum
-                              </p>
-                              <p className="text-sm font-medium">
-                                ₹{maxPrice.toLocaleString("en-IN")}
-                              </p>
-                            </div>
-                          </div>
+                              if (e.target.value === "") return;
 
-                          {/* Minimum Price */}
-                          <div className="mt-5">
-                            <label className="mb-2 block text-[10px] text-[var(--foreground)]/50">
-                              Minimum price
-                            </label>
-
-                            <input
-                              type="range"
-                              min={MIN_ROOM_PRICE}
-                              max={MAX_ROOM_PRICE}
-                              step={100}
-                              value={minPrice}
-                              onChange={(e) =>
-                                setMinPrice(
-                                  Math.min(Number(e.target.value), maxPrice),
-                                )
-                              }
-                              className="w-full cursor-pointer accent-[var(--primary)]"
-                            />
-                          </div>
-
-                          {/* Maximum Price */}
-                          <div className="mt-4">
-                            <label className="mb-2 block text-[10px] text-[var(--foreground)]/50">
-                              Maximum price
-                            </label>
-
-                            <input
-                              type="range"
-                              min={MIN_ROOM_PRICE}
-                              max={MAX_ROOM_PRICE}
-                              step={100}
-                              value={maxPrice}
-                              onChange={(e) =>
-                                setMaxPrice(
-                                  Math.max(Number(e.target.value), minPrice),
-                                )
-                              }
-                              className="w-full cursor-pointer accent-[var(--primary)]"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Guest Rating */}
-                        <div className="border-t border-[var(--border)] py-6">
-                          <h4 className="mb-4 text-sm font-semibold">
-                            Guest rating
-                          </h4>
-
-                          <div className="grid grid-cols-3 gap-2">
-                            {[
-                              { label: "Any rating", value: 0 },
-                              { label: "4.0+", value: 4 },
-                              { label: "4.5+", value: 4.5 },
-                            ].map((rating) => (
-                              <button
-                                key={rating.value}
-                                onClick={() => setMinRating(rating.value)}
-                                className={`flex flex-col items-center gap-1 rounded-xl border px-2 py-3 text-xs transition-all duration-300 ${
-                                  minRating === rating.value
-                                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                                    : "border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)]"
-                                }`}
-                              >
-                                {rating.value === 0 ? (
-                                  <span className="font-medium">
-                                    Any rating
-                                  </span>
-                                ) : (
-                                  <>
-                                    <span className="flex items-center gap-1 font-semibold">
-                                      <Star
-                                        size={12}
-                                        fill="currentColor"
-                                        className="text-[var(--primary)]"
-                                      />
-                                      {rating.label}
-                                    </span>
-                                    <span className="text-[9px] opacity-60">
-                                      & above
-                                    </span>
-                                  </>
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Number of Guests */}
-                        <div className="border-t border-[var(--border)] py-6">
-                          <h4 className="mb-4 text-sm font-semibold">
-                            Number of guests
-                          </h4>
-
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-xs font-medium">Guests</p>
-                              <p className="mt-1 text-[10px] text-[var(--foreground)]/50">
-                                Minimum room capacity
-                              </p>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                              <button
-                                onClick={() =>
-                                  setMinGuests((prev) => Math.max(1, prev - 1))
-                                }
-                                disabled={minGuests <= 1}
-                                aria-label="Decrease guests"
-                                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
-                              >
-                                <Minus size={14} />
-                              </button>
-
-                              <span className="w-5 text-center text-sm font-semibold tabular-nums">
-                                {minGuests}
-                              </span>
-
-                              <button
-                                onClick={() =>
-                                  setMinGuests((prev) =>
-                                    Math.min(MAX_GUESTS, prev + 1),
-                                  )
-                                }
-                                disabled={minGuests >= MAX_GUESTS}
-                                aria-label="Increase guests"
-                                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
-                              >
-                                <Plus size={14} />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Footer */}
-                        <div className="flex items-center gap-4 border-t border-[var(--border)] pt-6">
-                          <button
-                            onClick={resetFilters}
-                            className="shrink-0 text-xs font-medium text-[var(--foreground)]/60 underline underline-offset-4 transition-colors hover:text-[var(--primary)]"
-                          >
-                            Reset all
-                          </button>
-
-                          <button
-                            onClick={() => setIsFilterOpen(false)}
-                            className="group flex h-[50px] flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-4 text-xs font-medium text-white transition-all duration-300 hover:brightness-110"
-                          >
-                            Show Stays
-                            <ArrowUpRight
-                              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                              size={15}
-                            />
-                          </button>
+                              setMaxPrice(
+                                Math.max(
+                                  Math.min(value, MAX_ROOM_PRICE),
+                                  minPrice,
+                                ),
+                              );
+                            }}
+                            className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none"
+                            aria-label="Maximum price"
+                          />
                         </div>
                       </div>
                     </div>
-                  )}
+                  </div>
+
+                  {/* GUEST RATING */}
+                  <div className="flex shrink-0 flex-col gap-1 pr-6 border-r border-[var(--border)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/65">
+                      Guest rating
+                    </p>
+
+                    <div className="flex h-full items-center gap-2">
+                      {[
+                        { label: "Any", value: 0 },
+                        { label: "4.0+", value: 4 },
+                        { label: "4.5+", value: 4.5 },
+                      ].map((rating) => (
+                        <button
+                          key={rating.value}
+                          onClick={() => setMinRating(rating.value)}
+                          className={`flex h-11 items-center gap-1.5 rounded-lg border px-3 text-xs transition-all duration-200 ${
+                            minRating === rating.value
+                              ? "border-[var(--primary)]/30 bg-[var(--primary)]/10 font-semibold text-[var(--primary)]"
+                              : "border-[var(--border)] bg-transparent text-[var(--foreground)]/60 hover:border-[var(--primary)]/40 hover:text-[var(--primary)]"
+                          }`}
+                        >
+                          {rating.value !== 0 && (
+                            <Star
+                              size={12}
+                              fill={
+                                minRating === rating.value
+                                  ? "currentColor"
+                                  : "none"
+                              }
+                            />
+                          )}
+                          {rating.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* GUESTS */}
+                  <div className="flex shrink-0 flex-col gap-4 pr-6 border-r border-[var(--border)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/65">
+                      Guests
+                    </p>
+
+                    <div className="flex h-11 w-fit items-center gap-3 rounded-lg border border-[var(--border)] px-2">
+                      <button
+                        onClick={() =>
+                          setMinGuests((prev) => Math.max(1, prev - 1))
+                        }
+                        disabled={minGuests <= 1}
+                        aria-label="Decrease guests"
+                        className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--foreground)]/60 transition-colors hover:bg-[var(--surface)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        <Minus size={14} />
+                      </button>
+
+                      <span className="min-w-5 text-center text-sm font-semibold tabular-nums text-[var(--foreground)]">
+                        {minGuests}
+                      </span>
+
+                      <button
+                        onClick={() =>
+                          setMinGuests((prev) => Math.min(MAX_GUESTS, prev + 1))
+                        }
+                        disabled={minGuests >= MAX_GUESTS}
+                        aria-label="Increase guests"
+                        className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--foreground)]/60 transition-colors hover:bg-[var(--surface)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* ACTIONS */}
+                  <div className="flex shrink-0 items-center justify-between gap-3 py-2 lg:flex-col lg:items-stretch lg:gap-2 lg:py-0">
+                    <button
+                      onClick={resetFilters}
+                      className="flex h-10 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-5 text-xs font-semibold text-[var(--foreground)]/65 transition-all duration-300 hover:border-[var(--primary)]/40 hover:bg-[var(--surface)] hover:text-[var(--primary)]"
+                    >
+                      Reset filters
+                    </button>
+
+                    <button
+                      onClick={() => setIsFilterOpen(false)}
+                      className="group flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-[var(--primary)] px-5 text-xs font-semibold text-white transition-all duration-300 hover:brightness-110"
+                    >
+                      Apply
+                      <ArrowUpRight
+                        size={14}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
