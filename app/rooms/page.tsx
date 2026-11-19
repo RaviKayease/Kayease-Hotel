@@ -307,6 +307,7 @@ const RoomsPage = () => {
                   className="flex w-full flex-col gap-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] px-5 py-3 sm:px-6 lg:flex-row lg:px-4 lg:py-3"
                 >
                   {/* PRICE RANGE */}
+
                   <div className="flex min-w-0 flex-[1.5] flex-col gap-2 pr-6 py-1 lg:py-0 border-r border-[var(--border)]">
                     <div className="flex items-center justify-between">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/65">
@@ -320,80 +321,148 @@ const RoomsPage = () => {
 
                     <div className="grid grid-cols-2 gap-3">
                       {/* MINIMUM PRICE */}
-                      <div className="flex h-11 flex-col justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 transition-colors focus-within:border-[var(--primary)]/60">
-                        <label
-                          htmlFor="min-room-price"
-                          className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
-                        >
-                          Minimum price
-                        </label>
+                      <div className="flex h-11 justify-between items-center rounded-lg border border-[var(--border)] bg-[var(--background)] pl-3 pr-2 transition-colors focus-within:border-[var(--primary)]/60">
+                        <div>
+                          <label
+                            htmlFor="min-room-price"
+                            className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                          >
+                            Minimum price
+                          </label>
 
-                        <div className="flex items-center gap-1">
-                          <span className="text-sm font-medium text-[var(--foreground)]/60">
-                            ₹
-                          </span>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm font-semibold text-[var(--foreground)]">
+                              ₹
+                            </span>
 
-                          <input
-                            id="min-room-price"
-                            type="number"
-                            min={MIN_ROOM_PRICE}
-                            max={maxPrice}
-                            step={100}
-                            value={minPrice}
-                            onChange={(e) => {
-                              const value = Number(e.target.value);
+                            <input
+                              id="min-room-price"
+                              type="number"
+                              min={MIN_ROOM_PRICE}
+                              max={maxPrice}
+                              step={100}
+                              value={minPrice}
+                              onChange={(e) => {
+                                const value = Number(e.target.value);
 
-                              if (e.target.value === "") return;
+                                if (e.target.value === "") return;
 
-                              setMinPrice(
-                                Math.min(
-                                  Math.max(value, MIN_ROOM_PRICE),
-                                  maxPrice,
-                                ),
-                              );
-                            }}
-                            className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none"
-                            aria-label="Minimum price"
-                          />
+                                setMinPrice(
+                                  Math.min(
+                                    Math.max(value, MIN_ROOM_PRICE),
+                                    maxPrice,
+                                  ),
+                                );
+                              }}
+                              className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                              aria-label="Minimum price"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-0.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.3">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMinPrice((prev) =>
+                                Math.max(prev - 100, MIN_ROOM_PRICE),
+                              )
+                            }
+                            disabled={minPrice <= MIN_ROOM_PRICE}
+                            className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                            aria-label="Decrease minimum price"
+                          >
+                            −
+                          </button>
+
+                          <div className="h-4 w-px bg-[var(--border)]" />
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMinPrice((prev) =>
+                                Math.min(prev + 100, maxPrice),
+                              )
+                            }
+                            disabled={minPrice >= maxPrice}
+                            className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                            aria-label="Increase minimum price"
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
 
                       {/* MAXIMUM PRICE */}
-                      <div className="flex h-11 flex-col justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 transition-colors focus-within:border-[var(--primary)]/60">
-                        <label
-                          htmlFor="max-room-price"
-                          className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
-                        >
-                          Maximum price
-                        </label>
+                      <div className="flex h-11 justify-between items-center rounded-lg border border-[var(--border)] bg-[var(--background)] pl-3 pr-2 transition-colors focus-within:border-[var(--primary)]/60">
+                        <div>
+                          <label
+                            htmlFor="max-room-price"
+                            className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                          >
+                            Maximum price
+                          </label>
 
-                        <div className="flex items-center gap-1">
-                          <span className="text-sm font-medium text-[var(--foreground)]/60">
-                            ₹
-                          </span>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm font-semibold text-[var(--foreground)]">
+                              ₹
+                            </span>
 
-                          <input
-                            id="max-room-price"
-                            type="number"
-                            min={minPrice}
-                            max={MAX_ROOM_PRICE}
-                            step={100}
-                            value={maxPrice}
-                            onChange={(e) => {
-                              const value = Number(e.target.value);
+                            <input
+                              id="max-room-price"
+                              type="number"
+                              min={minPrice}
+                              max={MAX_ROOM_PRICE}
+                              step={100}
+                              value={maxPrice}
+                              onChange={(e) => {
+                                const value = Number(e.target.value);
 
-                              if (e.target.value === "") return;
+                                if (e.target.value === "") return;
 
-                              setMaxPrice(
-                                Math.max(
-                                  Math.min(value, MAX_ROOM_PRICE),
-                                  minPrice,
-                                ),
-                              );
-                            }}
-                            className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none"
-                            aria-label="Maximum price"
-                          />
+                                setMaxPrice(
+                                  Math.max(
+                                    Math.min(value, MAX_ROOM_PRICE),
+                                    minPrice,
+                                  ),
+                                );
+                              }}
+                              className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                              aria-label="Maximum price"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-0.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.3">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMaxPrice((prev) =>
+                                Math.max(prev - 100, minPrice),
+                              )
+                            }
+                            disabled={maxPrice <= minPrice}
+                            className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                            aria-label="Decrease maximum price"
+                          >
+                            −
+                          </button>
+
+                          <div className="h-4 w-px bg-[var(--border)]" />
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMaxPrice((prev) =>
+                                Math.min(prev + 100, MAX_ROOM_PRICE),
+                              )
+                            }
+                            disabled={maxPrice >= MAX_ROOM_PRICE}
+                            className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                            aria-label="Increase maximum price"
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
                     </div>
