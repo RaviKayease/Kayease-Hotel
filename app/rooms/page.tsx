@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Cormorant_Garamond } from "next/font/google";
+import Link from "next/link";
 import {
   rooms,
   roomCategories,
@@ -107,13 +108,13 @@ const RoomsPage = () => {
               </h2>
             </div>
 
-            <a
+            <Link
               href="#room-collection"
               className="flex w-fit items-center gap-4 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-[11px] backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-[#332c26]"
             >
               Explore our rooms
               <ArrowDown size={16} />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -311,7 +312,7 @@ const RoomsPage = () => {
                     </div>
                   </div>
 
-                  <a
+                  <Link
                     href="/contact"
                     className="group/link flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
                     aria-label={`Enquire about ${room.name}`}
@@ -320,7 +321,7 @@ const RoomsPage = () => {
                       size={19}
                       className="transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>
@@ -467,15 +468,18 @@ const RoomsPage = () => {
               forward to welcoming you.
             </p>
 
-            <a
+            <Link
               href="/contact"
               className="group flex shrink-0 items-center gap-5 border-b border-[var(--primary)]/50 pb-2 text-[10px] font-medium tracking-[0.2em] transition-colors hover:text-[var(--primary)]"
             >
               CREATE YOUR OWN STORY
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
-                <ArrowUpRight size={18} />
+                <ArrowUpRight
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  size={18}
+                />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>

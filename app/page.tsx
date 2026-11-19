@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import HeroIamge from "@/public/HeroImage.png";
 import { Cormorant_Garamond } from "next/font/google";
 import { rooms, roomLocations } from "./data/roomsPageData";
+import Link from "next/link";
 import {
   MapPin,
   CalendarDays,
@@ -1068,13 +1069,16 @@ const HomePage = () => {
             </div>
 
             {/* Explore Button */}
-            <a
+            <Link
               href="/rooms"
-              className="absolute bottom-7 right-7 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-full bg-white text-[var(--primary)] shadow-md transition-transform duration-300 hover:scale-110"
-              aria-label="Explore all hotels"
+              className="group absolute bottom-7 right-7 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-full bg-white text-[var(--primary)] shadow-md transition-transform duration-300"
+              aria-label="Explore all rooms"
             >
-              <ArrowUpRight size={27} />
-            </a>
+              <ArrowUpRight
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                size={27}
+              />
+            </Link>
           </div>
         </div>
       </section>
@@ -1196,13 +1200,16 @@ const HomePage = () => {
                   </div>
                 </div>
 
-                <a
+                <Link
                   href="/rooms#room-collection"
-                  className="mt-5 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 text-xs font-medium text-white transition-all duration-300 hover:brightness-90 lg:mt-7 lg:py-4 lg:text-sm"
+                  className="group mt-5 flex w-full items-center justify-between rounded-full bg-[var(--primary)] px-5 py-3 text-xs font-medium text-white transition-all duration-300 hover:brightness-90 lg:mt-7 lg:py-4 lg:text-sm"
                 >
                   Find your perfect stay
-                  <ArrowUpRight size={19} />
-                </a>
+                  <ArrowUpRight
+                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    size={19}
+                  />
+                </Link>
               </div>
             </div>
           </div>
@@ -1244,16 +1251,16 @@ const HomePage = () => {
                   ))}
                 </div>
 
-                <a
+                <Link
                   href="/rooms#room-collection"
                   className="mb-3 group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]"
                 >
                   View all stays
                   <ArrowUpRight
                     size={15}
-                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    className=" border transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Hotel Cards */}
@@ -1373,7 +1380,7 @@ const HomePage = () => {
                           </div>
                         </div>
 
-                        <a
+                        <Link
                           href="/contact"
                           className="group/link flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
                           aria-label={`Enquire about ${room.name}`}
@@ -1382,7 +1389,7 @@ const HomePage = () => {
                             size={19}
                             className="transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                           />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </article>
@@ -1442,7 +1449,10 @@ const HomePage = () => {
             </p>
 
             {/* Explore Button */}
-            <button className="group mt-7 inline-flex items-center gap-6 border-b border-[var(--primary)]/60 pb-2 text-[var(--foreground)]">
+            <Link
+              href="rooms#room-collection"
+              className="group mt-7 inline-flex items-center gap-6 border-b border-[var(--primary)]/60 pb-2 text-[var(--foreground)]"
+            >
               <span className="text-[10px] font-medium tracking-[0.22em] sm:text-[11px]">
                 DISCOVER OUR COLLECTION
               </span>
@@ -1454,7 +1464,7 @@ const HomePage = () => {
                   className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                 />
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* Right Image - Premium Stacked Card Deck */}
