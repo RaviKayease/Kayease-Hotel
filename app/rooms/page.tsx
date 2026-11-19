@@ -208,12 +208,14 @@ const RoomsPage = () => {
         </div>
 
         {/* Room Cards */}
-        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-16">
+        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:gap-x-7 lg:gap-y-16">
           {filteredRooms.map((room) => (
-            <article key={room.id} className="group min-w-0">
+            <article
+              key={room.id}
+              className="group relative min-w-0 cursor-pointer"
+            >
               {/* Image */}
-
-              <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[370px]">
+              <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[350px]">
                 <img
                   src={room.image}
                   alt={room.name}
@@ -230,10 +232,11 @@ const RoomsPage = () => {
 
                 {/* Favourite */}
                 <button
+                  type="button"
                   onClick={() => toggleFavorite(room.id)}
                   aria-label={`Toggle favourite for ${room.name}`}
                   aria-pressed={favorites.includes(room.id)}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#332c26] backdrop-blur-md transition-all duration-300 hover:scale-110"
+                  className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#332c26] backdrop-blur-md transition-all duration-300 hover:scale-110"
                 >
                   <Heart
                     size={17}
@@ -248,82 +251,74 @@ const RoomsPage = () => {
 
               {/* Details */}
               <div className="pt-5">
-                <div className="flex h-[105px] items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <h3
-                      className={`${cormorant.className} line-clamp-2 text-3xl font-medium leading-tight transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-4xl`}
-                    >
-                      {room.name}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 max-w-sm text-xs leading-6 text-[var(--foreground)]/55">
-                      {room.description}
-                    </p>
+                {/* Room Title */}
+                <h3
+                  className={`${cormorant.className} min-w-0 truncate text-[clamp(1.6rem,2vw,2.2rem)] font-medium leading-[1.05] transition-colors duration-300 group-hover:text-[var(--primary)]`}
+                >
+                  {room.name}
+                </h3>
+
+                {/* Description */}
+                <p className="truncate text-xs leading-6 text-[var(--foreground)]/55">
+                  {room.description}
+                </p>
+
+                {/* Room Features */}
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-3 border-b border-[var(--border)] pb-5 text-[10px] text-[var(--foreground)]/60">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <span className="flex items-center gap-1.5 whitespace-nowrap">
+                      <Users size={13} className="text-[var(--primary)]" />
+                      {room.guests} Guests
+                    </span>
+
+                    <span className="flex items-center gap-1.5 whitespace-nowrap">
+                      <BedDouble size={13} className="text-[var(--primary)]" />
+                      {room.beds}
+                    </span>
                   </div>
 
-                  <div className="flex shrink-0 items-center gap-1 pt-2">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap">
+                    <MapPin size={13} className="text-[var(--primary)]" />
+                    {room.location}
+                  </span>
+                </div>
+
+                {/* Price + Rating */}
+                <div className="flex items-end justify-between gap-3">
+                  {/* Price */}
+
+                  <div className="flex items-baseline gap-1.5">
+                    <span
+                      className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
+                    >
+                      ₹{room.price.toLocaleString("en-IN")}
+                    </span>
+
+                    <span className="text-[10px] text-[var(--foreground)]/50">
+                      / night
+                    </span>
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-1.5 pb-1">
                     <Star
                       size={13}
                       fill="currentColor"
                       className="text-[var(--primary)]"
                     />
-                    <span className="text-xs font-semibold">
+                    <span className="text-xs font-medium">
                       {room.rating.toFixed(1)}
                     </span>
                   </div>
                 </div>
-
-                {/* Room Features */}
-                <div className="mt-5 flex flex-wrap items-center justify-between border-b border-[var(--border)] pb-5 text-[10px] text-[var(--foreground)]/60">
-                  <div className="flex gap-x-4 gap-y-3">
-                    <span className="flex items-center gap-1.5">
-                      <Users size={14} className="text-[var(--primary)]" />
-                      {room.guests} Guests
-                    </span>
-
-                    <span className="flex items-center gap-1.5">
-                      <BedDouble size={14} className="text-[var(--primary)]" />
-                      {room.beds}
-                    </span>
-                  </div>
-
-                  <span className="flex items-center gap-1.5">
-                    <MapPin size={14} className="text-[var(--primary)]" />
-                    {room.location}
-                  </span>
-                </div>
-
-                {/* Price + Action */}
-                <div className="flex items-end justify-between gap-3 pt-5">
-                  <div>
-                    <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--foreground)]/45">
-                      STARTING FROM
-                    </p>
-
-                    <div className="flex items-baseline gap-1.5">
-                      <span
-                        className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
-                      >
-                        ₹{room.price.toLocaleString("en-IN")}
-                      </span>
-
-                      <span className="text-[10px] text-[var(--foreground)]/50">
-                        / night
-                      </span>
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/contact"
-                    className="group/link flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
-                    aria-label={`Enquire about ${room.name}`}
-                  >
-                    <ArrowUpRight
-                      size={19}
-                      className="transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                    />
-                  </Link>
-                </div>
               </div>
+
+              {/* Full Card Navigation */}
+              <Link
+                href="/contact"
+                aria-label={`Enquire about ${room.name}`}
+                className="absolute inset-0 z-10 rounded-[24px] lg:rounded-[30px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+              />
             </article>
           ))}
         </div>

@@ -13,8 +13,7 @@ export const rooms = [
     name: "The Garden Deluxe",
     category: "Deluxe Rooms",
     location: "Italy",
-    description:
-      "A beautifully appointed bedroom with a plush king bed, soft neutral tones and a peaceful atmosphere.",
+    description: "Plush king bed with soft, peaceful tones.",
     image:
       "https://www.velora-hotel.com/elegant-hotel-room-with-luxury-bedding.jpg",
     price: 7500,
@@ -29,8 +28,7 @@ export const rooms = [
     name: "The Heritage Deluxe",
     category: "Deluxe Rooms",
     location: "Japan",
-    description:
-      "A refined guest room featuring elegant furnishings, warm textures and a comfortable king-size bed.",
+    description: "Elegant furnishings with warm textures.",
     image:
       "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2019/09/05/1507/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.jpg/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.16x9.jpg?imwidth=2560",
     price: 7900,
@@ -47,8 +45,7 @@ export const rooms = [
     name: "The Premium Retreat",
     category: "Premium Rooms",
     location: "India",
-    description:
-      "Relax in a spacious bedroom with sophisticated interiors, a luxurious king bed and elegant details.",
+    description: "Spacious bedroom with a luxurious king bed.",
     image:
       "https://www.gizapalace.com/images/site-specific/accommodation/rooms/deluxe-adapted/gallery/adapted-deluxe-king-S360-desktop.webp",
     price: 9500,
@@ -63,8 +60,7 @@ export const rooms = [
     name: "The Executive Premium",
     category: "Premium Rooms",
     location: "Australia",
-    description:
-      "An inviting bedroom with a beautifully dressed king bed, elegant lighting and a relaxing seating corner.",
+    description: "Elegant king bed with relaxing seating.",
     image:
       "https://media.alotea.com/the-st-regis-washington-dc-washington-cover.webp",
     price: 11000,
@@ -81,8 +77,7 @@ export const rooms = [
     name: "The Heritage Suite",
     category: "Suites",
     location: "Japan",
-    description:
-      "A spacious suite with a luxurious king bed, refined furnishings and a beautifully designed bedroom.",
+    description: "Spacious suite with a luxurious king bed.",
     image:
       "https://static-new.lhw.com/HotelImages/Final/LW1325/lw1325_l2885084_720x450.jpg",
     price: 12500,
@@ -97,8 +92,7 @@ export const rooms = [
     name: "The Signature Suite",
     category: "Suites",
     location: "Italy",
-    description:
-      "Enjoy an indulgent bedroom with premium bedding, generous space and sophisticated contemporary styling.",
+    description: "Premium bedding with sophisticated styling.",
     image:
       "https://www.americanexpress.com/content/dam/amex/en-au/credit-cards/membership-benefits/the-platinum-card/accor/You_might_also_like_Section_FHR_Mobile.png",
     price: 16500,
@@ -115,8 +109,7 @@ export const rooms = [
     name: "The Royal Residence",
     category: "Luxury Rooms",
     location: "Australia",
-    description:
-      "Experience exceptional comfort in a grand bedroom with a king-size bed, elegant furnishings and luxurious finishes.",
+    description: "Grand bedroom with elegant furnishings.",
     image:
       "https://toc.h-cdn.co/assets/16/27/4000x2657/1-credit-the-peninsula-new-york.jpg",
     price: 15800,
@@ -131,8 +124,7 @@ export const rooms = [
     name: "The Maharaja Retreat",
     category: "Luxury Rooms",
     location: "India",
-    description:
-      "A magnificent bedroom with luxurious bedding, elegant furnishings and an atmosphere of timeless sophistication.",
+    description: "Luxurious bedding with timeless elegance.",
     image:
       "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
     price: 19500,
