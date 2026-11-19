@@ -12,7 +12,7 @@ export const rooms = [
     id: 1,
     name: "The Garden Deluxe",
     category: "Deluxe Rooms",
-    location: "Jaipur",
+    location: "Italy",
     description:
       "A beautifully appointed bedroom with a plush king bed, soft neutral tones and a peaceful atmosphere.",
     image:
@@ -28,7 +28,7 @@ export const rooms = [
     id: 2,
     name: "The Heritage Deluxe",
     category: "Deluxe Rooms",
-    location: "Udaipur",
+    location: "Japan",
     description:
       "A refined guest room featuring elegant furnishings, warm textures and a comfortable king-size bed.",
     image:
@@ -46,7 +46,7 @@ export const rooms = [
     id: 3,
     name: "The Premium Retreat",
     category: "Premium Rooms",
-    location: "Jaipur",
+    location: "India",
     description:
       "Relax in a spacious bedroom with sophisticated interiors, a luxurious king bed and elegant details.",
     image:
@@ -62,7 +62,7 @@ export const rooms = [
     id: 4,
     name: "The Executive Premium",
     category: "Premium Rooms",
-    location: "Udaipur",
+    location: "Australia",
     description:
       "An inviting bedroom with a beautifully dressed king bed, elegant lighting and a relaxing seating corner.",
     image:
@@ -80,7 +80,7 @@ export const rooms = [
     id: 5,
     name: "The Heritage Suite",
     category: "Suites",
-    location: "Jaipur",
+    location: "Japan",
     description:
       "A spacious suite with a luxurious king bed, refined furnishings and a beautifully designed bedroom.",
     image:
@@ -96,7 +96,7 @@ export const rooms = [
     id: 6,
     name: "The Signature Suite",
     category: "Suites",
-    location: "Udaipur",
+    location: "Italy",
     description:
       "Enjoy an indulgent bedroom with premium bedding, generous space and sophisticated contemporary styling.",
     image:
@@ -114,7 +114,7 @@ export const rooms = [
     id: 7,
     name: "The Royal Residence",
     category: "Luxury Rooms",
-    location: "Jaipur",
+    location: "Australia",
     description:
       "Experience exceptional comfort in a grand bedroom with a king-size bed, elegant furnishings and luxurious finishes.",
     image:
@@ -130,7 +130,7 @@ export const rooms = [
     id: 8,
     name: "The Maharaja Retreat",
     category: "Luxury Rooms",
-    location: "Udaipur",
+    location: "India",
     description:
       "A magnificent bedroom with luxurious bedding, elegant furnishings and an atmosphere of timeless sophistication.",
     image:
@@ -144,7 +144,13 @@ export const rooms = [
   },
 ];
 
-export const roomLocations = ["All Locations", "Jaipur", "Udaipur", "Goa"];
+export const roomLocations = [
+  "All Locations",
+  "Italy",
+  "Japan",
+  "Australia",
+  "India",
+];
 
 export const guestReviews = [
   {

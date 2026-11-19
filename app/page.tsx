@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeroIamge from "@/public/HeroImage.png";
 import { Cormorant_Garamond } from "next/font/google";
-import { rooms } from "./data/roomsPageData";
+import { rooms, roomLocations } from "./data/roomsPageData";
 import {
   MapPin,
   CalendarDays,
@@ -11,6 +11,7 @@ import {
   Search,
   Heart,
   Star,
+  BedDouble,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -240,7 +241,8 @@ const HomePage = () => {
 
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
-  const [rooms, setRooms] = useState(1);
+  const [roomCount, setRoomCount] = useState(1);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   const [showDestinations, setShowDestinations] = useState(false);
   const [showOccupancy, setShowOccupancy] = useState(false);
@@ -251,10 +253,18 @@ const HomePage = () => {
 
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const [activeHotelTab, setActiveHotelTab] = useState("Featured");
+  const [activeHotelTab, setActiveHotelTab] = useState("All Locations");
 
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
+
+  const toggleFavorite = (id: number) => {
+    setFavorites((current) =>
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id],
+    );
+  };
 
   useEffect(() => {
     const date = new Date();
@@ -315,14 +325,16 @@ const HomePage = () => {
 
   const currentSlide = editorialSlides[activeSlide];
 
-  const hotelTabs = ["Featured", "Japan", "Italy", "Australia"];
+  const hotelTabs = [
+    "All Locations",
+    ...roomLocations.filter((location) => location !== "All Locations"),
+  ];
 
-  const filteredHotels =
-    activeHotelTab === "Featured"
-      ? editorialHotels
-      : editorialHotels.filter((hotel) =>
-          hotel.location.toLowerCase().includes(activeHotelTab.toLowerCase()),
-        );
+  const filteredTrendingRooms = rooms.filter((room) => {
+    return (
+      activeHotelTab === "All Locations" || room.location === activeHotelTab
+    );
+  });
 
   return (
     <main>
@@ -560,11 +572,8 @@ const HomePage = () => {
                       Choose Occupancy
                     </span>
                   </div>
-
-                  <span className="text-sm xl:text-base font-semibold">
-                    {adults + children} Guests, {rooms}{" "}
-                    {rooms === 1 ? "Room" : "Rooms"}
-                  </span>
+                  {adults + children} Guests, {roomCount}{" "}
+                  {roomCount === 1 ? "Room" : "Rooms"}
                 </button>
 
                 {showOccupancy && (
@@ -596,8 +605,8 @@ const HomePage = () => {
                       {
                         label: "Rooms",
                         description: "Number of rooms",
-                        value: rooms,
-                        setValue: setRooms,
+                        value: roomCount,
+                        setValue: setRoomCount,
                         min: 1,
                       },
                     ].map((item) => (
@@ -892,8 +901,8 @@ const HomePage = () => {
                         {
                           label: "Rooms",
                           description: "Number of rooms",
-                          value: rooms,
-                          setValue: setRooms,
+                          value: roomCount,
+                          setValue: setRoomCount,
                           min: 1,
                         },
                       ].map((item) => (
@@ -1248,107 +1257,140 @@ const HomePage = () => {
               </div>
 
               {/* Hotel Cards */}
-              <div className="hide-scrollbar flex w-full gap-5 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth snap-x snap-mandatory">
-                {filteredHotels.slice(0, 4).map((hotel, index) => (
-                  <div
-                    key={hotel.id}
-                    className={`group ${filteredHotels.length === 1 ? "w-full" : "w-[88%]"} shrink-0 cursor-pointer snap-start sm:w-[45%] lg:w-[calc(25%-15px)]`}
-                  >
-                    {/* Hotel Image */}
-                    <div className="relative h-[240px] w-full overflow-hidden rounded-3xl lg:rounded-4xl bg-[var(--border)] sm:h-[210px] lg:h-[170px] xl:h-[195px]">
+              <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-16">
+                {filteredTrendingRooms.slice(0, 4).map((room) => (
+                  <article key={room.id} className="group min-w-0">
+                    {/* Image */}
+
+                    <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[250px]">
                       <img
-                        src={hotel.image}
-                        alt={hotel.name}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src={room.image}
+                        alt={room.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                       />
 
-                      {/* Image Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" />
 
-                      {/* Featured Label */}
-                      {index === 0 && activeHotelTab === "Featured" && (
-                        <span className="absolute left-3 top-3 rounded-full bg-[var(--surface)]/90 px-3 sm:px-3.5 py-1 sm:py-2 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider text-[var(--foreground)] backdrop-blur-sm">
-                          Popular stay
-                        </span>
-                      )}
+                      {/* Category */}
+                      <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-[9px] font-medium uppercase tracking-wider text-white backdrop-blur-md">
+                        {room.tag}
+                      </span>
 
-                      {/* Favourite Icon */}
+                      {/* Favourite */}
                       <button
-                        onClick={(e) => e.stopPropagation()}
-                        aria-label={`Add ${hotel.name} to favourites`}
-                        className="absolute right-3 top-3 flex h-5 sm:h-9 w-5 sm:w-9 items-center justify-center rounded-full bg-white/90 text-[#38302A] backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white"
+                        onClick={() => toggleFavorite(room.id)}
+                        aria-label={`Toggle favourite for ${room.name}`}
+                        aria-pressed={favorites.includes(room.id)}
+                        className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#332c26] backdrop-blur-md transition-all duration-300 hover:scale-110"
                       >
                         <Heart
-                          className="size-[12px] sm:size-[16px]"
+                          size={17}
                           strokeWidth={1.5}
+                          fill={
+                            favorites.includes(room.id)
+                              ? "currentColor"
+                              : "none"
+                          }
+                          className={
+                            favorites.includes(room.id)
+                              ? "text-[var(--primary)]"
+                              : ""
+                          }
                         />
                       </button>
                     </div>
 
-                    {/* Hotel Information */}
-                    <div className="pt-4 flex flex-col gap-1 sm:gap-2">
-                      {/* Hotel Name */}
-                      <h4
-                        className={`${cormorant.className} truncate text-3xl lg:text-[32px] font-semibold leading-[1.1] text-[var(--foreground)] transition-colors duration-300 group-hover:text-[var(--primary)]`}
-                      >
-                        {hotel.name}
-                      </h4>
+                    {/* Details */}
+                    <div className="pt-5">
+                      <div className="flex h-[105px] items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <h3
+                            className={`${cormorant.className} line-clamp-2 truncate text-3xl font-medium leading-tight transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-4xl`}
+                          >
+                            {room.name}
+                          </h3>
+                          <p className="mt-2 line-clamp-2 max-w-sm text-xs leading-6 text-[var(--foreground)]/55">
+                            {room.description}
+                          </p>
+                        </div>
 
-                      {/* Description */}
-                      <p className="line-clamp-2 text-[13px] leading-[1.7] text-[var(--foreground)]/65">
-                        {hotel.description}
-                      </p>
-
-                      {/* Location + Rating */}
-                      <div className="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
-                        <p className="flex min-w-0 items-center gap-1.5 text-[12px] font-medium text-[var(--foreground)]/60">
-                          <MapPin
-                            size={14}
-                            className="shrink-0 text-[var(--primary)]"
-                          />
-                          <span className="truncate">{hotel.location}</span>
-                        </p>
-
-                        <div className="flex shrink-0 items-center gap-1.5">
+                        <div className="flex shrink-0 items-center gap-1 pt-2">
                           <Star
                             size={13}
                             fill="currentColor"
                             className="text-[var(--primary)]"
                           />
-                          <span className="text-[12px] font-semibold text-[var(--foreground)]">
-                            {hotel.rating}
-                          </span>
-                          <span className="text-[10px] text-[var(--foreground)]/45">
-                            / 5.0
+                          <span className="text-xs font-semibold">
+                            {room.rating.toFixed(1)}
                           </span>
                         </div>
                       </div>
 
-                      {/* Price */}
-                      <div className="flex items-end justify-between border-t border-[var(--border)] pt-3">
+                      {/* Room Features */}
+                      <div className="mt-5 flex flex-wrap items-center justify-between border-b border-[var(--border)] pb-5 text-[10px] text-[var(--foreground)]/60">
+                        <div className="flex gap-x-4 gap-y-3">
+                          <span className="flex items-center gap-1.5">
+                            <Users
+                              size={14}
+                              className="text-[var(--primary)]"
+                            />
+                            {room.guests} Guests
+                          </span>
+
+                          <span className="flex items-center gap-1.5">
+                            <BedDouble
+                              size={14}
+                              className="text-[var(--primary)]"
+                            />
+                            {room.beds}
+                          </span>
+                        </div>
+
+                        <span className="flex items-center gap-1.5">
+                          <MapPin size={14} className="text-[var(--primary)]" />
+                          {room.location}
+                        </span>
+                      </div>
+
+                      {/* Price + Action */}
+                      <div className="flex items-end justify-between gap-3 pt-5">
                         <div>
-                          <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.15em] text-[var(--foreground)]/45">
-                            Starting from
+                          <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--foreground)]/45">
+                            STARTING FROM
                           </p>
+
                           <div className="flex items-baseline gap-1.5">
                             <span
-                              className={`${cormorant.className} text-[29px] font-semibold leading-none text-[var(--foreground)]`}
+                              className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
                             >
-                              ₹{hotel.price.toLocaleString("en-IN")}
+                              ₹{room.price.toLocaleString("en-IN")}
                             </span>
-                            <span className="text-[11px] text-[var(--foreground)]/50">
+
+                            <span className="text-[10px] text-[var(--foreground)]/50">
                               / night
                             </span>
                           </div>
                         </div>
+
+                        <a
+                          href="/contact"
+                          className="group/link flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
+                          aria-label={`Enquire about ${room.name}`}
+                        >
+                          <ArrowUpRight
+                            size={19}
+                            className="transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                          />
+                        </a>
                       </div>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
 
               {/* Empty State */}
-              {filteredHotels.length === 0 && (
+              {filteredTrendingRooms.length === 0 && (
                 <div className="py-12 text-center">
                   <p
                     className={`${cormorant.className} text-2xl text-[var(--foreground)]`}

@@ -208,7 +208,7 @@ const RoomsPage = () => {
 
         {/* Room Cards */}
         <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-16">
-          {filteredRooms.map((room, index) => (
+          {filteredRooms.map((room) => (
             <article key={room.id} className="group min-w-0">
               {/* Image */}
 
