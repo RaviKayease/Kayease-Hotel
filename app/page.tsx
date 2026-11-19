@@ -13,6 +13,7 @@ import {
   Heart,
   Star,
   BedDouble,
+  Check,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 
@@ -255,6 +256,9 @@ const HomePage = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const [activeHotelTab, setActiveHotelTab] = useState("All Locations");
+
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
@@ -1548,49 +1552,82 @@ const HomePage = () => {
         </div>
       </section>
       {/* Newsletter Section */}
-      <section className="relative w-full flex justify-center overflow-hidden bg-[var(--background)] px-5 py-8 lg:py-20 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:pt-28 lg:pb-18">
-        {/* Newsletter Content */}
-        <div className="max-w-[750px]">
+      <section className="relative flex w-full justify-center overflow-hidden bg-[var(--background)] px-5 py-12 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:pb-18 lg:pt-28">
+        <div className="w-full max-w-[750px]">
           {/* Main Heading */}
           <h2 className={`${sectionHeadingClass} max-w-[700px]`}>
             Beautiful stays, delivered
             <span className="block">straight to your inbox.</span>
           </h2>
 
-          {/* Newsletter Form */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              // Connect your newsletter subscription API here.
-            }}
-            className="mt-16 flex w-full max-w-[650px] flex-col gap-0 sm:flex-row"
-          >
-            {/* Email Input */}
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="Enter Email Address"
-              className="h-[54px] min-w-0 flex-1 border border-[var(--border)] bg-[var(--surface)] px-6 text-sm text-[var(--foreground)] outline-none transition-all duration-300 placeholder:text-[var(--foreground)]/40 focus:border-[var(--primary)] sm:h-[58px]"
-            />
+          {/* Newsletter Form / Success Message */}
+          <div className="mt-12 sm:mt-16">
+            {!isSubscribed ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-            {/* Subscribe Button */}
-            <button
-              type="submit"
-              className="group flex h-[54px] shrink-0 items-center justify-center gap-3 border border-[var(--primary)] bg-[var(--primary)] px-7 text-sm font-medium text-white transition-all duration-300 hover:brightness-110 sm:h-[58px]"
-            >
-              Subscribe
-              <ArrowUpRight
-                size={17}
-                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-              />
-            </button>
-          </form>
+                  if (!email.trim()) return;
+
+                  // Connect newsletter API here before confirming subscription.
+                  setIsSubscribed(true);
+                  setEmail("");
+                }}
+                className="flex w-full max-w-[650px] flex-col gap-3 sm:flex-row sm:gap-0"
+              >
+                {/* Email Input */}
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Email Address"
+                  className="h-[54px] min-w-0 flex-1 border border-[var(--border)] bg-[var(--surface)] px-6 text-sm text-[var(--foreground)] outline-none transition-all duration-300 placeholder:text-[var(--foreground)]/40 focus:border-[var(--primary)] sm:h-[58px]"
+                />
+
+                {/* Subscribe Button */}
+                <button
+                  type="submit"
+                  className="group flex h-[54px] shrink-0 items-center justify-center gap-3 border border-[var(--primary)] bg-[var(--primary)] px-7 text-sm font-medium text-white transition-all duration-300 hover:brightness-110 sm:h-[58px]"
+                >
+                  Subscribe
+                  <ArrowUpRight
+                    size={17}
+                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
+                </button>
+              </form>
+            ) : (
+              /* Success Message */
+              <div
+                role="status"
+                aria-live="polite"
+                className="flex max-w-[650px] items-center gap-4 border border-[var(--primary)]/25 bg-[var(--surface)] px-6 py-5 animate-in fade-in duration-500"
+              >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/10">
+                  <Check size={21} className="text-[var(--primary)]" />
+                </div>
+
+                <div>
+                  <h3 className={`${cormorant.className} text-2xl font-medium`}>
+                    Thank you for subscribing!
+                  </h3>
+                  <p className="mt-1 text-xs leading-5 text-[var(--foreground)]/55">
+                    You're one step closer to discovering beautiful stays and
+                    exclusive offers.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Privacy Note */}
-          <p className="mt-4 text-[10px] leading-5 tracking-wide text-[var(--foreground)]/45 sm:text-xs">
-            Travel inspiration and exclusive offers, straight to your inbox.
-          </p>
+          {!isSubscribed && (
+            <p className="mt-1 text-[10px] leading-5 tracking-wide text-[var(--foreground)]/45 sm:text-xs">
+              Travel inspiration and exclusive offers, straight to your inbox.
+            </p>
+          )}
         </div>
       </section>
     </main>
