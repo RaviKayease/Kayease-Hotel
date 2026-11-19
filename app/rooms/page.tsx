@@ -20,6 +20,10 @@ import {
   Users,
   ChevronDown,
   Check,
+  X,
+  Minus,
+  Plus,
+  SlidersHorizontal,
 } from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
@@ -35,6 +39,19 @@ const RoomsPage = () => {
   const [activeLocation, setActiveLocation] = useState("All Locations");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const MIN_ROOM_PRICE = Math.min(...rooms.map((room) => room.price));
+  const MAX_ROOM_PRICE = Math.max(...rooms.map((room) => room.price));
+  const MAX_GUESTS = Math.max(...rooms.map((room) => room.guests));
+
+  const [minPrice, setMinPrice] = useState(MIN_ROOM_PRICE);
+  const [maxPrice, setMaxPrice] = useState(MAX_ROOM_PRICE);
+
+  const [minRating, setMinRating] = useState(0);
+
+  const [minGuests, setMinGuests] = useState(1);
+
   const locationRef = useRef<HTMLDivElement | null>(null);
 
   const filteredRooms = rooms.filter((room) => {
@@ -44,8 +61,35 @@ const RoomsPage = () => {
     const matchesLocation =
       activeLocation === "All Locations" || room.location === activeLocation;
 
-    return matchesCategory && matchesLocation;
+    const matchesPrice = room.price >= minPrice && room.price <= maxPrice;
+
+    const matchesRating = room.rating >= minRating;
+
+    const matchesGuests = room.guests >= minGuests;
+
+    return (
+      matchesCategory &&
+      matchesLocation &&
+      matchesPrice &&
+      matchesRating &&
+      matchesGuests
+    );
   });
+
+  const activeFilterCount =
+    Number(minPrice > MIN_ROOM_PRICE) +
+    Number(maxPrice < MAX_ROOM_PRICE) +
+    Number(minRating > 0) +
+    Number(minGuests > 1);
+
+  const resetFilters = () => {
+    setActiveCategory("All Rooms");
+    setActiveLocation("All Locations");
+    setMinPrice(MIN_ROOM_PRICE);
+    setMaxPrice(MAX_ROOM_PRICE);
+    setMinRating(0);
+    setMinGuests(1);
+  };
 
   const toggleFavorite = (id: number) => {
     setFavorites((current) =>
@@ -62,6 +106,7 @@ const RoomsPage = () => {
         !locationRef.current.contains(event.target as Node)
       ) {
         setIsLocationOpen(false);
+        setIsFilterOpen(false);
       }
     };
 
@@ -131,79 +176,332 @@ const RoomsPage = () => {
         </div>
 
         {/* Filters */}
-        <div className="hide-scrollbar mt-10 flex justify-between gap-5 w-full border-b items-center border-[var(--border)] pb-4 sm:mt-12">
-          <div className="min-w-0 flex-1 overflow-hidden border-r border-[var(--border)] pr-5">
-            <div className="hide-scrollbar flex w-full gap-4 overflow-x-auto overscroll-x-contain whitespace-nowrap">
-              {roomCategories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`shrink-0 rounded-full px-5 py-3 text-[10px] font-medium transition-all duration-300 sm:px-7 sm:text-xs ${
-                    activeCategory === category
-                      ? "bg-[var(--primary)] text-white shadow-md"
-                      : "border border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)] hover:text-[var(--primary)]"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Location Filter */}
-          <div className="relative shrink-0">
-            <button
-              onClick={() => setIsLocationOpen((prev) => !prev)}
-              className="flex min-w-[190px] items-center justify-between gap-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 transition-all duration-300 hover:border-[var(--primary)]"
-            >
-              <div className="flex items-center gap-3">
-                <MapPin
-                  size={17}
-                  className="text-[var(--primary)] leading-none"
-                />
-
-                <div className="text-left">
-                  <p className="text-xs font-semibold text-[var(--foreground)]">
-                    {activeLocation}
-                  </p>
-                </div>
-              </div>
-
-              <ChevronDown
-                size={16}
-                className={`text-[var(--foreground)]/55 transition-transform duration-300 ${
-                  isLocationOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {isLocationOpen && (
-              <div
-                ref={locationRef}
-                className="absolute right-0 top-full z-30 mt-2 w-full min-w-[190px] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-xl"
-              >
-                {roomLocations.map((location) => (
+        <div className="mt-10 border-b border-[var(--border)] pb-5 sm:mt-12">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            {/* Room Categories */}
+            <div className="hide-scrollbar min-w-0 flex-1 overflow-x-auto">
+              <div className="flex w-max gap-3 whitespace-nowrap">
+                {roomCategories.map((category) => (
                   <button
-                    key={location}
-                    onClick={() => {
-                      setActiveLocation(location);
-                      setIsLocationOpen(false);
-                    }}
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-xs transition-colors ${
-                      activeLocation === location
-                        ? "bg-[var(--primary)]/10 font-semibold text-[var(--primary)]"
-                        : "text-[var(--foreground)]/70 hover:bg-[var(--background)]"
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`shrink-0 rounded-full px-5 py-3 text-[10px] font-medium transition-all duration-300 sm:px-7 sm:text-xs ${
+                      activeCategory === category
+                        ? "bg-[var(--primary)] text-white shadow-md"
+                        : "border border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)] hover:text-[var(--primary)]"
                     }`}
                   >
-                    {location}
-
-                    {activeLocation === location && (
-                      <Check size={14} className="text-[var(--primary)]" />
-                    )}
+                    {category}
                   </button>
                 ))}
               </div>
-            )}
+            </div>
+
+            {/* Filters */}
+            <div className="flex w-full shrink-0 gap-3 lg:w-auto">
+              {/* Location Filter */}
+              <div
+                ref={locationRef}
+                className="relative min-w-0 flex-1 lg:flex-none"
+              >
+                <button
+                  onClick={() => {
+                    (setIsFilterOpen(false),
+                      setIsLocationOpen((prev) => !prev));
+                  }}
+                  className="flex h-[48px] w-full items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 transition-all duration-300 hover:border-[var(--primary)] lg:min-w-[190px]"
+                >
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <MapPin
+                      size={16}
+                      className="shrink-0 text-[var(--primary)]"
+                    />
+
+                    <span className="truncate text-xs font-medium text-[var(--foreground)]">
+                      {activeLocation}
+                    </span>
+                  </div>
+
+                  <ChevronDown
+                    size={15}
+                    className={`shrink-0 text-[var(--foreground)]/55 transition-transform duration-300 ${
+                      isLocationOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isLocationOpen && (
+                  <div className="absolute left-0 top-full z-30 mt-2 w-full min-w-[190px] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-xl">
+                    {roomLocations.map((location) => (
+                      <button
+                        key={location}
+                        onClick={() => {
+                          setActiveLocation(location);
+                          setIsLocationOpen(false);
+                        }}
+                        className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-xs transition-colors ${
+                          activeLocation === location
+                            ? "bg-[var(--primary)]/10 font-semibold text-[var(--primary)]"
+                            : "text-[var(--foreground)]/70 hover:bg-[var(--background)]"
+                        }`}
+                      >
+                        {location}
+
+                        {activeLocation === location && (
+                          <Check size={14} className="text-[var(--primary)]" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Price, Rating & Guest Filter */}
+              <div className="flex w-full shrink-0 gap-3 lg:w-auto">
+                <div className="relative min-w-0 flex-1 lg:flex-none">
+                  {/* Filters Button */}
+                  <button
+                    onClick={() => setIsFilterOpen(true)}
+                    className="flex h-[48px] w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-xs font-medium text-[var(--foreground)] transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  >
+                    <SlidersHorizontal size={15} />
+                    Filters
+                    {activeFilterCount > 0 && (
+                      <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--primary)] px-1 text-[10px] text-white">
+                        {activeFilterCount}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Filter Bottom Sheet */}
+                  {isFilterOpen && (
+                    <div
+                      className="absolute right-0 top-full z-30 mt-2 w-[calc(100vw-2.5rem)] sm:w-[520px] lg:w-[520px]"
+                      onClick={() => setIsFilterOpen(false)}
+                    >
+                      <div
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="filter-heading"
+                        onClick={(e) => e.stopPropagation()}
+                        className="max-h-[88vh] w-full max-w-[520px] overflow-y-auto hide-scrollbar rounded-t-[28px] border border-[var(--border)] bg-[var(--background)] p-6 shadow-2xl sm:rounded-[28px] sm:p-8"
+                      >
+                        {/* Header */}
+                        <div className="mb-7 flex items-center justify-between">
+                          <div>
+                            <h3
+                              id="filter-heading"
+                              className={`${cormorant.className} text-3xl font-medium`}
+                            >
+                              Refine Your Stay
+                            </h3>
+                            <p className="mt-1 text-[11px] text-[var(--foreground)]/50">
+                              Find the perfect room for your experience.
+                            </p>
+                          </div>
+
+                          <button
+                            onClick={() => setIsFilterOpen(false)}
+                            aria-label="Close filters"
+                            className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:bg-[var(--surface)]"
+                          >
+                            <X size={17} />
+                          </button>
+                        </div>
+
+                        {/* Price Range */}
+                        <div className="border-t border-[var(--border)] py-6">
+                          <div className="mb-5 flex items-center justify-between">
+                            <h4 className="text-sm font-semibold">
+                              Price per night
+                            </h4>
+                            <span className="text-[10px] text-[var(--foreground)]/50">
+                              INR
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between gap-3">
+                            <div>
+                              <p className="mb-1 text-[10px] text-[var(--foreground)]/45">
+                                Minimum
+                              </p>
+                              <p className="text-sm font-medium">
+                                ₹{minPrice.toLocaleString("en-IN")}
+                              </p>
+                            </div>
+
+                            <div className="h-px w-8 bg-[var(--border)]" />
+
+                            <div className="text-right">
+                              <p className="mb-1 text-[10px] text-[var(--foreground)]/45">
+                                Maximum
+                              </p>
+                              <p className="text-sm font-medium">
+                                ₹{maxPrice.toLocaleString("en-IN")}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Minimum Price */}
+                          <div className="mt-5">
+                            <label className="mb-2 block text-[10px] text-[var(--foreground)]/50">
+                              Minimum price
+                            </label>
+
+                            <input
+                              type="range"
+                              min={MIN_ROOM_PRICE}
+                              max={MAX_ROOM_PRICE}
+                              step={100}
+                              value={minPrice}
+                              onChange={(e) =>
+                                setMinPrice(
+                                  Math.min(Number(e.target.value), maxPrice),
+                                )
+                              }
+                              className="w-full cursor-pointer accent-[var(--primary)]"
+                            />
+                          </div>
+
+                          {/* Maximum Price */}
+                          <div className="mt-4">
+                            <label className="mb-2 block text-[10px] text-[var(--foreground)]/50">
+                              Maximum price
+                            </label>
+
+                            <input
+                              type="range"
+                              min={MIN_ROOM_PRICE}
+                              max={MAX_ROOM_PRICE}
+                              step={100}
+                              value={maxPrice}
+                              onChange={(e) =>
+                                setMaxPrice(
+                                  Math.max(Number(e.target.value), minPrice),
+                                )
+                              }
+                              className="w-full cursor-pointer accent-[var(--primary)]"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Guest Rating */}
+                        <div className="border-t border-[var(--border)] py-6">
+                          <h4 className="mb-4 text-sm font-semibold">
+                            Guest rating
+                          </h4>
+
+                          <div className="grid grid-cols-3 gap-2">
+                            {[
+                              { label: "Any rating", value: 0 },
+                              { label: "4.0+", value: 4 },
+                              { label: "4.5+", value: 4.5 },
+                            ].map((rating) => (
+                              <button
+                                key={rating.value}
+                                onClick={() => setMinRating(rating.value)}
+                                className={`flex flex-col items-center gap-1 rounded-xl border px-2 py-3 text-xs transition-all duration-300 ${
+                                  minRating === rating.value
+                                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
+                                    : "border-[var(--border)] text-[var(--foreground)]/65 hover:border-[var(--primary)]"
+                                }`}
+                              >
+                                {rating.value === 0 ? (
+                                  <span className="font-medium">
+                                    Any rating
+                                  </span>
+                                ) : (
+                                  <>
+                                    <span className="flex items-center gap-1 font-semibold">
+                                      <Star
+                                        size={12}
+                                        fill="currentColor"
+                                        className="text-[var(--primary)]"
+                                      />
+                                      {rating.label}
+                                    </span>
+                                    <span className="text-[9px] opacity-60">
+                                      & above
+                                    </span>
+                                  </>
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Number of Guests */}
+                        <div className="border-t border-[var(--border)] py-6">
+                          <h4 className="mb-4 text-sm font-semibold">
+                            Number of guests
+                          </h4>
+
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs font-medium">Guests</p>
+                              <p className="mt-1 text-[10px] text-[var(--foreground)]/50">
+                                Minimum room capacity
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                              <button
+                                onClick={() =>
+                                  setMinGuests((prev) => Math.max(1, prev - 1))
+                                }
+                                disabled={minGuests <= 1}
+                                aria-label="Decrease guests"
+                                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                              >
+                                <Minus size={14} />
+                              </button>
+
+                              <span className="w-5 text-center text-sm font-semibold tabular-nums">
+                                {minGuests}
+                              </span>
+
+                              <button
+                                onClick={() =>
+                                  setMinGuests((prev) =>
+                                    Math.min(MAX_GUESTS, prev + 1),
+                                  )
+                                }
+                                disabled={minGuests >= MAX_GUESTS}
+                                aria-label="Increase guests"
+                                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition-colors hover:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="flex items-center gap-4 border-t border-[var(--border)] pt-6">
+                          <button
+                            onClick={resetFilters}
+                            className="shrink-0 text-xs font-medium text-[var(--foreground)]/60 underline underline-offset-4 transition-colors hover:text-[var(--primary)]"
+                          >
+                            Reset all
+                          </button>
+
+                          <button
+                            onClick={() => setIsFilterOpen(false)}
+                            className="group flex h-[50px] flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-4 text-xs font-medium text-white transition-all duration-300 hover:brightness-110"
+                          >
+                            Show Stays
+                            <ArrowUpRight
+                              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                              size={15}
+                            />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
