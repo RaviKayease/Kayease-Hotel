@@ -65,7 +65,7 @@ const FAQsPage = () => {
   };
 
   return (
-    <main className="w-full overflow-hidden bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500">
+    <main>
       {/* ================= HERO SECTION ================= */}
       <section className="relative px-5 pb-14 pt-16 sm:px-10 sm:pb-20 sm:pt-24 lg:px-16 lg:pb-24 lg:pt-28">
         {/* Decorative Background */}
