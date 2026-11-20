@@ -46,7 +46,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
   ].slice(0, 4);
 
   return (
-    <main className="overflow-hidden bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500">
+    <main>
       {/* EDITORIAL INTRO */}
       <section className="px-5 pb-12 pt-16 sm:px-10 sm:pb-16 sm:pt-24 lg:px-16 lg:pt-32">
         <div className="mx-auto max-w-[1450px]">

@@ -7,11 +7,8 @@ import DecorativeLeaf from "@/public/FooterImage/image.png";
 import Image from "next/image";
 import Logo from "./Logo";
 import { BRAND_NAME } from "./brand";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { SiX } from "react-icons/si";
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -117,13 +114,7 @@ const Footer = () => {
                 aria-label="Facebook"
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-4 w-4"
-                >
-                  <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.8-.1-1.7-.2-2.6-.2-2.6 0-4.4 1.6-4.4 4.5v1.9H7V13h2.8v8h3.7Z" />
-                </svg>
+                <FaFacebookF className="h-4 w-4" />
               </a>
 
               {/* Instagram */}
@@ -134,17 +125,7 @@ const Footer = () => {
                 aria-label="Instagram"
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  className="h-4 w-4"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" />
-                </svg>
+                <FaInstagram className="h-4 w-4" />
               </a>
 
               {/* X / Twitter */}
@@ -155,13 +136,7 @@ const Footer = () => {
                 aria-label="X"
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-3.5 w-3.5"
-                >
-                  <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.7L18.9 2Zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20Z" />
-                </svg>
+                <SiX className="h-3.5 w-3.5" />
               </a>
             </div>
           </div>

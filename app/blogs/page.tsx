@@ -51,7 +51,7 @@ const Page = () => {
   const featuredPost = blogPosts[0];
 
   return (
-    <main className="overflow-hidden bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500">
+    <main>
       {/* EDITORIAL INTRO + FEATURED STORY */}
       <section className="relative px-5 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-12 lg:px-12 lg:pt-24 lg:pb-16">
         <div className="mx-auto max-w-[1350px]">

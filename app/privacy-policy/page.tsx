@@ -265,7 +265,7 @@ const sections = [
 
 const page = () => {
   return (
-    <main className="overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+    <main>
       {/* HERO */}
       <section className="px-4 pb-5 pt-24 sm:px-7 sm:pt-28 lg:px-10 lg:pt-32">
         <div className="relative mx-auto min-h-[570px] max-w-[1600px] overflow-hidden bg-[var(--editorial-background)] sm:min-h-[650px]">
