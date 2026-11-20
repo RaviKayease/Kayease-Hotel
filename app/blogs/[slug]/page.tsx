@@ -2,13 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  CalendarDays,
-  Clock3,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
 
 import { blogPosts } from "@/app/data/blogPosts";
 
@@ -212,7 +206,6 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
         </div>
       </section>
 
-      {/* RELATED STORIES */}
       {/* RELATED STORIES */}
       {fallbackPosts.length > 0 && (
         <section className="relative overflow-hidden bg-[var(--foreground)]/[0.025] px-5 py-24 sm:px-10 sm:py-28 lg:px-16">
