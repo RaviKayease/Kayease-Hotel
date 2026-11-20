@@ -15,14 +15,14 @@ const cormorant = Cormorant_Garamond({
 
 const quickLinks = [
   { name: "Home", href: "/" },
-  { name: "Our Stays", href: "/hotels" },
-  { name: "About", href: "/about" },
-  { name: "Blog", href: "/blogs-page" },
-  { name: "Contact", href: "/contact" },
+  { name: "Our Stays", href: "/rooms" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Contact Us", href: "/contact-us" },
+  { name: "Blog", href: "/blogs" },
 ];
 
 const supportLinks = [
-  { name: "FAQs", href: "/faq" },
+  { name: "FAQs", href: "/faqs" },
   { name: "Booking Guide", href: "/booking-guide" },
   { name: "Cancellation", href: "/cancellation" },
   { name: "Terms & Conditions", href: "/terms" },
