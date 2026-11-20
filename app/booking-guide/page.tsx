@@ -411,12 +411,12 @@ const page = () => {
 
       {/* FINAL CTA */}
       <section className="px-5 pb-24 sm:px-10 sm:pb-32 lg:px-16">
-        <div className="relative mx-auto max-w-[1450px] overflow-hidden bg-[#252b28] px-7 py-20 text-center text-white sm:px-12 sm:py-28">
-          <div className="absolute -left-20 -top-32 h-80 w-80 rounded-full border border-white/[0.08]" />
-          <div className="absolute -bottom-48 -right-20 h-[420px] w-[420px] rounded-full border border-white/[0.08]" />
+        <div className="relative mx-auto max-w-[1450px] overflow-hidden bg-[var(--editorial-background)] px-7 py-20 text-center text-[var(--foreground)] sm:px-12 sm:py-28">
+          <div className="absolute -left-20 -top-32 h-80 w-80 rounded-full border border-[var(--foreground)]/[0.08]" />
+          <div className="absolute -bottom-48 -right-20 h-[420px] w-[420px] rounded-full border border-[var(--foreground)]/[0.08]" />
 
           <div className="relative mx-auto max-w-[680px]">
-            <p className="mb-6 text-[9px] font-semibold uppercase tracking-[0.25em] text-white/55">
+            <p className="mb-6 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]/55">
               Your next chapter awaits
             </p>
 
@@ -428,14 +428,14 @@ const page = () => {
               is to <span className="italic">get away.</span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-[410px] text-xs leading-7 text-white/55 sm:text-sm">
+            <p className="mx-auto mt-6 max-w-[410px] text-xs leading-7 text-[var(--foreground)]/55 sm:text-sm">
               Find somewhere special, make it yours and start looking forward to
               the moments ahead.
             </p>
 
             <Link
               href="/properties"
-              className="group mt-10 inline-flex items-center gap-4 border-b border-white/50 pb-3 text-[9px] font-semibold uppercase tracking-[0.2em] hover:border-white"
+              className="group mt-10 inline-flex items-center gap-4 border-b border-[var(--foreground)]/50 pb-3 text-[9px] font-semibold uppercase tracking-[0.2em] hover:border-[var(--primary)] hover:text-[var(--primary)]"
             >
               Explore stays
               <ArrowUpRight
@@ -444,14 +444,14 @@ const page = () => {
               />
             </Link>
 
-            <div className="mt-14 flex items-center justify-center gap-2 text-white/40">
+            <div className="mt-14 flex items-center justify-center gap-2 text-[var(--foreground)]/40">
               <CircleHelp size={13} />
               <span className="text-[9px] uppercase tracking-[0.15em]">
                 Need a little help?
               </span>
               <Link
                 href="/contact-us"
-                className="text-[9px] uppercase tracking-[0.15em] text-white/80 transition-colors hover:text-white"
+                className="text-[9px] uppercase tracking-[0.15em] text-[var(--foreground)]/80 transition-colors hover:text-[var(--primary)]"
               >
                 Contact us
               </Link>
