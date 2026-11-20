@@ -12,6 +12,7 @@ import {
   BookOpen,
   X,
 } from "lucide-react";
+import { blogPosts } from "@/app/data/blogPosts";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -27,81 +28,7 @@ const categories = [
   "Inspiration",
 ];
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Art of Slow Travel: Finding Beauty in Every Moment",
-    excerpt:
-      "Discover a different way to explore the world, where the journey matters just as much as the destination.",
-    category: "Inspiration",
-    date: "November 18, 2026",
-    readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&q=85",
-    slug: "art-of-slow-travel",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "A Weekend in Kyoto: Where Tradition Meets Tranquility",
-    excerpt:
-      "From quiet bamboo forests to beautiful traditional streets, discover the timeless charm of Kyoto.",
-    category: "Destinations",
-    date: "November 12, 2026",
-    readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&q=85",
-    slug: "weekend-in-kyoto",
-  },
-  {
-    id: 3,
-    title: "Beyond the Ordinary: The Beauty of Boutique Stays",
-    excerpt:
-      "Explore the little details that transform a beautiful accommodation into an unforgettable experience.",
-    category: "Hospitality",
-    date: "November 08, 2026",
-    readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
-    slug: "beauty-of-boutique-stays",
-  },
-  {
-    id: 4,
-    title: "Chasing Sunsets Along the Mediterranean Coast",
-    excerpt:
-      "A journey through breathtaking coastlines, charming seaside towns and unforgettable golden evenings.",
-    category: "Travel Guides",
-    date: "November 02, 2026",
-    readTime: "7 min read",
-    image:
-      "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1000&q=85",
-    slug: "mediterranean-coast",
-  },
-  {
-    id: 5,
-    title: "Little Luxuries That Make a Stay Extraordinary",
-    excerpt:
-      "Sometimes it is the smallest thoughtful touches that make the biggest difference to your travels.",
-    category: "Experiences",
-    date: "October 26, 2026",
-    readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85",
-    slug: "little-luxuries",
-  },
-  {
-    id: 6,
-    title: "The Beauty of Getting Lost in New Places",
-    excerpt:
-      "Leave the itinerary behind and discover the unexpected experiences waiting around every corner.",
-    category: "Inspiration",
-    date: "October 19, 2026",
-    readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1000&q=85",
-    slug: "getting-lost-in-new-places",
-  },
-];
+
 
 const Page = () => {
   const [activeCategory, setActiveCategory] = useState("All Stories");
