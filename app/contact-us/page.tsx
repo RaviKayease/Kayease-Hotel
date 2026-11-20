@@ -410,7 +410,7 @@ const ContactPage = () => {
 
       {/* CLOSING SECTION */}
       <section className="relative mx-auto max-w-[1400px] px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12 lg:pb-36">
-        <div className="relative isolate overflow-hidden rounded-[32px] bg-[#252821] px-6 py-20 text-center shadow-[0_25px_70px_rgba(0,0,0,0.10)] sm:rounded-[40px] sm:px-12 sm:py-28 lg:py-32">
+        <div className="relative isolate overflow-hidden rounded-[32px] bg-[var(--surface)] px-6 py-20 text-center shadow-[0_25px_70px_rgba(0,0,0,0.10)] sm:rounded-[40px] sm:px-12 sm:py-28 lg:py-32">
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
             <Image
@@ -425,7 +425,7 @@ const ContactPage = () => {
           </div>
 
           {/* Content */}
-          <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#e8b77d]">
+          <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[var(--primary)]">
             Until we meet
           </p>
 
@@ -433,15 +433,17 @@ const ContactPage = () => {
             className={`${cormorant.className} mx-auto max-w-3xl text-5xl font-medium leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-[76px]`}
           >
             Your next beautiful
-            <span className="block italic text-[#e8b77d]">escape awaits.</span>
+            <span className="block italic text-[var(--primary)]">
+              escape awaits.
+            </span>
           </h2>
 
           <Link
             href="/rooms#room-collection"
-            className="group mt-8 inline-flex items-center gap-4 border-b border-[#e8b77d]/60 pb-2 text-[10px] font-semibold uppercase tracking-[0.17em] text-white transition-colors hover:text-[#e8b77d]"
+            className="group mt-8 inline-flex items-center gap-4 border-b border-[var(--primary)]/60 pb-2 text-[10px] font-semibold uppercase tracking-[0.17em] text-white transition-colors hover:text-[var(--primary)]"
           >
             Explore our stays
-            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#e8b77d]/60 text-[#e8b77d] transition-all duration-300 group-hover:bg-[#e8b77d] group-hover:text-[#252821]">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--primary)]/60 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-[var(--background)]">
               <ArrowUpRight
                 size={16}
                 className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
