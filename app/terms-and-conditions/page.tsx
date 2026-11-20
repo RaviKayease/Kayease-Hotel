@@ -500,7 +500,7 @@ const page = () => {
               </span>
             </Link>
             <Link
-              href="/terms-of-services"
+              href="/booking-guide"
               className="group flex min-h-[150px] items-center justify-between border border-[var(--border)] p-7 transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface)]"
             >
               <div>
@@ -509,7 +509,7 @@ const page = () => {
                 </span>
 
                 <h3 className={`${cormorant.className} mt-2 text-3xl`}>
-                  Terms of Service
+                  Booking Guide
                 </h3>
 
                 <p className="mt-2 text-xs text-[var(--foreground)]/60">

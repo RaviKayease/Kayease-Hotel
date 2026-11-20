@@ -15,7 +15,7 @@ const cormorant = Cormorant_Garamond({
 
 const quickLinks = [
   { name: "Home", href: "/" },
-  { name: "Our Stays", href: "/rooms" },
+  { name: "Rooms", href: "/rooms" },
   { name: "About Us", href: "/about-us" },
   { name: "Contact Us", href: "/contact-us" },
   { name: "Blog", href: "/blogs" },
@@ -26,7 +26,6 @@ const supportLinks = [
   { name: "Booking Guide", href: "/booking-guide" },
   { name: "Cancellation", href: "/cancellation" },
   { name: "Terms & Conditions", href: "/terms-and-conditions" },
-  { name: "Contact Us", href: "/contact" },
 ];
 
 const Footer = () => {
@@ -177,21 +176,12 @@ const Footer = () => {
             © {currentYear} {BRAND_NAME}. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-3 text-[9px] text-[#aaa69c] sm:text-[10px]">
+          <div className="text-[9px] text-[#aaa69c] sm:text-[10px]">
             <Link
               href="/privacy-policy"
               className="transition-colors hover:text-[#d7bd91]"
             >
               Privacy Policy
-            </Link>
-
-            <span className="text-[#777368]">|</span>
-
-            <Link
-              href="/terms"
-              className="transition-colors hover:text-[#d7bd91]"
-            >
-              Terms of Service
             </Link>
           </div>
         </div>
