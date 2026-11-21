@@ -6,6 +6,7 @@ export const roomCategories = [
   "Luxury Rooms",
 ];
 
+
 export const rooms = [
   // ================ DELUXE ROOMS ================
   {
@@ -16,6 +17,13 @@ export const rooms = [
     description: "Plush king bed with soft, peaceful tones.",
     image:
       "https://www.velora-hotel.com/elegant-hotel-room-with-luxury-bedding.jpg",
+    images: [
+      "https://www.velora-hotel.com/elegant-hotel-room-with-luxury-bedding.jpg",
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+    ],
     price: 7500,
     size: "420 sq.ft.",
     guests: 2,
@@ -31,6 +39,13 @@ export const rooms = [
     description: "Elegant furnishings with warm textures.",
     image:
       "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2019/09/05/1507/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.jpg/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.16x9.jpg?imwidth=2560",
+    images: [
+      "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2019/09/05/1507/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.jpg/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.16x9.jpg?imwidth=2560",
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600",
+    ],
     price: 7900,
     size: "430 sq.ft.",
     guests: 2,
@@ -48,6 +63,13 @@ export const rooms = [
     description: "Spacious bedroom with a luxurious king bed.",
     image:
       "https://www.gizapalace.com/images/site-specific/accommodation/rooms/deluxe-adapted/gallery/adapted-deluxe-king-S360-desktop.webp",
+    images: [
+      "https://www.gizapalace.com/images/site-specific/accommodation/rooms/deluxe-adapted/gallery/adapted-deluxe-king-S360-desktop.webp",
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+    ],
     price: 9500,
     size: "480 sq.ft.",
     guests: 2,
@@ -63,6 +85,13 @@ export const rooms = [
     description: "Elegant king bed with relaxing seating.",
     image:
       "https://media.alotea.com/the-st-regis-washington-dc-washington-cover.webp",
+    images: [
+      "https://media.alotea.com/the-st-regis-washington-dc-washington-cover.webp",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+    ],
     price: 11000,
     size: "540 sq.ft.",
     guests: 2,
@@ -80,6 +109,13 @@ export const rooms = [
     description: "Spacious suite with a luxurious king bed.",
     image:
       "https://static-new.lhw.com/HotelImages/Final/LW1325/lw1325_l2885084_720x450.jpg",
+    images: [
+      "https://static-new.lhw.com/HotelImages/Final/LW1325/lw1325_l2885084_720x450.jpg",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+    ],
     price: 12500,
     size: "650 sq.ft.",
     guests: 3,
@@ -95,6 +131,13 @@ export const rooms = [
     description: "Premium bedding with sophisticated styling.",
     image:
       "https://www.americanexpress.com/content/dam/amex/en-au/credit-cards/membership-benefits/the-platinum-card/accor/You_might_also_like_Section_FHR_Mobile.png",
+    images: [
+      "https://www.americanexpress.com/content/dam/amex/en-au/credit-cards/membership-benefits/the-platinum-card/accor/You_might_also_like_Section_FHR_Mobile.png",
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+    ],
     price: 16500,
     size: "780 sq.ft.",
     guests: 3,
@@ -112,6 +155,13 @@ export const rooms = [
     description: "Grand bedroom with elegant furnishings.",
     image:
       "https://toc.h-cdn.co/assets/16/27/4000x2657/1-credit-the-peninsula-new-york.jpg",
+    images: [
+      "https://toc.h-cdn.co/assets/16/27/4000x2657/1-credit-the-peninsula-new-york.jpg",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+    ],
     price: 15800,
     size: "820 sq.ft.",
     guests: 4,
@@ -127,6 +177,13 @@ export const rooms = [
     description: "Luxurious bedding with timeless elegance.",
     image:
       "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+    images: [
+      "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+    ],
     price: 19500,
     size: "950 sq.ft.",
     guests: 4,
@@ -135,6 +192,7 @@ export const rooms = [
     rating: 5.0,
   },
 ];
+
 
 export const roomLocations = [
   "All Locations",
