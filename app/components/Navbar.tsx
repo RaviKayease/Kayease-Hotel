@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import { Menu, X, Plus, Minus } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Menu, X, Plus, Minus, Heart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import ChangeTheme from "@/app/components/ChangeTheme";
+import { getWishlist } from "@/app/utils/wishlist";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,22 @@ const Navbar = () => {
     null,
   );
   const pathname = usePathname();
+
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    const syncWishlist = () => {
+      setWishlistCount(getWishlist().length);
+    };
+
+    syncWishlist();
+
+    window.addEventListener("wishlistUpdated", syncWishlist);
+
+    return () => {
+      window.removeEventListener("wishlistUpdated", syncWishlist);
+    };
+  }, []);
 
   return (
     <div className="sticky top-0 z-40 ">
@@ -55,6 +72,22 @@ const Navbar = () => {
           </div>
 
           <div className="flex gap-2">
+            <Link
+              href="/wishlist"
+              className={`relative flex items-center justify-center text-[var(--primary)]`}
+            >
+              <Heart
+                size={28}
+                strokeWidth={1.5}
+                fill={"currentColor"}
+              />
+
+              {wishlistCount > 0 && (
+                <span className="absolute -right-[1] -top-[-13px] flex leading-none text-[9px] font-medium text-white">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
             {/* Change Theme Button */}
             <ChangeTheme />
 

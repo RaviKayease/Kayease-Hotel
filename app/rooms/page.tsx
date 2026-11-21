@@ -25,6 +25,7 @@ import {
   Plus,
   SlidersHorizontal,
 } from "lucide-react";
+import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -92,13 +93,16 @@ const RoomsPage = () => {
     setMinGuests(1);
   };
 
-  const toggleFavorite = (id: number) => {
-    setFavorites((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
-  };
+ 
+const toggleFavorite = (id: number) => {
+  const updated = favorites.includes(id)
+    ? favorites.filter((item) => item !== id)
+    : [...favorites, id];
+
+  setFavorites(updated);
+  saveWishlist(updated);
+};
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -131,6 +135,20 @@ const RoomsPage = () => {
 
     return () => {
       document.removeEventListener("mousedown", handleFilterClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    setFavorites(getWishlist());
+
+    const handleWishlistUpdate = () => {
+      setFavorites(getWishlist());
+    };
+
+    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+    return () => {
+      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
     };
   }, []);
 

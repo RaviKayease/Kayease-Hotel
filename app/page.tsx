@@ -16,7 +16,7 @@ import {
   Check,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
-
+import { getWishlist, saveWishlist } from "./utils/wishlist";
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -264,11 +264,12 @@ const HomePage = () => {
   const bookingRef = useRef<HTMLDivElement>(null);
 
   const toggleFavorite = (id: number) => {
-    setFavorites((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
+    const updated = favorites.includes(id)
+      ? favorites.filter((item) => item !== id)
+      : [...favorites, id];
+
+    setFavorites(updated);
+    saveWishlist(updated);
   };
 
   useEffect(() => {
@@ -327,6 +328,22 @@ const HomePage = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+ useEffect(() => {
+   // Load the saved wishlist
+   setFavorites(getWishlist());
+
+   // Listen for wishlist changes from other components
+   const handleWishlistUpdate = () => {
+     setFavorites(getWishlist());
+   };
+
+   window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+   return () => {
+     window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+   };
+ }, []);
 
   const currentSlide = editorialSlides[activeSlide];
 

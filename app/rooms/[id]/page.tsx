@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
@@ -24,7 +24,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
+import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 import { rooms } from "../../data/roomsPageData";
 
 const cormorant = Cormorant_Garamond({
@@ -302,12 +302,29 @@ const RoomDetailPage = () => {
   };
 
   const toggleFavorite = (id: number) => {
-    setFavorites((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
+    const updated = favorites.includes(id)
+      ? favorites.filter((item) => item !== id)
+      : [...favorites, id];
+
+    setFavorites(updated);
+    saveWishlist(updated);
   };
+
+  useEffect(() => {
+    // Load the saved wishlist
+    setFavorites(getWishlist());
+
+    // Listen for wishlist changes from other components
+    const handleWishlistUpdate = () => {
+      setFavorites(getWishlist());
+    };
+
+    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+    return () => {
+      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+    };
+  }, []);
 
   return (
     <main>
