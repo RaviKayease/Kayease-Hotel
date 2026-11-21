@@ -23,6 +23,7 @@ import {
   Images,
   ChevronLeft,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
 import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 import { rooms } from "../../data/roomsPageData";
@@ -73,40 +74,51 @@ const RoomDetailContent = () => {
     return new Date(date.getFullYear(), date.getMonth(), 1);
   });
 
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      name: "Ananya Sharma",
-      date: "October 2026",
-      rating: 5,
-      comment:
-        "Absolutely loved our stay. The room was beautifully maintained, the interiors were elegant, and every little detail made the experience special.",
-    },
-    {
-      id: 2,
-      name: "Rahul Mehta",
-      date: "September 2026",
-      rating: 5,
-      comment:
-        "A wonderful place to unwind. The room was spacious, comfortable, and exactly as described. Would definitely come back.",
-    },
-    {
-      id: 3,
-      name: "Priya Kapoor",
-      date: "August 2026",
-      rating: 4,
-      comment:
-        "Beautiful room and a very peaceful atmosphere. The overall experience was lovely, and the staff were welcoming.",
-    },
-    {
-      id: 4,
-      name: "Arjun Malhotra",
-      date: "July 2026",
-      rating: 5,
-      comment:
-        "One of the most relaxing stays we've had. Thoughtful design, comfortable bedding, and a great experience from start to finish.",
-    },
-  ]);
+  // const [reviews, setReviews] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Ananya Sharma",
+  //     date: "October 2026",
+  //     rating: 5,
+  //     comment:
+  //       "Absolutely loved our stay. The room was beautifully maintained, the interiors were elegant, and every little detail made the experience special.",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Rahul Mehta",
+  //     date: "September 2026",
+  //     rating: 5,
+  //     comment:
+  //       "A wonderful place to unwind. The room was spacious, comfortable, and exactly as described. Would definitely come back.",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Priya Kapoor",
+  //     date: "August 2026",
+  //     rating: 4,
+  //     comment:
+  //       "Beautiful room and a very peaceful atmosphere. The overall experience was lovely, and the staff were welcoming.",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Arjun Malhotra",
+  //     date: "July 2026",
+  //     rating: 5,
+  //     comment:
+  //       "One of the most relaxing stays we've had. Thoughtful design, comfortable bedding, and a great experience from start to finish.",
+  //   },
+  // ]);
+
+  type Review = {
+    id: number;
+    name: string;
+    date: string;
+    rating: number;
+    comment: string;
+  };
+
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewsLoaded, setReviewsLoaded] = useState(false);
 
   const [reviewName, setReviewName] = useState("");
   const [reviewComment, setReviewComment] = useState("");
@@ -142,7 +154,7 @@ const RoomDetailContent = () => {
 
   const handleReviewSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (!room) return;
     if (!reviewName.trim() || !reviewComment.trim() || reviewRating === 0) {
       setReviewError(
         "Please enter your name, select a rating, and write a review.",
@@ -161,7 +173,14 @@ const RoomDetailContent = () => {
       comment: reviewComment.trim(),
     };
 
-    setReviews((prev) => [newReview, ...prev]);
+    const updatedReviews = [newReview, ...reviews];
+
+    localStorage.setItem(
+      `room-reviews-${room.id}`,
+      JSON.stringify(updatedReviews),
+    );
+
+    setReviews(updatedReviews);
     setReviewName("");
     setReviewComment("");
     setReviewRating(0);
@@ -169,6 +188,19 @@ const RoomDetailContent = () => {
     setReviewError("");
     setShowReviewForm(false);
     setShowAllReviews(true);
+  };
+
+  const handleDeleteReview = (reviewId: number) => {
+    if (!room) return;
+
+    const updatedReviews = reviews.filter((review) => review.id !== reviewId);
+
+    localStorage.setItem(
+      `room-reviews-${room.id}`,
+      JSON.stringify(updatedReviews),
+    );
+
+    setReviews(updatedReviews);
   };
 
   const formatDate = (date: string) => {
@@ -252,6 +284,24 @@ const RoomDetailContent = () => {
     if (queryChildren) setChildren(Number(queryChildren));
     if (queryRooms) setRoomCount(Number(queryRooms));
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!room) return;
+
+    setReviewsLoaded(false);
+
+    try {
+      const savedReviews = localStorage.getItem(`room-reviews-${room.id}`);
+
+      const parsedReviews = savedReviews ? JSON.parse(savedReviews) : [];
+
+      setReviews(Array.isArray(parsedReviews) ? parsedReviews : []);
+    } catch {
+      setReviews([]);
+    } finally {
+      setReviewsLoaded(true);
+    }
+  }, [room?.id]);
 
   if (!room) {
     return (
@@ -369,7 +419,9 @@ const RoomDetailContent = () => {
                   fill="currentColor"
                   className="text-[var(--primary)]"
                 />
-                {room.rating} Guest rating
+                {reviewsLoaded && reviews.length > 0
+                  ? `${averageReviewRating.toFixed(1)} Guest rating`
+                  : "No ratings yet"}
               </span>
 
               <span className="inline-flex items-center gap-2">
@@ -737,7 +789,11 @@ const RoomDetailContent = () => {
                     fill="currentColor"
                     className="text-[var(--primary)]"
                   />
-                  <span className="text-xs font-medium">{room.rating}</span>
+                  <span className="text-xs font-medium">
+                    {reviewsLoaded && reviews.length > 0
+                      ? averageReviewRating.toFixed(1)
+                      : "—"}
+                  </span>
                   <span className="text-[9px] text-[var(--muted)]">
                     Guest rating
                   </span>
@@ -1688,7 +1744,11 @@ const RoomDetailContent = () => {
           </div>
 
           {/* INDIVIDUAL REVIEWS */}
-          {reviews.length > 0 ? (
+          {!reviewsLoaded ? (
+            <div className="border-t border-[var(--border)] py-12 text-center">
+              <p className="text-xs text-[var(--muted)]">Loading reviews...</p>
+            </div>
+          ) : reviews.length > 0 ? (
             <div className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
               {reviews
                 .slice(0, showAllReviews ? reviews.length : 4)
@@ -1698,8 +1758,8 @@ const RoomDetailContent = () => {
                     className="border-t border-[var(--border)] py-7"
                   >
                     {/* REVIEWER */}
-                    <div className="mb-5 flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
+                    <div className="mb-5 flex items-start justify-between gap-4">
+                      <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface)] text-xs font-semibold uppercase">
                           {review.name
                             .split(" ")
@@ -1708,7 +1768,7 @@ const RoomDetailContent = () => {
                             .join("")}
                         </div>
 
-                        <div>
+                        <div className="min-w-0">
                           <p className="text-xs font-semibold">{review.name}</p>
                           <p className="mt-1 text-[10px] text-[var(--muted)]">
                             {review.date}
@@ -1716,15 +1776,31 @@ const RoomDetailContent = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1">
-                        <Star
-                          size={12}
-                          fill="currentColor"
-                          className="text-[var(--primary)]"
-                        />
-                        <span className="text-[11px] font-semibold">
-                          {review.rating}.0
-                        </span>
+                      <div className="flex shrink-0 items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          <Star
+                            size={12}
+                            fill="currentColor"
+                            className="text-[var(--primary)]"
+                          />
+                          <span className="text-[11px] font-semibold">
+                            {review.rating}.0
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteReview(review.id)}
+                          title="Delete review"
+                          aria-label={`Delete review by ${review.name}`}
+                          className="group flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] text-[var(--muted)]"
+                        >
+                          <Trash2
+                            size={13}
+                            strokeWidth={1.6}
+                            className="transition-transform duration-300 group-hover:scale-110"
+                          />
+                        </button>
                       </div>
                     </div>
 
