@@ -155,7 +155,7 @@ const toggleFavorite = (id: number) => {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative left-1/2 w-screen -translate-x-1/2 pt-12 sm:pt-16 lg:pt-10">
+      <section className="t-12 sm:pt-16 lg:pt-10">
         <div className="text-center">
           <h1
             className={`${cormorant.className} text-[16vw] font-medium leading-[0.88] tracking-tight sm:text-[12vw] lg:text-[110px]`}

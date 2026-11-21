@@ -14,6 +14,8 @@ import {
   Star,
   BedDouble,
   Check,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 import { getWishlist, saveWishlist } from "./utils/wishlist";
@@ -232,9 +234,6 @@ const HomePage = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
-  const checkInRef = useRef<HTMLInputElement>(null);
-  const checkOutRef = useRef<HTMLInputElement>(null);
-
   const mobileCheckInRef = useRef<HTMLInputElement>(null);
   const mobileCheckOutRef = useRef<HTMLInputElement>(null);
 
@@ -263,6 +262,51 @@ const HomePage = () => {
   const errorRef = useRef<HTMLDivElement>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
 
+  const [calendarMonth, setCalendarMonth] = useState<Date | null>(null);
+
+  const formatDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const getCalendarDays = (month: Date): (number | null)[] => {
+    const year = month.getFullYear();
+    const monthIndex = month.getMonth();
+
+    const firstDay = new Date(year, monthIndex, 1).getDay();
+    const totalDays = new Date(year, monthIndex + 1, 0).getDate();
+
+    return [
+      ...Array<number | null>(firstDay).fill(null),
+      ...Array.from({ length: totalDays }, (_, i) => i + 1),
+    ];
+  };
+
+  const changeMonth = (direction: number) => {
+    setCalendarMonth((prev) => {
+      if (!prev) return prev;
+
+      return new Date(prev.getFullYear(), prev.getMonth() + direction, 1);
+    });
+  };
+
+  const selectCalendarDate = (date: string) => {
+    if (!checkIn || (checkIn && checkOut)) {
+      setCheckIn(date);
+      setCheckOut("");
+    } else if (date <= checkIn) {
+      setCheckIn(date);
+      setCheckOut("");
+    } else {
+      setCheckOut(date);
+    }
+
+    setSearchError("");
+  };
+
   const toggleFavorite = (id: number) => {
     const updated = favorites.includes(id)
       ? favorites.filter((item) => item !== id)
@@ -274,6 +318,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const date = new Date();
+
     const localDate = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000,
     )
@@ -281,6 +326,10 @@ const HomePage = () => {
       .split("T")[0];
 
     setToday(localDate);
+
+    // Initialize the calendar to the current month
+    date.setDate(1);
+    setCalendarMonth(date);
   }, []);
 
   useEffect(() => {
@@ -329,21 +378,19 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
- useEffect(() => {
-   // Load the saved wishlist
-   setFavorites(getWishlist());
+  useEffect(() => {
+    setFavorites(getWishlist());
 
-   // Listen for wishlist changes from other components
-   const handleWishlistUpdate = () => {
-     setFavorites(getWishlist());
-   };
+    const handleWishlistUpdate = () => {
+      setFavorites(getWishlist());
+    };
 
-   window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
 
-   return () => {
-     window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
-   };
- }, []);
+    return () => {
+      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+    };
+  }, []);
 
   const currentSlide = editorialSlides[activeSlide];
 
@@ -438,7 +485,7 @@ const HomePage = () => {
                 </button>
 
                 {showDestinations && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-3 text-left shadow-xl backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-64 md:-translate-x-1/2">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-3 text-left shadow-xl backdrop-blur-xl md:absolute md:left-1/2 md:bottom-full md:top-auto md:mb-4 md:w-64 md:-translate-x-1/2">
                     <p className="px-3 pb-2 pt-1 text-[11px] font-semibold tracking-widest text-[var(--foreground)]/55">
                       POPULAR DESTINATIONS
                     </p>
@@ -497,83 +544,189 @@ const HomePage = () => {
                 </button>
 
                 {showDates && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-5 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:left-1/2 md:top-full md:mt-4 md:w-72 md:-translate-x-1/2">
-                    <h3 className="mb-4 text-lg font-semibold text-[var(--foreground)]">
-                      Choose Your Stay
-                    </h3>
-
-                    <div className="flex flex-col gap-4">
-                      {/* Check-in */}
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-[600px] -translate-x-1/2 rounded-3xl border border-[var(--border)] bg-[var(--surface)]/95 p-4 text-[var(--foreground)] shadow-2xl backdrop-blur-2xl md:absolute md:left-1/2 md:bottom-full md:top-auto md:mb-3 md:w-[600px] md:-translate-x-1/2 sm:p-5">
+                    {/* Header */}
+                    <div className="mb-4 flex items-center justify-between">
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-[var(--foreground)]/70">
-                          Check-in
-                        </label>
-
-                        <div
-                          onClick={() => checkInRef.current?.showPicker?.()}
-                          className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)]/60 px-3 py-3 transition focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/30"
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)]">
+                          Plan your escape
+                        </p>
+                        <h3
+                          className={`${cormorant.className} mt-1 text-2xl font-semibold`}
                         >
-                          <CalendarDays
-                            size={17}
-                            className="shrink-0 text-[var(--primary)]"
-                          />
-
-                          <input
-                            ref={checkInRef}
-                            type="date"
-                            value={checkIn}
-                            min={today || undefined}
-                            onChange={(e) => {
-                              setCheckIn(e.target.value);
-                              setSearchError("");
-
-                              if (checkOut && e.target.value >= checkOut) {
-                                setCheckOut("");
-                              }
-                            }}
-                            className="w-full min-w-0 bg-transparent text-sm text-[var(--foreground)] outline-none"
-                          />
-                        </div>
+                          Choose Your Stay
+                        </h3>
                       </div>
 
-                      {/* Check-out */}
-                      <div>
-                        <label className="mb-2 block text-sm font-medium text-[var(--foreground)]/70">
-                          Check-out
-                        </label>
-
-                        <div
-                          onClick={() => checkOutRef.current?.showPicker()}
-                          className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)]/60 px-3 py-3 transition focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/30"
-                        >
-                          <CalendarDays
-                            size={17}
-                            className="shrink-0 text-[var(--primary)]"
-                          />
-
-                          <input
-                            ref={checkOutRef}
-                            type="date"
-                            value={checkOut}
-                            min={checkIn || today || undefined}
-                            onChange={(e) => {
-                              setCheckOut(e.target.value);
-                              setSearchError("");
-                            }}
-                            className="w-full min-w-0 bg-transparent text-sm text-[var(--foreground)] outline-none"
-                          />
-                        </div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">
+                        <CalendarDays size={18} />
                       </div>
                     </div>
 
-                    {/* Apply Dates */}
-                    <button
-                      onClick={() => setShowDates(false)}
-                      disabled={!checkIn || !checkOut}
-                      className="mt-5 w-full rounded-xl bg-[var(--primary)] py-3 text-sm font-semibold text-white shadow-md transition hover:brightness-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
-                    >
-                      Apply Dates
-                    </button>
+                    {/* Selected dates */}
+                    <div className="mb-4 grid grid-cols-2 gap-3">
+                      <div className="rounded-2xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-2.5">
+                        <p className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/50">
+                          Check-in
+                        </p>
+                        <p className="mt-1 text-sm font-semibold">
+                          {checkIn || "Select date"}
+                        </p>
+                      </div>
+
+                      <div className="rounded-2xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-2.5">
+                        <p className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/50">
+                          Check-out
+                        </p>
+                        <p className="mt-1 text-sm font-semibold">
+                          {checkOut || "Select date"}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Calendar navigation */}
+                    <div className="mb-3 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => changeMonth(-1)}
+                        disabled={
+                          !calendarMonth ||
+                          !today ||
+                          `${calendarMonth.getFullYear()}-${String(
+                            calendarMonth.getMonth() + 1,
+                          ).padStart(2, "0")}` <= today.slice(0, 7)
+                        }
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-30"
+                      >
+                        <ChevronLeft size={18} />
+                      </button>
+
+                      <p className="text-sm font-semibold tracking-wide">
+                        Select your dates
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={() => changeMonth(1)}
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                      >
+                        <ChevronRight size={18} />
+                      </button>
+                    </div>
+
+                    {/* Two month calendars */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-6">
+                      {calendarMonth &&
+                        [0, 1].map((offset) => {
+                          const month = new Date(
+                            calendarMonth.getFullYear(),
+                            calendarMonth.getMonth() + offset,
+                            1,
+                          );
+
+                          const days = getCalendarDays(month);
+
+                          return (
+                            <div key={offset} className="min-w-0">
+                              <h4 className="mb-2 text-center text-xs font-semibold">
+                                {month.toLocaleDateString("en-US", {
+                                  month: "long",
+                                  year: "numeric",
+                                })}
+                              </h4>
+
+                              <div className="mb-2 grid grid-cols-7">
+                                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
+                                  (day) => (
+                                    <span
+                                      key={day}
+                                      className="py-1.5 text-center text-[9px] font-semibold text-[var(--foreground)]/40"
+                                    >
+                                      {day}
+                                    </span>
+                                  ),
+                                )}
+                              </div>
+
+                              <div className="grid grid-cols-7 gap-y-1">
+                                {days.map((day, index) => {
+                                  if (!day) {
+                                    return <div key={`empty-${index}`} />;
+                                  }
+
+                                  const date = formatDate(
+                                    new Date(
+                                      month.getFullYear(),
+                                      month.getMonth(),
+                                      day,
+                                    ),
+                                  );
+
+                                  const isPast = date < today;
+                                  const isStart = date === checkIn;
+                                  const isEnd = date === checkOut;
+
+                                  const isBetween =
+                                    !!checkIn &&
+                                    !!checkOut &&
+                                    date > checkIn &&
+                                    date < checkOut;
+
+                                  const isSelected = isStart || isEnd;
+
+                                  return (
+                                    <button
+                                      key={date}
+                                      type="button"
+                                      disabled={isPast || !today}
+                                      onClick={() => selectCalendarDate(date)}
+                                      className={`
+                        relative mx-auto flex aspect-square w-full max-w-9
+                        items-center justify-center rounded-full text-[11px]
+                        transition-all duration-200
+                        ${
+                          isSelected
+                            ? "bg-[var(--primary)] font-semibold text-white shadow-md"
+                            : isBetween
+                              ? "rounded-none bg-[var(--primary)]/15 text-[var(--primary)]"
+                              : isPast
+                                ? "cursor-not-allowed text-[var(--foreground)]/20"
+                                : "text-[var(--foreground)] hover:bg-[var(--primary)]/10 hover:text-[var(--primary)]"
+                        }
+                      `}
+                                    >
+                                      {day}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-4 flex items-center justify-between gap-3 border-t border-[var(--border)] pt-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCheckIn("");
+                          setCheckOut("");
+                        }}
+                        className="text-xs font-medium text-[var(--foreground)]/55 transition hover:text-[var(--primary)]"
+                      >
+                        Clear dates
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setShowDates(false)}
+                        disabled={!checkIn || !checkOut}
+                        className="rounded-xl bg-[var(--primary)] px-5 py-2.5 text-xs font-semibold text-white shadow-md transition hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Apply Dates
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -599,7 +752,7 @@ const HomePage = () => {
                 </button>
 
                 {showOccupancy && (
-                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-4 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:left-auto md:right-0 md:top-full md:mt-4 md:w-72 md:translate-x-0">
+                  <div className="fixed left-1/2 top-15 sm:top-17 z-[100] w-[calc(100%-2rem)] max-w-72 -translate-x-1/2 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 p-4 text-[var(--foreground)] shadow-xl backdrop-blur-xl md:absolute md:left-auto md:right-0 md:bottom-full md:top-auto md:mb-4 md:w-72 md:translate-x-0">
                     <div className="mb-3">
                       <h3 className="text-lg font-semibold text-[var(--foreground)]">
                         Guests & Rooms
