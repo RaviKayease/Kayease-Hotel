@@ -1630,7 +1630,7 @@ const handleBookingSearch = () => {
 
                     {/* Full Card Navigation */}
                     <Link
-                      href="/contact"
+                      href={`/rooms/${room.id}`}
                       aria-label={`Enquire about ${room.name}`}
                       className="absolute inset-0 z-10 rounded-[24px] lg:rounded-[30px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
                     />
