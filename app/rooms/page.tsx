@@ -93,16 +93,14 @@ const RoomsPage = () => {
     setMinGuests(1);
   };
 
- 
-const toggleFavorite = (id: number) => {
-  const updated = favorites.includes(id)
-    ? favorites.filter((item) => item !== id)
-    : [...favorites, id];
+  const toggleFavorite = (id: number) => {
+    const updated = favorites.includes(id)
+      ? favorites.filter((item) => item !== id)
+      : [...favorites, id];
 
-  setFavorites(updated);
-  saveWishlist(updated);
-};
-
+    setFavorites(updated);
+    saveWishlist(updated);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -158,14 +156,14 @@ const toggleFavorite = (id: number) => {
       <section className="t-12 sm:pt-16 lg:pt-10">
         <div className="text-center">
           <h1
-            className={`${cormorant.className} text-[16vw] font-medium leading-[0.88] tracking-tight sm:text-[12vw] lg:text-[110px]`}
+            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
           >
             Rooms & Suites
           </h1>
         </div>
 
         {/* Hero Image */}
-        <div className="group relative mx-10 mt-12 h-[340px] overflow-hidden rounded-[25px] sm:mt-16 sm:h-[480px] sm:rounded-[35px] lg:h-[620px] lg:rounded-[45px]">
+        <div className="group relative mx-10 mt-12 h-[340px] overflow-hidden rounded-[25px] sm:mt-5 sm:h-[480px] sm:rounded-[35px] lg:h-[620px] lg:rounded-[45px]">
           <img
             src="https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp"
             alt="Luxury boutique hotel suite"
@@ -187,14 +185,6 @@ const toggleFavorite = (id: number) => {
                 <span className="block italic">beautiful.</span>
               </h2>
             </div>
-
-            <Link
-              href="#room-collection"
-              className="flex w-fit items-center gap-4 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-[11px] backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-[#332c26]"
-            >
-              Explore our rooms
-              <ArrowDown size={16} />
-            </Link>
           </div>
         </div>
       </section>
@@ -839,19 +829,6 @@ const toggleFavorite = (id: number) => {
               The finest memories are the ones we create together. We look
               forward to welcoming you.
             </p>
-
-            <Link
-              href="/contact"
-              className="group flex shrink-0 items-center gap-5 border-b border-[var(--primary)]/50 pb-2 text-[10px] font-medium tracking-[0.2em] transition-colors hover:text-[var(--primary)]"
-            >
-              CREATE YOUR OWN STORY
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
-                <ArrowUpRight
-                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  size={18}
-                />
-              </span>
-            </Link>
           </div>
         </div>
       </section>

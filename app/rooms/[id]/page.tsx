@@ -1,6 +1,6 @@
 "use client";
 
-import React, {Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
@@ -296,9 +296,12 @@ const RoomDetailContent = () => {
     roomId: String(room.id),
     checkIn,
     checkOut,
-    guests: String(adults),
+    adults: String(adults),
+    children: String(children),
+    guests: String(adults + children),
     rooms: String(roomCount),
     nights: String(nights),
+    pricePerNight: String(room.price),
     total: String(totalPrice),
   }).toString()}`;
 
@@ -999,7 +1002,8 @@ const RoomDetailContent = () => {
 
                     <div>
                       <p className="text-xs font-medium">
-                        {adults} {adults === 1 ? "Guest" : "Guests"}
+                        {adults + children}{" "}
+                        {adults + children === 1 ? "Guest" : "Guests"}
                         <span className="mx-2 text-[var(--muted)]">·</span>
                         {roomCount} {roomCount === 1 ? "Room" : "Rooms"}
                       </p>
@@ -1069,11 +1073,63 @@ const RoomDetailContent = () => {
                         <button
                           type="button"
                           onClick={() =>
-                            setAdults(Math.min(room.guests, adults + 1))
+                            setAdults(
+                              Math.min(
+                                room.guests * roomCount - children,
+                                adults + 1,
+                              ),
+                            )
                           }
-                          disabled={adults >= room.guests}
+                          disabled={
+                            adults + children >= room.guests * roomCount
+                          }
                           aria-label="Add adult"
                           className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* CHILDREN */}
+                    <div className="flex items-center justify-between border-b border-[var(--border)] py-5">
+                      <div>
+                        <p className="text-xs font-medium">Children</p>
+                        <p className="mt-1 text-[10px] text-[var(--muted)]">
+                          Ages 0–17
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setChildren(Math.max(0, children - 1))}
+                          disabled={children <= 0}
+                          aria-label="Remove child"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <Minus size={14} />
+                        </button>
+
+                        <span className="w-5 text-center text-sm tabular-nums">
+                          {children}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setChildren(
+                              Math.min(
+                                room.guests * roomCount - adults,
+                                children + 1,
+                              ),
+                            )
+                          }
+                          disabled={
+                            adults + children >= room.guests * roomCount
+                          }
+                          aria-label="Add child"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                         >
                           <Plus size={14} />
                         </button>
@@ -1168,8 +1224,11 @@ const RoomDetailContent = () => {
 
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--muted)]">Guests</span>
+
                     <span>
                       {adults} {adults === 1 ? "adult" : "adults"}
+                      {children > 0 &&
+                        `, ${children} ${children === 1 ? "child" : "children"}`}
                     </span>
                   </div>
                 </div>
