@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { BRAND_NAME } from "./components/brand";
 import { getWishlist, saveWishlist } from "./utils/wishlist";
+import { useRouter } from "next/navigation";
+
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -264,6 +266,8 @@ const HomePage = () => {
 
   const [calendarMonth, setCalendarMonth] = useState<Date | null>(null);
 
+  const router = useRouter();
+
   const formatDate = (date: Date): string => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -405,6 +409,107 @@ const HomePage = () => {
     );
   });
 
+ 
+const handleBookingSearch = () => {
+  // Close all dropdowns
+  setShowDestinations(false);
+  setShowDates(false);
+  setShowOccupancy(false);
+
+  const errors: string[] = [];
+
+  // 1. Validate destination
+  if (!destination.trim()) {
+    errors.push("Please select your destination.");
+  }
+
+  // 2. Validate dates
+  if (!checkIn || !checkOut) {
+    errors.push("Please select both check-in and check-out dates.");
+  } else if (checkOut <= checkIn) {
+    errors.push("Your check-out date must be after your check-in date.");
+  }
+
+  // 3. Validate occupancy
+  if (adults < 1) {
+    errors.push("At least one adult is required.");
+  }
+
+  if (roomCount < 1) {
+    errors.push("Please select at least one room.");
+  }
+
+  const totalGuests = adults + children;
+
+  if (totalGuests < 1) {
+    errors.push("Please select at least one guest.");
+  }
+
+  // Check rooms for the selected destination
+  const locationRooms = destination.trim()
+    ? rooms.filter(
+        (room) =>
+          room.location.toLowerCase() === destination.trim().toLowerCase(),
+      )
+    : [];
+
+  // Check whether any room can accommodate the guests
+  const guestsPerRoom = roomCount > 0 ? Math.ceil(totalGuests / roomCount) : 0;
+
+  const capacityRooms = locationRooms.filter(
+    (room) => room.guests >= guestsPerRoom,
+  );
+
+  // 4. Check destination availability
+  if (destination.trim() && locationRooms.length === 0) {
+    errors.push(
+      `We currently don't have any listed rooms in ${destination}. Please explore another destination.`,
+    );
+  }
+
+  // 5. Check guest capacity
+  if (
+    locationRooms.length > 0 &&
+    guestsPerRoom > 0 &&
+    capacityRooms.length === 0
+  ) {
+    const maxCapacity = Math.max(...locationRooms.map((room) => room.guests));
+
+    errors.push(
+      `We have rooms in ${destination}, but they can accommodate a maximum of ${maxCapacity} guests per room. Please reduce the number of guests or select more rooms.`,
+    );
+  }
+
+  // Show all relevant errors together
+  if (errors.length > 0) {
+    setSearchError(errors.join(" "));
+    return;
+  }
+
+  // Select the most suitable room
+  const matchingRooms = capacityRooms.sort(
+    (a, b) => a.guests - b.guests || a.price - b.price,
+  );
+
+  const selectedRoom = matchingRooms[0];
+
+  // Prepare booking information
+  const searchParams = new URLSearchParams({
+    destination,
+    checkIn,
+    checkOut,
+    adults: String(adults),
+    children: String(children),
+    guests: String(totalGuests),
+    rooms: String(roomCount),
+  });
+
+  setSearchError("");
+  setShowMobileSearchPanel(false);
+
+  router.push(`/rooms/${selectedRoom.id}?${searchParams.toString()}`);
+};
+
   return (
     <main>
       {/* Hero Section */}
@@ -490,32 +595,34 @@ const HomePage = () => {
                       POPULAR DESTINATIONS
                     </p>
 
-                    {destinations.map((place) => (
-                      <button
-                        key={place}
-                        onClick={() => {
-                          setDestination(place);
-                          setShowDestinations(false);
-                          setSearchError("");
-                        }}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
-                          destination === place
-                            ? "bg-[var(--primary)]/15 text-[var(--primary)]"
-                            : "text-[var(--foreground)] hover:bg-[var(--background)] hover:text-[var(--primary)]"
-                        }`}
-                      >
-                        <MapPin
-                          size={16}
-                          className="shrink-0 text-[var(--primary)]"
-                        />
+                    {roomLocations
+                      .filter((place) => place !== "All Locations")
+                      .map((place) => (
+                        <button
+                          key={place}
+                          onClick={() => {
+                            setDestination(place);
+                            setShowDestinations(false);
+                            setSearchError("");
+                          }}
+                          className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
+                            destination === place
+                              ? "bg-[var(--primary)]/15 text-[var(--primary)]"
+                              : "text-[var(--foreground)] hover:bg-[var(--background)] hover:text-[var(--primary)]"
+                          }`}
+                        >
+                          <MapPin
+                            size={16}
+                            className="shrink-0 text-[var(--primary)]"
+                          />
 
-                        <span className="flex-1">{place}</span>
+                          <span className="flex-1">{place}</span>
 
-                        {destination === place && (
-                          <span className="text-[var(--primary)]">✓</span>
-                        )}
-                      </button>
-                    ))}
+                          {destination === place && (
+                            <span className="text-[var(--primary)]">✓</span>
+                          )}
+                        </button>
+                      ))}
                   </div>
                 )}
               </div>
@@ -870,24 +977,7 @@ const HomePage = () => {
 
               {/* Desktop Search Button */}
               <button
-                onClick={() => {
-                  setSearchError("");
-                  setShowDestinations(false);
-                  setShowDates(false);
-                  setShowOccupancy(false);
-
-                  if (!destination.trim() || !checkIn || !checkOut) {
-                    setSearchError(
-                      "Please select your destination and travel dates.",
-                    );
-                    return;
-                  }
-
-                  if (checkOut <= checkIn) {
-                    setSearchError("Check-out must be after check-in.");
-                    return;
-                  }
-                }}
+                onClick={handleBookingSearch}
                 className="hidden lg:block bg-[var(--primary)] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl cursor-pointer transition hover:brightness-90"
               >
                 <Search className="text-white size-5 sm:size-7" />
@@ -1132,24 +1222,7 @@ const HomePage = () => {
                   {/* Sticky Search Button */}
                   <div className="border-t border-[var(--border)] bg-[var(--surface)]/95 px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
                     <button
-                      onClick={() => {
-                        if (!destination.trim() || !checkIn || !checkOut) {
-                          setSearchError(
-                            "Please select your destination and travel dates.",
-                          );
-                          return;
-                        }
-
-                        if (checkOut <= checkIn) {
-                          setSearchError("Check-out must be after check-in.");
-                          return;
-                        }
-
-                        setSearchError("");
-                        setShowMobileSearchPanel(false);
-
-                        // Add your booking search/navigation logic here.
-                      }}
+                      onClick={handleBookingSearch}
                       className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] py-4 text-sm font-semibold text-white shadow-lg transition hover:brightness-90 active:scale-[0.98]"
                     >
                       <Search size={19} />

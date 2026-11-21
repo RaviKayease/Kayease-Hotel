@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, {Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
 import {
   ArrowLeft,
@@ -46,7 +46,7 @@ const addDays = (date: string, days: number) => {
   return getLocalDate(result);
 };
 
-const RoomDetailPage = () => {
+const RoomDetailContent = () => {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
@@ -57,6 +57,7 @@ const RoomDetailPage = () => {
   const [checkIn, setCheckIn] = useState(today);
   const [checkOut, setCheckOut] = useState(addDays(today, 1));
   const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
   const [roomCount, setRoomCount] = useState(1);
   const [showGuests, setShowGuests] = useState(false);
   const [favorites, setFavorites] = useState<number[]>([]);
@@ -114,6 +115,7 @@ const RoomDetailPage = () => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewError, setReviewError] = useState("");
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const searchParams = useSearchParams();
 
   const averageReviewRating = useMemo(() => {
     if (!reviews.length) return 0;
@@ -236,6 +238,20 @@ const RoomDetailPage = () => {
       Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)),
     );
   }, [checkIn, checkOut]);
+
+  useEffect(() => {
+    const queryCheckIn = searchParams.get("checkIn");
+    const queryCheckOut = searchParams.get("checkOut");
+    const queryAdults = searchParams.get("adults");
+    const queryChildren = searchParams.get("children");
+    const queryRooms = searchParams.get("rooms");
+
+    if (queryCheckIn) setCheckIn(queryCheckIn);
+    if (queryCheckOut) setCheckOut(queryCheckOut);
+    if (queryAdults) setAdults(Number(queryAdults));
+    if (queryChildren) setChildren(Number(queryChildren));
+    if (queryRooms) setRoomCount(Number(queryRooms));
+  }, [searchParams]);
 
   if (!room) {
     return (
@@ -1689,6 +1705,22 @@ const RoomDetailPage = () => {
         </div>
       </section>
     </main>
+  );
+};
+
+const RoomDetailPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <p className="text-sm text-[var(--foreground)]">
+            Loading room details...
+          </p>
+        </div>
+      }
+    >
+      <RoomDetailContent />
+    </Suspense>
   );
 };
 

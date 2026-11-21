@@ -193,7 +193,6 @@ export const rooms = [
   },
 ];
 
-
 export const roomLocations = [
   "All Locations",
   "Italy",

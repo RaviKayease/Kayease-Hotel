@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Hotel Site",
@@ -39,7 +40,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
 
       <body>
-        <Navbar />
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
         <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw]">
           {children}
           <Footer />
