@@ -36,7 +36,7 @@ const Footer = () => {
       {/* Main Footer Container */}
       <div className="relative overflow-hidden rounded-4xl border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
         {/* Decorative Leaf Image */}
-        <div className="pointer-events-none absolute -right-5 -top-4 z-0 h-[300px] w-[225px] sm:-right-4 sm:-top-5 sm:h-[370px] sm:w-[278px] lg:h-[400px] lg:w-[300px]">
+        <div className="pointer-events-none absolute -right-0 -bottom-0 z-0 h-[300px] w-[225px] sm:-right-4 sm:-top-5 sm:h-[370px] sm:w-[278px] lg:h-[400px] lg:w-[300px]">
           <Image
             src={DecorativeLeaf}
             alt="Decorative olive green leaves"
@@ -48,95 +48,97 @@ const Footer = () => {
         </div>
 
         {/* Footer Content */}
-        <div className="relative z-10 grid grid-cols-2 gap-x-8 gap-y-10 px-6 py-10 sm:grid-cols-4 sm:gap-6 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-[8vw] xl:gap-[14vw] px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
           {/* Brand */}
-          <div className="col-span-2 flex flex-col items-start sm:col-span-1">
+          <div className="flex flex-col items-start w-full max-w-[200px]">
             <Logo variant="footer" />
 
-            <p className="mt-2 max-w-[230px] text-[11px] leading-6 tracking-wide text-[#c5c0b5] sm:text-xs">
+            <p className="mt-2 text-[11px] leading-6 tracking-wide text-[#c5c0b5] sm:text-xs">
               Live Beautiful, Live Extraordinary.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="flex flex-col items-start">
-            <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
-              Quick Links
-            </h3>
+          <div className="relative w-full z-10 flex flex-wrap justify-between gap-x-8 gap-y-10">
+            {/* Quick Links */}
+            <div className="flex flex-col items-start">
+              <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
+                Quick Links
+              </h3>
 
-            <ul className="flex flex-col gap-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-[11px] text-[#c5c0b5] transition-colors duration-300 hover:text-[#d7bd91] sm:text-xs"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <ul className="flex flex-col gap-3">
+                {quickLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] text-[#c5c0b5] transition-colors duration-300 hover:text-[#d7bd91] sm:text-xs"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Support */}
-          <div className="flex flex-col items-start">
-            <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
-              Support
-            </h3>
+            {/* Support */}
+            <div className="flex flex-col items-start">
+              <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
+                Support
+              </h3>
 
-            <ul className="flex flex-col gap-3">
-              {supportLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-[11px] text-[#c5c0b5] transition-colors duration-300 hover:text-[#d7bd91] sm:text-xs"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <ul className="flex flex-col gap-3">
+                {supportLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] text-[#c5c0b5] transition-colors duration-300 hover:text-[#d7bd91] sm:text-xs"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Social Links */}
-          <div className="relative z-20 flex flex-col items-start">
-            <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
-              Follow Us
-            </h3>
+            {/* Social Links */}
+            <div className="relative z-20 flex flex-col items-start">
+              <h3 className="mb-5 text-xs font-semibold tracking-wide text-[#f4eee3]">
+                Follow Us
+              </h3>
 
-            <div className="flex items-center gap-2">
-              {/* Facebook */}
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
-              >
-                <FaFacebookF className="h-4 w-4" />
-              </a>
+              <div className="flex items-center gap-2">
+                {/* Facebook */}
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
+                >
+                  <FaFacebookF className="h-4 w-4" />
+                </a>
 
-              {/* Instagram */}
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
-              >
-                <FaInstagram className="h-4 w-4" />
-              </a>
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
+                >
+                  <FaInstagram className="h-4 w-4" />
+                </a>
 
-              {/* X / Twitter */}
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="X"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
-              >
-                <SiX className="h-3.5 w-3.5" />
-              </a>
+                {/* X / Twitter */}
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9c0af]/50 text-[#eee8dc] transition-all duration-300 hover:border-[#d7bd91] hover:bg-[#d7bd91] hover:text-[#191a16]"
+                >
+                  <SiX className="h-3.5 w-3.5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
