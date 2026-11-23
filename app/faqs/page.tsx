@@ -75,26 +75,13 @@ const FAQsPage = () => {
           <div className="flex flex-col items-center text-center">
             {/* Heading */}
             <h1
-              className={`${sectionHeadingClass} text-[17vw] sm:text-[12vw] lg:text-[125px]`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
             >
               A few things,
               <span className="block italic text-[var(--primary)]">
                 made clear.
               </span>
             </h1>
-
-            {/* Description */}
-            <p className="mt-7 max-w-[510px] text-sm leading-7 text-[var(--foreground)]/60 sm:text-base sm:leading-8">
-              Everything you need to know before, during, and after your stay.
-              Find helpful answers and make your next getaway a little easier.
-            </p>
-
-            {/* Decorative Detail */}
-            <div className="mt-9 flex items-center gap-3 text-[10px] tracking-[0.2em] text-[var(--foreground)]/40">
-              <span>EXPLORE</span>
-              <span className="h-px w-10 bg-[var(--border)]" />
-              <span>YOUR QUESTIONS, ANSWERED</span>
-            </div>
           </div>
         </div>
       </section>
@@ -246,10 +233,10 @@ const FAQsPage = () => {
                   <div className="h-px bg-[var(--border)]" />
 
                   <Link
-                    href="/cancellation-policy"
+                    href="/privacy-policy"
                     className="group flex items-center justify-between text-sm text-[var(--foreground)]/70 transition-colors hover:text-[var(--primary)]"
                   >
-                    Cancellation policy
+                    Privacy policy
                     <ArrowUpRight
                       size={16}
                       className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

@@ -21,8 +21,20 @@ const cormorant = Cormorant_Garamond({
   weight: ["400", "500", "600"],
 });
 
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
+
+type ContactFormData = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
 const ContactPage = () => {
   const [isSubjectOpen, setIsSubjectOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState("");
 
   const subjectOptions = [
     "General enquiry",
@@ -32,47 +44,93 @@ const ContactPage = () => {
     "Something else",
   ];
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "General enquiry",
-    message: "",
-  });
+ const [formData, setFormData] = useState<ContactFormData>({
+   name: "",
+   email: "",
+   subject: "General enquiry",
+   message: "",
+ });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitMessage("");
+    setSubmitStatus("");
+
+    try {
+      // Simulate a short submission process
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      // Store the enquiry locally in the browser
+      const enquiry = {
+        ...formData,
+        submittedAt: new Date().toISOString(),
+      };
+
+     const storedEnquiries = localStorage.getItem("hotelEnquiries");
+
+     const existingEnquiries = storedEnquiries
+       ? JSON.parse(storedEnquiries)
+       : [];
+
+     if (!Array.isArray(existingEnquiries)) {
+       throw new Error("Invalid enquiry storage");
+     }
+
+      localStorage.setItem(
+        "hotelEnquiries",
+        JSON.stringify([...existingEnquiries, enquiry]),
+      );
+
+      setSubmitStatus("success");
+      setSubmitMessage(
+        "Thank you! Your enquiry has been received successfully.",
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "General enquiry",
+        message: "",
+      });
+
+      setIsSubjectOpen(false);
+    } catch (error) {
+      setSubmitStatus("error");
+      setSubmitMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
+    setSubmitMessage("");
+    setSubmitStatus("");
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Connect your contact API here.
-    console.log("Contact enquiry:", formData);
-  };
-
   return (
     <main>
       {/* INTRODUCTION */}
-      <section className="mx-auto max-w-[1400px] px-5 pb-12 pt-16 sm:px-8 sm:pb-16 sm:pt-20 lg:px-12 lg:pt-24">
+      <section className="mx-auto max-w-[1400px] px-5 pb-12 pt-16 sm:px-8 sm:pb-5 sm:pt-20 lg:px-12 lg:pt-20">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-8">
             <h1
-              className={`${cormorant.className} text-[16vw] font-medium leading-[0.82] tracking-[-0.055em] sm:text-[13vw] lg:text-[145px]`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
             >
               Let's talk
               <span className="italic text-[var(--primary)]">.</span>
             </h1>
-            <p className="mt-5 max-w-md text-sm leading-7 text-[var(--foreground)]/65 sm:text-base">
-              Have a question or planning your next getaway? We’re just a
-              conversation away.
-            </p>
           </div>
         </div>
       </section>
@@ -190,9 +248,7 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <h2
-                className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-[72px]`}
-              >
+              <h2 className={`${sectionHeadingClass}`}>
                 Tell us a little
                 <span className="block italic text-[var(--primary)]">
                   about it.
@@ -261,7 +317,11 @@ const ContactPage = () => {
                     {/* Dropdown Trigger */}
                     <button
                       type="button"
-                      onClick={() => setIsSubjectOpen((prev) => !prev)}
+                      onClick={() => {
+                        setIsSubjectOpen((prev) => !prev);
+                        setSubmitMessage("");
+                        setSubmitStatus("");
+                      }}
                       onBlur={(e) => {
                         if (
                           !e.currentTarget.parentElement?.contains(
@@ -394,16 +454,31 @@ const ContactPage = () => {
 
                 <button
                   type="submit"
-                  className="group inline-flex h-13 shrink-0 items-center justify-center gap-5 rounded-full bg-[var(--primary)] px-8 text-[10px] font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:brightness-90"
+                  disabled={isSubmitting}
+                  className="group inline-flex h-13 shrink-0 items-center justify-center gap-5 rounded-full bg-[var(--primary)] px-8 text-[10px] font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Send enquiry
-                  <ArrowUpRight
-                    size={17}
-                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
+                  {isSubmitting ? "Sending..." : "Send enquiry"}
+
+                  {!isSubmitting && (
+                    <ArrowUpRight
+                      size={17}
+                      className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    />
+                  )}
                 </button>
               </div>
             </form>
+            {submitMessage && (
+              <p
+                role="status"
+                aria-live="polite"
+                className={`mt-4 text-sm ${
+                  submitStatus === "success" ? "text-green-600" : "text-red-500"
+                }`}
+              >
+                {submitMessage}
+              </p>
+            )}
           </div>
         </div>
       </section>

@@ -8,8 +8,6 @@ import {
   ShieldCheck,
   LockKeyhole,
   Eye,
-  Database,
-  Cookie,
   UserRound,
   Mail,
 } from "lucide-react";
@@ -18,6 +16,8 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
 const sections = [
   {
@@ -267,8 +267,8 @@ const page = () => {
   return (
     <main>
       {/* HERO */}
-      <section className="px-4 pb-5 pt-24 sm:px-7 sm:pt-28 lg:px-10 lg:pt-32">
-        <div className="relative mx-auto min-h-[570px] max-w-[1600px] overflow-hidden bg-[var(--editorial-background)] sm:min-h-[650px]">
+      <section className="px-4 pb-5 pt-24 sm:px-7 sm:pt-28 lg:px-10 lg:pt-24">
+        <div className="relative mx-auto min-h-[570px] max-w-[1600px] overflow-hidden bg-[var(--editorial-background)] sm:min-h-[650px] rounded-4xl">
           <Image
             src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=2200&q=85"
             alt="Quiet architectural space surrounded by natural light"
@@ -291,7 +291,7 @@ const page = () => {
 
             <div className="max-w-[850px] py-16">
               <h1
-                className={`${cormorant.className} text-[18vw] font-medium leading-[0.76] tracking-[-0.055em] sm:text-[13vw] lg:text-[155px]`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
               >
                 Privacy is
                 <br />
@@ -330,7 +330,7 @@ const page = () => {
               A note from us
             </p>
             <h2
-              className={`${cormorant.className} mt-6 text-5xl leading-[1.02] sm:text-6xl`}
+              className={`${sectionHeadingClass}`}
             >
               Your journey is yours.
               <span className="block italic text-[var(--primary)]">
@@ -410,10 +410,10 @@ const page = () => {
         className="scroll-mt-16 px-5 py-24 sm:px-10 sm:py-32 lg:px-16"
       >
         <div className="mx-auto max-w-[1350px]">
-          <div className="mb-20 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+          <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
             <div>
               <h2
-                className={`${cormorant.className} mt-5 text-6xl leading-[0.9] sm:text-7xl`}
+                className={`${sectionHeadingClass}`}
               >
                 What you should
                 <br />
@@ -521,7 +521,7 @@ const page = () => {
               <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
                 More information
               </p>
-              <h2 className={`${cormorant.className} mt-3 text-5xl`}>
+              <h2 className={`${sectionHeadingClass}`}>
                 Other policies
               </h2>
             </div>

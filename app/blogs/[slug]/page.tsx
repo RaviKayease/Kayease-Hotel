@@ -19,6 +19,8 @@ type BlogPageProps = {
   }>;
 };
 
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
+
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
     slug: post.slug,
@@ -48,20 +50,12 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
   return (
     <main>
       {/* EDITORIAL INTRO */}
-      <section className="px-5 pb-12 pt-16 sm:px-10 sm:pb-16 sm:pt-24 lg:px-16 lg:pt-32">
+      <section className="pb-12 pt-16 sm:pb-10 sm:pt-24 lg:pt-10">
         <div className="mx-auto max-w-[1450px]">
-          <div className="flex items-center gap-4">
-            <span className="h-px w-10 bg-[var(--primary)]" />
-
-            <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-              {post.category}
-            </span>
-          </div>
-
           <div className="mt-9 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
             <div className="lg:col-span-10">
               <h1
-                className={`${cormorant.className} max-w-[1250px] text-[16vw] font-medium leading-[0.78] tracking-[-0.065em] sm:text-[12vw] lg:text-[145px]`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
               >
                 {post.title}
                 <span className="text-[var(--primary)]">.</span>
@@ -74,7 +68,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       {/* FEATURE IMAGE */}
       <section className="px-3 sm:px-5 lg:px-8">
         <div className="mx-auto max-w-[1500px]">
-          <div className="relative h-[350px] overflow-hidden sm:h-[550px] lg:h-[760px]">
+          <div className="relative h-[350px] overflow-hidden sm:h-[550px] lg:h-[760px] rounded-4xl">
             <img
               src={post.image}
               alt={post.title}
@@ -133,11 +127,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             </div>
 
             <div className="lg:col-span-8">
-              <p
-                className={`${cormorant.className} text-3xl leading-[1.35] tracking-[-0.02em] sm:text-4xl lg:text-[46px]`}
-              >
-                {post.excerpt}
-              </p>
+              <p className={`${sectionHeadingClass}`}>{post.excerpt}</p>
             </div>
           </div>
 
@@ -159,9 +149,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 </div>
 
                 <div className="lg:col-span-10">
-                  <h2
-                    className={`${cormorant.className} mb-8 max-w-[850px] text-4xl font-medium leading-[1.08] tracking-[-0.025em] sm:text-5xl lg:text-6xl`}
-                  >
+                  <h2 className={`${sectionHeadingClass}`}>
                     {section.heading}
                   </h2>
 
@@ -181,7 +169,6 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
           </div>
 
           {/* Quote */}
-
           {post.quote && (
             <div className="mx-auto max-w-[950px] py-24 text-center sm:py-32">
               <span className="text-6xl leading-none text-[var(--primary)]">
@@ -208,7 +195,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
       {/* RELATED STORIES */}
       {fallbackPosts.length > 0 && (
-        <section className="relative overflow-hidden bg-[var(--foreground)]/[0.025] px-5 py-24 sm:px-10 sm:py-28 lg:px-16">
+        <section className="relative left-1/2 flex w-screen -translate-x-1/2 overflow-hidden bg-[var(--foreground)]/[0.025] px-5 py-24 sm:px-10 sm:py-28 lg:px-16">
           <div className="mx-auto max-w-[1450px]">
             {/* Header */}
             <div className="mb-16 flex flex-col justify-between gap-8 lg:mb-20 lg:flex-row lg:items-end">
@@ -228,7 +215,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
               <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between lg:w-[340px] lg:flex-col lg:items-start">
                 <Link
-                  href="/blogs-page"
+                  href="/blogs"
                   className="group inline-flex items-center gap-4 border-b border-[var(--foreground)]/30 pb-2 text-[9px] font-medium uppercase tracking-[0.2em] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
                 >
                   Explore all stories
@@ -246,7 +233,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 href={`/blogs/${fallbackPosts[0].slug}`}
                 className="group mb-16 grid grid-cols-1 gap-8 border-y border-[var(--border)] py-8 md:grid-cols-[1.35fr_0.85fr] md:items-center md:gap-12 lg:mb-24 lg:gap-20 lg:py-12"
               >
-                <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9]">
+                <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] rounded-[24px]">
                   <img
                     src={fallbackPosts[0].image}
                     alt={fallbackPosts[0].title}
@@ -287,8 +274,12 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                       {fallbackPosts[0].readTime}
                     </span>
 
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] transition-all duration-300 group-hover:border-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white">
-                      <ArrowUpRight size={18} strokeWidth={1.4} />
+                    <span className="group flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] transition-all duration-300 group-hover:border-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white">
+                      <ArrowUpRight
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                        size={18}
+                        strokeWidth={1.4}
+                      />
                     </span>
                   </div>
                 </div>
@@ -315,7 +306,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                       href={`/blogs/${relatedPost.slug}`}
                       className="group"
                     >
-                      <div className="relative mb-6 aspect-[5/4] overflow-hidden">
+                      <div className="relative mb-6 aspect-[5/4] overflow-hidden rounded-[24px]">
                         <img
                           src={relatedPost.image}
                           alt={relatedPost.title}
@@ -369,16 +360,6 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 </div>
               </div>
             )}
-
-            {/* Closing Detail */}
-            <div className="mt-20 flex items-center gap-5 border-t border-[var(--border)] pt-7">
-              <span className="h-px w-10 bg-[var(--primary)]" />
-              <p
-                className={`${cormorant.className} text-xl italic text-[var(--foreground)]/55`}
-              >
-                Every journey begins with a story.
-              </p>
-            </div>
           </div>
         </section>
       )}
@@ -393,7 +374,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               </p>
 
               <h2
-                className={`${cormorant.className} text-[15vw] font-medium leading-[0.85] tracking-[-0.055em] sm:text-[11vw] lg:text-[130px]`}
+                className={`${cormorant.className} text-[15vw] font-medium leading-[0.85] tracking-[-0.055em] sm:text-[11vw] lg:text-[90px]`}
               >
                 The world is
                 <span className="block italic text-[var(--primary)]">

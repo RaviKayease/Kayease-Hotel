@@ -16,36 +16,7 @@ const cormorant = Cormorant_Garamond({
   weight: ["400", "500", "600"],
 });
 
-const steps = [
-  {
-    number: "01",
-    title: "Find your place",
-    description:
-      "Explore our collection and discover a stay that matches the way you want to travel.",
-    icon: Search,
-  },
-  {
-    number: "02",
-    title: "Set your dates",
-    description:
-      "Choose your arrival and departure dates, add your guests and check availability.",
-    icon: CalendarDays,
-  },
-  {
-    number: "03",
-    title: "Make it yours",
-    description:
-      "Review the property details, booking conditions and total price before proceeding.",
-    icon: ClipboardList,
-  },
-  {
-    number: "04",
-    title: "You're all set",
-    description:
-      "Complete your reservation and keep your confirmation details ready for your trip.",
-    icon: Check,
-  },
-];
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
 const essentials = [
   "Check the property's location and amenities.",
@@ -66,7 +37,7 @@ const page = () => {
             </p>
           </div>
 
-          <div className="relative min-h-[580px] overflow-hidden sm:min-h-[680px]">
+          <div className="relative min-h-[580px] overflow-hidden sm:min-h-[680px] rounded-4xl">
             <img
               src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2400&q=90"
               alt="Beautiful secluded holiday cabin surrounded by nature"
@@ -91,7 +62,7 @@ const page = () => {
                 </p>
 
                 <h1
-                  className={`${cormorant.className} text-[19vw] font-medium leading-[0.78] tracking-[-0.055em] sm:text-[13vw] lg:text-[155px]`}
+                  className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
                 >
                   The art of
                   <br />
@@ -125,7 +96,7 @@ const page = () => {
       >
         <div className="mx-auto max-w-[1350px]">
           {/* Heading */}
-          <div className="mb-16 flex flex-col justify-between gap-8 lg:mb-24 lg:flex-row lg:items-end">
+          <div className="mb-5 flex flex-col justify-between gap-8 lg:mb-10 lg:flex-row lg:items-end">
             <div>
               <div className="mb-6 flex items-center gap-3">
                 <span className="h-px w-9 bg-[var(--primary)]" />
@@ -135,7 +106,7 @@ const page = () => {
               </div>
 
               <h2
-                className={`${cormorant.className} text-6xl font-medium leading-[0.88] tracking-[-0.045em] sm:text-8xl lg:text-[110px]`}
+                className={`${sectionHeadingClass}`}
               >
                 Four steps.
                 <br />
@@ -145,17 +116,13 @@ const page = () => {
               </h2>
             </div>
 
-            <p className="max-w-[290px] pb-2 text-sm leading-7 text-[var(--foreground)]/55">
-              From the first search to the final confirmation, every step brings
-              you closer to somewhere special.
-            </p>
           </div>
 
           {/* Steps */}
           <div className="space-y-20 sm:space-y-28">
             {/* Step 01 */}
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px]">
+              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85"
                   alt="Beautiful destination surrounded by mountains and nature"
@@ -177,7 +144,7 @@ const page = () => {
                   First things first
                 </p>
                 <h3
-                  className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-[-0.035em] sm:text-7xl`}
+                  className={`${sectionHeadingClass}`}
                 >
                   Find somewhere
                   <br />
@@ -208,7 +175,7 @@ const page = () => {
                   Make it your own
                 </p>
                 <h3
-                  className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-[-0.035em] sm:text-7xl`}
+                  className={`${sectionHeadingClass}`}
                 >
                   Choose your
                   <br />
@@ -231,7 +198,7 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px]">
+              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1600&q=85"
                   alt="Peaceful luxury accommodation overlooking a scenic landscape"
@@ -251,7 +218,7 @@ const page = () => {
 
             {/* Step 03 */}
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px]">
+              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85"
                   alt="Elegant interior of a carefully designed accommodation"
@@ -273,7 +240,7 @@ const page = () => {
                   A moment to review
                 </p>
                 <h3
-                  className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-[-0.035em] sm:text-7xl`}
+                  className={`${sectionHeadingClass}`}
                 >
                   Every detail,
                   <br />
@@ -304,7 +271,7 @@ const page = () => {
                   And just like that
                 </p>
                 <h3
-                  className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-[-0.035em] sm:text-7xl`}
+                  className={`${sectionHeadingClass}`}
                 >
                   It's time to
                   <br />
@@ -327,7 +294,7 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px]">
+              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85"
                   alt="Beautiful scenic destination ready to be explored"
@@ -351,7 +318,7 @@ const page = () => {
       {/* ESSENTIALS */}
       <section className="px-5 py-24 sm:px-10 sm:py-32 lg:px-16">
         <div className="mx-auto grid max-w-[1250px] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-24">
-          <div className="relative min-h-[440px] overflow-hidden sm:min-h-[570px]">
+          <div className="relative min-h-[440px] overflow-hidden sm:min-h-[570px] rounded-[24px]">
             <img
               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
               alt="Beautifully designed and welcoming holiday accommodation"
@@ -378,7 +345,7 @@ const page = () => {
             </p>
 
             <h2
-              className={`${cormorant.className} text-5xl font-medium leading-[0.98] tracking-[-0.035em] sm:text-7xl`}
+              className={`${sectionHeadingClass}`}
             >
               A few things
               <br />
@@ -434,7 +401,7 @@ const page = () => {
             </p>
 
             <Link
-              href="/properties"
+              href="/rooms"
               className="group mt-10 inline-flex items-center gap-4 border-b border-[var(--foreground)]/50 pb-3 text-[9px] font-semibold uppercase tracking-[0.2em] hover:border-[var(--primary)] hover:text-[var(--primary)]"
             >
               Explore stays

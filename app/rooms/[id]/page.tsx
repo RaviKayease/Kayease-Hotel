@@ -47,6 +47,8 @@ const addDays = (date: string, days: number) => {
   return getLocalDate(result);
 };
 
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
+
 const RoomDetailContent = () => {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -74,41 +76,6 @@ const RoomDetailContent = () => {
     return new Date(date.getFullYear(), date.getMonth(), 1);
   });
 
-  // const [reviews, setReviews] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Ananya Sharma",
-  //     date: "October 2026",
-  //     rating: 5,
-  //     comment:
-  //       "Absolutely loved our stay. The room was beautifully maintained, the interiors were elegant, and every little detail made the experience special.",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Rahul Mehta",
-  //     date: "September 2026",
-  //     rating: 5,
-  //     comment:
-  //       "A wonderful place to unwind. The room was spacious, comfortable, and exactly as described. Would definitely come back.",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Priya Kapoor",
-  //     date: "August 2026",
-  //     rating: 4,
-  //     comment:
-  //       "Beautiful room and a very peaceful atmosphere. The overall experience was lovely, and the staff were welcoming.",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Arjun Malhotra",
-  //     date: "July 2026",
-  //     rating: 5,
-  //     comment:
-  //       "One of the most relaxing stays we've had. Thoughtful design, comfortable bedding, and a great experience from start to finish.",
-  //   },
-  // ]);
-
   type Review = {
     id: number;
     name: string;
@@ -127,6 +94,8 @@ const RoomDetailContent = () => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewError, setReviewError] = useState("");
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [reservationSubmitted, setReservationSubmitted] = useState(false);
+  const [reservationMessage, setReservationMessage] = useState("");
   const searchParams = useSearchParams();
 
   const averageReviewRating = useMemo(() => {
@@ -333,6 +302,50 @@ const RoomDetailContent = () => {
 
   const totalPrice = room.price * nights * roomCount;
 
+  const handleReservationRequest = () => {
+    if (reservationSubmitted) return;
+
+    try {
+      const savedReservations = localStorage.getItem("hotelReservations");
+      const existingReservations = savedReservations
+        ? JSON.parse(savedReservations)
+        : [];
+
+      if (!Array.isArray(existingReservations)) {
+        throw new Error("Invalid reservation data");
+      }
+
+      const reservation = {
+        id: `RES-${Date.now()}`,
+        roomId: room.id,
+        roomName: room.name,
+        checkIn,
+        checkOut,
+        adults,
+        children,
+        guests: adults + children,
+        rooms: roomCount,
+        nights,
+        pricePerNight: room.price,
+        totalPrice,
+        status: "Requested",
+        submittedAt: new Date().toISOString(),
+      };
+
+      localStorage.setItem(
+        "hotelReservations",
+        JSON.stringify([...existingReservations, reservation]),
+      );
+
+      setReservationSubmitted(true);
+      setReservationMessage(
+        "Your reservation request has been saved successfully.",
+      );
+    } catch {
+      setReservationMessage("Unable to save your request. Please try again.");
+    }
+  };
+
   const handleCheckIn = (value: string) => {
     setCheckIn(value);
 
@@ -398,11 +411,11 @@ const RoomDetailContent = () => {
   return (
     <main>
       {/* PAGE INTRO */}
-      <section className="pb-9 pt-12 sm:pt-16">
+      <section className="pb-5 pt-12 sm:pt-16">
         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
           <div>
             <h1
-              className={`${cormorant.className} text-[clamp(48px,7vw,94px)] font-normal leading-[0.95] tracking-[-0.045em]`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
             >
               {room.name}
             </h1>
@@ -636,9 +649,7 @@ const RoomDetailContent = () => {
               Designed around you
             </p>
 
-            <h2
-              className={`${cormorant.className} max-w-[600px] text-5xl leading-[1.05] tracking-[-0.025em] sm:text-6xl`}
-            >
+            <h2 className={`${sectionHeadingClass}`}>
               Everything you need
               <span className="italic text-[var(--primary)]"> to unwind.</span>
             </h2>
@@ -781,22 +792,6 @@ const RoomDetailContent = () => {
                   <p className="mt-2 text-[10px] text-[var(--muted)]">
                     Per room, per night
                   </p>
-                </div>
-
-                <div className="mb-1 flex items-center gap-1.5">
-                  <Star
-                    size={13}
-                    fill="currentColor"
-                    className="text-[var(--primary)]"
-                  />
-                  <span className="text-xs font-medium">
-                    {reviewsLoaded && reviews.length > 0
-                      ? averageReviewRating.toFixed(1)
-                      : "—"}
-                  </span>
-                  <span className="text-[9px] text-[var(--muted)]">
-                    Guest rating
-                  </span>
                 </div>
               </div>
             </div>
@@ -1309,16 +1304,43 @@ const RoomDetailContent = () => {
               </div>
 
               {/* RESERVATION BUTTON */}
-              <Link
-                href={bookingUrl}
-                className="group mt-7 flex w-full items-center justify-between rounded-full bg-[var(--foreground)] px-6 py-3 text-[9px] uppercase tracking-[0.17em] text-[var(--background)] transition-all duration-300 hover:opacity-85"
+              <button
+                type="button"
+                onClick={handleReservationRequest}
+                disabled={reservationSubmitted}
+                className={`group mt-7 flex w-full items-center justify-between rounded-full px-6 py-3 text-[9px] uppercase tracking-[0.17em] text-[var(--background)] transition-all duration-300 ${
+                  reservationSubmitted
+                    ? "cursor-default bg-[var(--primary)]"
+                    : "bg-[var(--foreground)] hover:opacity-85"
+                }`}
               >
-                <span>Request reservation</span>
-
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                  <ArrowUpRight size={16} />
+                <span>
+                  {reservationSubmitted
+                    ? "Reservation Requested"
+                    : "Request reservation"}
                 </span>
-              </Link>
+
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
+                  {reservationSubmitted ? (
+                    <Check size={16} />
+                  ) : (
+                    <ArrowUpRight size={16} />
+                  )}
+                </span>
+              </button>
+
+              {reservationMessage && (
+                <p
+                  className={`mt-4 text-center text-[10px] leading-5 ${
+                    reservationSubmitted
+                      ? "text-[var(--primary)]"
+                      : "text-red-500"
+                  }`}
+                  role="status"
+                >
+                  {reservationMessage}
+                </p>
+              )}
 
               <div className="mt-5 flex items-start justify-center gap-2 text-center">
                 <ShieldCheck
@@ -1345,9 +1367,7 @@ const RoomDetailContent = () => {
                 Continue exploring
               </p>
 
-              <h2
-                className={`${cormorant.className} max-w-[650px] text-5xl leading-[1.05] sm:text-6xl`}
-              >
+              <h2 className={`${sectionHeadingClass}`}>
                 Find another place
                 <span className="italic"> to belong.</span>
               </h2>

@@ -140,6 +140,8 @@ const sections = [
   },
 ];
 
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
+
 const page = () => {
   return (
     <main>
@@ -151,7 +153,7 @@ const page = () => {
             {/* Left content */}
             <div className="relative z-10">
               <h1
-                className={`${cormorant.className} max-w-[850px] text-[19vw] font-medium leading-[0.8] tracking-[-0.055em] sm:text-[14vw] lg:text-[150px]`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
               >
                 The
                 <br />
@@ -201,9 +203,7 @@ const page = () => {
 
                 {/* Document title */}
                 <div className="relative z-10 mt-9">
-                  <h2
-                    className={`${cormorant.className} text-[42px] leading-[0.95] tracking-[-0.03em] sm:text-[50px]`}
-                  >
+                  <h2 className={`${sectionHeadingClass}`}>
                     Terms &
                     <br />
                     Conditions
@@ -250,7 +250,7 @@ const page = () => {
       {/* CONTENT AREA */}
       <section
         id="terms-content"
-        className="border-t border-[var(--border)] bg-[var(--editorial-background)] px-5 py-14 transition-colors duration-300 sm:px-10 sm:py-20 lg:px-16"
+        className="relative left-1/2 flex w-screen -translate-x-1/2 border-t border-[var(--border)] bg-[var(--editorial-background)] px-5 py-14 transition-colors duration-300 sm:px-10 sm:py-20 lg:px-16"
       >
         <div className="mx-auto max-w-[1250px]">
           <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
@@ -303,7 +303,7 @@ const page = () => {
                 ))}
               </div>
 
-              <div className="mt-8 border-t border-[var(--border)] pt-6">
+              <div className="mt-4 pt-6">
                 <div className="flex items-center gap-2 text-[var(--primary)]">
                   <ShieldCheck size={16} />
 
@@ -359,32 +359,6 @@ const page = () => {
                           </p>
                         ))}
                       </div>
-
-                      {section.id === "06" && (
-                        <Link
-                          href="/booking-policy"
-                          className="group mt-5 inline-flex items-center gap-2 border-b border-[var(--primary)] pb-1 text-xs font-medium text-[var(--primary)] transition-opacity hover:opacity-70"
-                        >
-                          Read our Booking Policy{" "}
-                          <ArrowUpRight
-                            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                            size={13}
-                          />
-                        </Link>
-                      )}
-
-                      {section.id === "13" && (
-                        <Link
-                          href="/privacy-policy"
-                          className="group mt-5 inline-flex items-center gap-2 border-b border-[var(--primary)] pb-1 text-xs font-medium text-[var(--primary)] transition-opacity hover:opacity-70"
-                        >
-                          Read our Privacy Policy{" "}
-                          <ArrowUpRight
-                            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                            size={13}
-                          />
-                        </Link>
-                      )}
                     </div>
                   </div>
                 </article>
@@ -465,7 +439,7 @@ const page = () => {
               </span>
 
               <h2
-                className={`${cormorant.className} mt-3 text-4xl tracking-[-0.025em] sm:text-5xl`}
+                className={`${sectionHeadingClass}`}
               >
                 Other important details.
               </h2>
@@ -495,8 +469,11 @@ const page = () => {
                 </p>
               </div>
 
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] transition-colors group-hover:border-[var(--primary)]">
-                <ArrowUpRight size={17} />
+              <span className="group flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] transition-colors group-hover:border-[var(--primary)]">
+                <ArrowUpRight
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  size={17}
+                />
               </span>
             </Link>
             <Link
@@ -517,8 +494,11 @@ const page = () => {
                 </p>
               </div>
 
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] transition-colors group-hover:border-[var(--primary)]">
-                <ArrowUpRight size={17} />
+              <span className="group flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] transition-colors group-hover:border-[var(--primary)]">
+                <ArrowUpRight
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  size={17}
+                />
               </span>
             </Link>
           </div>

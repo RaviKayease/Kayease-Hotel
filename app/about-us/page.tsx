@@ -60,6 +60,27 @@ const experiences = [
   },
 ];
 
+const stayHighlights = [
+  {
+    title: "Thoughtful Living",
+    image:
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
+    alt: "Elegant luxury hotel suite",
+  },
+  {
+    title: "Remarkable Destinations",
+    image:
+      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85",
+    alt: "Beautiful architectural hotel exterior",
+  },
+  {
+    title: "Meaningful Experiences",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85",
+    alt: "Sophisticated luxury hotel living space",
+  },
+];
+
 const AboutPage = () => {
   return (
     <main>
@@ -69,94 +90,37 @@ const AboutPage = () => {
           {/*  Heading */}
           <div className="mb-16 text-center">
             <h1
-              className={`${cormorant.className} text-[clamp(42px,6vw,76px)] font-medium leading-[0.95] tracking-tight`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
             >
-              A world of{" "}
-              <span className="italic text-[var(--primary)]">
-                beautiful stays.
-              </span>
+              Beautiful Stays
             </h1>
           </div>
 
           {/* Three Image Gallery */}
           <div className="grid grid-cols-1 gap-9 sm:grid-cols-3 sm:gap-5 lg:gap-7">
-            {/* Image 1 */}
-            <div className="group">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <p className="mb-1 text-[8px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                    THE SPACES
-                  </p>
-                  <h2
-                    className={`${cormorant.className} text-2xl leading-none sm:text-[27px]`}
-                  >
-                    Thoughtful Living
-                  </h2>
+            {stayHighlights.map((item, index) => (
+              <div className="group" key={index}>
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <div>
+                    <h2
+                      className={`${cormorant.className} text-2xl leading-none sm:text-[27px]`}
+                    >
+                      {item.title}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="relative aspect-[1.12/1] overflow-hidden rounded-[24px]">
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
               </div>
-
-              <div className="relative aspect-[1.12/1] overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85"
-                  alt="Elegant luxury hotel suite"
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </div>
-
-            {/* Image 2 */}
-            <div className="group">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <p className="mb-1 text-[8px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                    THE PLACES
-                  </p>
-                  <h2
-                    className={`${cormorant.className} text-2xl leading-none sm:text-[27px]`}
-                  >
-                    Remarkable Destinations
-                  </h2>
-                </div>
-              </div>
-
-              <div className="relative aspect-[1.12/1] overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85"
-                  alt="Beautiful architectural hotel exterior"
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </div>
-
-            {/* Image 3 */}
-            <div className="group">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <p className="mb-1 text-[8px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                    THE MOMENTS
-                  </p>
-                  <h2
-                    className={`${cormorant.className} text-2xl leading-none sm:text-[27px]`}
-                  >
-                    Meaningful Experiences
-                  </h2>
-                </div>
-              </div>
-
-              <div className="relative aspect-[1.12/1] overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85"
-                  alt="Sophisticated luxury hotel living space"
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="mt-4 border-t border-[var(--border)] pt-7 text-center sm:mt-9 sm:pt-2">
@@ -173,9 +137,7 @@ const AboutPage = () => {
         <div className="mx-auto max-w-[1380px]">
           {/* Section Intro */}
           <div className="mb-12 text-center sm:mb-16">
-            <h2
-              className={`${cormorant.className} mx-auto max-w-4xl text-[clamp(42px,6vw,82px)] font-medium leading-[0.95] tracking-tight`}
-            >
+            <h2 className={`${sectionHeadingClass}`}>
               Where every stay becomes
               <span className="italic text-[var(--primary)]"> a story.</span>
             </h2>
@@ -205,7 +167,7 @@ const AboutPage = () => {
 
             {/* Main Image */}
             <div className="relative lg:col-span-6">
-              <div className="group relative h-[390px] overflow-hidden sm:h-[530px] lg:h-[620px]">
+              <div className="group relative h-[390px] overflow-hidden sm:h-[530px] lg:h-[620px] rounded-[24px]">
                 <Image
                   src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90"
                   alt="Luxury resort surrounded by tropical nature"
@@ -227,7 +189,7 @@ const AboutPage = () => {
 
             {/* Right Image + Text */}
             <div className="flex flex-col gap-7 lg:col-span-3 lg:pl-3">
-              <div className="relative h-[220px] overflow-hidden sm:h-[280px] lg:h-[250px]">
+              <div className="relative h-[220px] overflow-hidden sm:h-[280px] lg:h-[250px] rounded-[24px]">
                 <Image
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=85"
                   alt="Elegant and thoughtfully designed hotel interior"
@@ -324,10 +286,6 @@ const AboutPage = () => {
                     <p className="max-w-lg text-sm leading-7 text-[var(--foreground)]/60">
                       {item.description}
                     </p>
-
-                    <span className="hidden text-2xl text-[var(--primary)]/50 transition-all duration-500 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[var(--primary)] sm:block">
-                      ↗
-                    </span>
                   </div>
                 </article>
               );
@@ -360,7 +318,7 @@ const AboutPage = () => {
             {/* Featured Experience */}
             {experiences[0] && (
               <article className="group min-w-0">
-                <div className="relative h-[420px] overflow-hidden sm:h-[560px] lg:h-[680px]">
+                <div className="relative h-[420px] overflow-hidden sm:h-[560px] lg:h-[680px] rounded-[24px]">
                   <Image
                     src={experiences[0].image}
                     alt={experiences[0].title}
@@ -397,7 +355,7 @@ const AboutPage = () => {
             <div className="flex flex-col gap-10 sm:gap-12 lg:justify-between lg:pt-20">
               {experiences.slice(1, 3).map((item, index) => (
                 <article key={item.title} className="group min-w-0">
-                  <div className="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-[310px]">
+                  <div className="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-[310px] rounded-[24px]">
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -475,21 +433,12 @@ const AboutPage = () => {
             <Compass size={25} strokeWidth={1.4} />
           </div>
 
-          <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-            YOUR NEXT CHAPTER STARTS HERE
-          </p>
-
           <h2 className={sectionHeadingClass}>
             Your next beautiful
             <span className="block italic text-[var(--primary)]">
               escape awaits.
             </span>
           </h2>
-
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-[var(--foreground)]/60 sm:text-base">
-            Find a place that inspires you, a space that feels like home, and an
-            experience worth remembering.
-          </p>
 
           <Link
             href="/rooms#room-collection"

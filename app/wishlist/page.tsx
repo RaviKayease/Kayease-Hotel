@@ -13,7 +13,6 @@ import {
   Users,
   Trash2,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 
 import { rooms } from "../data/roomsPageData";
@@ -23,6 +22,8 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState<number[]>([]);
@@ -67,20 +68,11 @@ const WishlistPage = () => {
       {/* HERO */}
       <section className="mx-auto w-full max-w-[1500px] px-5 pb-12 pt-16 sm:px-8 sm:pb-16 sm:pt-24 lg:px-12">
         <div className="flex flex-col items-center text-center">
-          <p className="mb-5 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-            <Sparkles size={13} />A COLLECTION OF POSSIBILITIES
-          </p>
-
           <h1
-            className={`${cormorant.className} text-[17vw] font-medium leading-[0.85] tracking-tight sm:text-[12vw] lg:text-[110px]`}
+            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
           >
             Your Saved Stays
           </h1>
-
-          <p className="mt-7 max-w-md text-xs leading-7 text-[var(--foreground)]/55 sm:text-sm">
-            A little collection of places that caught your eye. Keep your
-            favourites close and find the perfect place for your next escape.
-          </p>
 
           <div className="mt-8 flex items-center gap-3 rounded-full border border-[var(--border)] px-5 py-3">
             <Heart size={15} className="text-[var(--primary)]" />
@@ -98,21 +90,13 @@ const WishlistPage = () => {
         {/* COLLECTION HEADING */}
         <div className="mb-8 flex flex-col justify-between gap-5 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-              YOUR PERSONAL COLLECTION
-            </p>
-
-            <h2
-              className={`${cormorant.className} text-4xl font-medium leading-none sm:text-5xl`}
-            >
-              Places to dream about.
-            </h2>
+            <h2 className={`${sectionHeadingClass}`}>Places to dream about.</h2>
           </div>
 
           {savedRooms.length > 0 && (
             <button
               onClick={clearWishlist}
-              className="flex w-fit items-center gap-2 text-[10px] font-medium uppercase tracking-[0.15em] text-[var(--foreground)]/50 transition-colors hover:text-red-500"
+              className="flex w-fit items-center gap-2 text-[10px] font-medium uppercase tracking-[0.15em] text-[var(--foreground)]/50 cursor-pointer"
             >
               <Trash2 size={14} />
               Clear wishlist
@@ -300,7 +284,10 @@ const WishlistPage = () => {
             >
               Explore more stays
               <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
-                <ArrowRight size={16} />
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
               </span>
             </Link>
           </div>

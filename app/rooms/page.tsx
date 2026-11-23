@@ -155,17 +155,17 @@ const RoomsPage = () => {
   return (
     <main>
       {/* Hero Section */}
-      <section className="t-12 sm:pt-16 lg:pt-10">
+      <section className="sm:pt-16 lg:pt-10">
         <div className="text-center">
           <h1
-            className={`${cormorant.className} dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
+            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
           >
             Rooms & Suites
           </h1>
         </div>
 
         {/* Hero Image */}
-        <div className="group relative mx-10 mt-12 h-[340px] overflow-hidden rounded-[25px] sm:mt-5 sm:h-[480px] sm:rounded-[35px] lg:h-[620px] lg:rounded-[45px]">
+        <div className="group relative mt-12 h-[340px] overflow-hidden rounded-[25px] sm:mt-5 sm:h-[480px] sm:rounded-[35px] lg:h-[620px] lg:rounded-[45px]">
           <img
             src="https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp"
             alt="Luxury boutique hotel suite"
@@ -190,10 +190,11 @@ const RoomsPage = () => {
           </div>
         </div>
       </section>
+
       {/* Room Collection */}
       <section
         id="room-collection"
-        className="mx-auto w-full max-w-[1500px] scroll-mt-24 px-5 pb-20 sm:px-8 sm:pb-28 lg:px-12 lg:pt-15"
+        className="w-full scroll-mt-24 pb-20 sm:pb-28 lg:pt-15"
       >
         {/* Heading */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -590,7 +591,7 @@ const RoomsPage = () => {
         </div>
 
         {/* Room Cards */}
-        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:gap-x-7 lg:gap-y-16">
+        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:gap-x-7 lg:gap-y-16 px-10">
           {filteredRooms.map((room) => (
             <article
               key={room.id}
@@ -714,8 +715,9 @@ const RoomsPage = () => {
           </div>
         )}
       </section>
+
       {/* Guest Experiences & Reviews */}
-      <section className="relative left-1/2 w-screen -translate-x-1/2 editorial-showcase overflow-hidden px-5 py-20 text-[var(--foreground)] transition-colors duration-500">
+      <section className="relative left-1/2 w-screen -translate-x-1/2 editorial-showcase overflow-hidden py-20 text-[var(--foreground)] transition-colors duration-500">
         <div className="mx-auto w-full max-w-[1350px]">
           {/* Section Heading */}
           <div className="mb-12 flex flex-col justify-between gap-6 sm:mb-16 lg:flex-row lg:items-end">

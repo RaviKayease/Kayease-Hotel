@@ -28,7 +28,7 @@ const categories = [
   "Inspiration",
 ];
 
-
+const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
 const Page = () => {
   const [activeCategory, setActiveCategory] = useState("All Stories");
@@ -53,18 +53,13 @@ const Page = () => {
   return (
     <main>
       {/* EDITORIAL INTRO + FEATURED STORY */}
-      <section className="relative px-5 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-12 lg:px-12 lg:pt-24 lg:pb-16">
+      <section className="relative px-5 pt-16 pb-10 sm:px-8 sm:pb-12 lg:px-12 lg:pb-10">
         <div className="mx-auto max-w-[1350px]">
           {/* Editorial Intro */}
           <div className="mb-6 flex flex-col items-start justify-between gap-8 pb-5 sm:flex-row sm:items-end">
             <div className="max-w-3xl">
-              <p className="mb-5 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-                <span className="h-px w-8 bg-[var(--primary)]" />
-                The Travel Journal
-              </p>
-
               <h1
-                className={`${cormorant.className} text-[17vw] font-medium leading-[0.82] tracking-[-0.055em] sm:text-[12vw] lg:text-[145px]`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-[0.9]`}
               >
                 Stories worth
                 <span className="block italic text-[var(--primary)]">
@@ -75,7 +70,7 @@ const Page = () => {
           </div>
 
           {/* Featured Story */}
-          <article className="grid grid-cols-1 overflow-hidden border border-[var(--border)] lg:grid-cols-12">
+          <article className="grid grid-cols-1 overflow-hidden border border-[var(--border)] lg:grid-cols-12 rounded-[24px]">
             {/* Image */}
             <Link
               href={`/blogs/${featuredPost.slug}`}
@@ -103,9 +98,7 @@ const Page = () => {
                   <span>Editor's Pick</span>
                 </div>
 
-                <h2
-                  className={`${cormorant.className} mt-7 text-4xl font-medium leading-[1.05] sm:text-5xl lg:text-[58px]`}
-                >
+                <h2 className={`${sectionHeadingClass}`}>
                   {featuredPost.title}
                 </h2>
 
@@ -155,20 +148,13 @@ const Page = () => {
 
           <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
-              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                Discover Something New
-              </p>
-
-              <h2
-                className={`${cormorant.className} text-5xl font-medium leading-none sm:text-6xl lg:text-7xl`}
-              >
+              <h2 className={`${sectionHeadingClass}`}>
                 The latest <span className="italic">stories.</span>
               </h2>
             </div>
           </div>
 
           {/* Filters and search */}
-
           <div className="flex flex-col gap-5 border-y border-[var(--border)] py-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide">
               {categories.map((category) => (
@@ -223,7 +209,7 @@ const Page = () => {
 
                   <Link
                     href={`/blogs/${post.slug}`}
-                    className="relative block h-[310px] overflow-hidden bg-[var(--surface)] sm:h-[340px] lg:h-[370px]"
+                    className="relative block h-[310px] overflow-hidden bg-[var(--surface)] sm:h-[340px] lg:h-[370px] rounded-[24px]"
                   >
                     <img
                       src={post.image}
@@ -313,10 +299,6 @@ const Page = () => {
       <section className="relative overflow-hidden px-5 py-20 sm:px-8 sm:pb-28 sm:pt-18 lg:px-12">
         <div className="mx-auto grid max-w-[1350px] grid-cols-1 items-center gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-              Every journey begins somewhere
-            </p>
-
             <h2
               className={`${cormorant.className} max-w-4xl text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-[90px]`}
             >
