@@ -100,139 +100,71 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`fixed inset-0 z-50 md:hidden bg-white ${
-          isMenuOpen ? "visible" : "invisible pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-50 md:hidden bg-[var(--background)]
+    transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+    ${
+      isMenuOpen
+        ? "visible opacity-100"
+        : "invisible opacity-0 pointer-events-none"
+    }`}
       >
         <div
-          className={`absolute inset-0 text-[#292824] overflow-y-auto transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isMenuOpen ? "translate-y-0" : "-translate-y-4"
-          }`}
+          className={`absolute inset-0 flex flex-col text-[var(--foreground)] overflow-y-auto
+      transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+      ${isMenuOpen ? "translate-y-0" : "-translate-y-4"}`}
         >
-          <div className="sticky top-0 flex items-center justify-between px-5 py-4 border-b border-black/10">
-            <div className="flex items-center justify-between w-full gap-2 sm:gap-4">
-              <Logo />
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                <X size={21} strokeWidth={1.4} />
-              </button>
-            </div>
+          {/* Header */}
+          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 border-b border-[var(--primary)]/15 bg-[var(--background)]/95 backdrop-blur-xl">
+            <Logo />
+
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              aria-label="Close menu"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--primary)]/20 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
+            >
+              <X size={19} strokeWidth={1.5} />
+            </button>
           </div>
 
-          <div className="px-6 pt-8 pb-7 flex flex-col gap-5">
-            {[
-              { name: "Accommodation", href: "/accommodation" },
-              { name: "Dining", href: "/dining" },
-              { name: "Wellness", href: "/wellness" },
-              { name: "Experiences", href: "/experiences" },
-              { name: "Offers", href: "/offers" },
-              { name: "Vouchers", href: "/vouchers" },
-              { name: "Gallery", href: "/gallery" },
-            ].map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-[11px] uppercase tracking-[0.2em] font-medium text-neutral-700"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="mx-6 border-t border-b border-black/15 py-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 mb-5">
-              Our Collection
+          {/* Navigation */}
+          <div className="flex flex-1 flex-col p-8">
+            <p className="mb-10 text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--primary)]">
+              Explore
             </p>
 
-            {[
-              {
-                name: "Hotels",
-                count: 2,
-                items: ["Hotel One", "Hotel Two"],
-              },
-              {
-                name: "Villas & Chalets",
-                count: 6,
-                items: ["Beach Villas", "Mountain Chalets"],
-              },
-              {
-                name: "Residences",
-                count: 1,
-                items: ["Private Residences"],
-              },
-            ].map((collection) => (
-              <div
-                key={collection.name}
-                className="border-b border-black/5 last:border-0"
-              >
-                <button
-                  onClick={() =>
-                    setExpandedCollection(
-                      expandedCollection === collection.name
-                        ? null
-                        : collection.name,
-                    )
-                  }
-                  className="w-full flex items-center justify-between py-3 text-sm"
-                >
-                  <span>
-                    {collection.name} ({collection.count})
-                  </span>
-
-                  {expandedCollection === collection.name ? (
-                    <Minus size={17} strokeWidth={1.3} />
-                  ) : (
-                    <Plus size={17} strokeWidth={1.3} />
-                  )}
-                </button>
-
-                <div
-                  className={`grid transition-all duration-300 ${
-                    expandedCollection === collection.name
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
+            <nav className="flex flex-col">
+              {[
+                { name: "Rooms", href: "/rooms" },
+                { name: "About Us", href: "/about-us" },
+                { name: "Contact Us", href: "/contact-us" },
+                { name: "Blogs", href: "/blogs" },
+              ].map((item, index) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`group flex items-center justify-between border-b border-[var(--primary)]/15 py-6 transition-all duration-300 ${
+                    pathname === item.href
+                      ? "text-[var(--primary)]"
+                      : "text-[var(--foreground)] hover:text-[var(--primary)]"
                   }`}
                 >
-                  <div className="overflow-hidden">
-                    {collection.items.map((item) => (
-                      <Link
-                        key={item}
-                        href="/rooms"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="block py-2 pl-3 text-xs text-neutral-500 hover:text-black"
-                      >
-                        {item}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                  <span className="flex items-center gap-5">
+                    <span className="text-[10px] tracking-widest text-[var(--primary)]/60">
+                      0{index + 1}
+                    </span>
 
-          <div className="px-6 py-7 flex flex-col gap-5">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400">
-              Hotel Kayease
-            </p>
+                    <span className="text-sm font-medium tracking-wide">
+                      {item.name}
+                    </span>
+                  </span>
 
-            {[
-              { name: "Rooms", href: "/rooms" },
-              { name: "About Us", href: "/about-us" },
-              { name: "Contact Us", href: "/contact-us" },
-              { name: "Blogs", href: "/blogs" },
-            ].map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-[11px] uppercase tracking-[0.2em] font-medium"
-              >
-                {item.name}
-              </Link>
-            ))}
+                  <span className="text-xl transition-transform duration-300 group-hover:translate-x-2">
+                    ↗
+                  </span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
       </div>

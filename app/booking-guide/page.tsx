@@ -105,9 +105,7 @@ const page = () => {
                 </p>
               </div>
 
-              <h2
-                className={`${sectionHeadingClass}`}
-              >
+              <h2 className={`${sectionHeadingClass}`}>
                 Four steps.
                 <br />
                 <span className="italic text-[var(--primary)]">
@@ -115,7 +113,6 @@ const page = () => {
                 </span>
               </h2>
             </div>
-
           </div>
 
           {/* Steps */}
@@ -143,9 +140,7 @@ const page = () => {
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
                   First things first
                 </p>
-                <h3
-                  className={`${sectionHeadingClass}`}
-                >
+                <h3 className={`${sectionHeadingClass}`}>
                   Find somewhere
                   <br />
                   <span className="italic">to fall for.</span>
@@ -174,9 +169,7 @@ const page = () => {
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
                   Make it your own
                 </p>
-                <h3
-                  className={`${sectionHeadingClass}`}
-                >
+                <h3 className={`${sectionHeadingClass}`}>
                   Choose your
                   <br />
                   <span className="italic">perfect moment.</span>
@@ -239,9 +232,7 @@ const page = () => {
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
                   A moment to review
                 </p>
-                <h3
-                  className={`${sectionHeadingClass}`}
-                >
+                <h3 className={`${sectionHeadingClass}`}>
                   Every detail,
                   <br />
                   <span className="italic">just right.</span>
@@ -270,9 +261,7 @@ const page = () => {
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
                   And just like that
                 </p>
-                <h3
-                  className={`${sectionHeadingClass}`}
-                >
+                <h3 className={`${sectionHeadingClass}`}>
                   It's time to
                   <br />
                   <span className="italic">look forward.</span>
@@ -344,9 +333,7 @@ const page = () => {
               Before you confirm
             </p>
 
-            <h2
-              className={`${sectionHeadingClass}`}
-            >
+            <h2 className={`${sectionHeadingClass}`}>
               A few things
               <br />
               to keep in <span className="italic">mind.</span>

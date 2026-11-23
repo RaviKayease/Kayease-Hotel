@@ -409,106 +409,106 @@ const HomePage = () => {
     );
   });
 
- 
-const handleBookingSearch = () => {
-  // Close all dropdowns
-  setShowDestinations(false);
-  setShowDates(false);
-  setShowOccupancy(false);
+  const handleBookingSearch = () => {
+    // Close all dropdowns
+    setShowDestinations(false);
+    setShowDates(false);
+    setShowOccupancy(false);
 
-  const errors: string[] = [];
+    const errors: string[] = [];
 
-  // 1. Validate destination
-  if (!destination.trim()) {
-    errors.push("Please select your destination.");
-  }
+    // 1. Validate destination
+    if (!destination.trim()) {
+      errors.push("Please select your destination.");
+    }
 
-  // 2. Validate dates
-  if (!checkIn || !checkOut) {
-    errors.push("Please select both check-in and check-out dates.");
-  } else if (checkOut <= checkIn) {
-    errors.push("Your check-out date must be after your check-in date.");
-  }
+    // 2. Validate dates
+    if (!checkIn || !checkOut) {
+      errors.push("Please select both check-in and check-out dates.");
+    } else if (checkOut <= checkIn) {
+      errors.push("Your check-out date must be after your check-in date.");
+    }
 
-  // 3. Validate occupancy
-  if (adults < 1) {
-    errors.push("At least one adult is required.");
-  }
+    // 3. Validate occupancy
+    if (adults < 1) {
+      errors.push("At least one adult is required.");
+    }
 
-  if (roomCount < 1) {
-    errors.push("Please select at least one room.");
-  }
+    if (roomCount < 1) {
+      errors.push("Please select at least one room.");
+    }
 
-  const totalGuests = adults + children;
+    const totalGuests = adults + children;
 
-  if (totalGuests < 1) {
-    errors.push("Please select at least one guest.");
-  }
+    if (totalGuests < 1) {
+      errors.push("Please select at least one guest.");
+    }
 
-  // Check rooms for the selected destination
-  const locationRooms = destination.trim()
-    ? rooms.filter(
-        (room) =>
-          room.location.toLowerCase() === destination.trim().toLowerCase(),
-      )
-    : [];
+    // Check rooms for the selected destination
+    const locationRooms = destination.trim()
+      ? rooms.filter(
+          (room) =>
+            room.location.toLowerCase() === destination.trim().toLowerCase(),
+        )
+      : [];
 
-  // Check whether any room can accommodate the guests
-  const guestsPerRoom = roomCount > 0 ? Math.ceil(totalGuests / roomCount) : 0;
+    // Check whether any room can accommodate the guests
+    const guestsPerRoom =
+      roomCount > 0 ? Math.ceil(totalGuests / roomCount) : 0;
 
-  const capacityRooms = locationRooms.filter(
-    (room) => room.guests >= guestsPerRoom,
-  );
-
-  // 4. Check destination availability
-  if (destination.trim() && locationRooms.length === 0) {
-    errors.push(
-      `We currently don't have any listed rooms in ${destination}. Please explore another destination.`,
+    const capacityRooms = locationRooms.filter(
+      (room) => room.guests >= guestsPerRoom,
     );
-  }
 
-  // 5. Check guest capacity
-  if (
-    locationRooms.length > 0 &&
-    guestsPerRoom > 0 &&
-    capacityRooms.length === 0
-  ) {
-    const maxCapacity = Math.max(...locationRooms.map((room) => room.guests));
+    // 4. Check destination availability
+    if (destination.trim() && locationRooms.length === 0) {
+      errors.push(
+        `We currently don't have any listed rooms in ${destination}. Please explore another destination.`,
+      );
+    }
 
-    errors.push(
-      `We have rooms in ${destination}, but they can accommodate a maximum of ${maxCapacity} guests per room. Please reduce the number of guests or select more rooms.`,
+    // 5. Check guest capacity
+    if (
+      locationRooms.length > 0 &&
+      guestsPerRoom > 0 &&
+      capacityRooms.length === 0
+    ) {
+      const maxCapacity = Math.max(...locationRooms.map((room) => room.guests));
+
+      errors.push(
+        `We have rooms in ${destination}, but they can accommodate a maximum of ${maxCapacity} guests per room. Please reduce the number of guests or select more rooms.`,
+      );
+    }
+
+    // Show all relevant errors together
+    if (errors.length > 0) {
+      setSearchError(errors.join(" "));
+      return;
+    }
+
+    // Select the most suitable room
+    const matchingRooms = capacityRooms.sort(
+      (a, b) => a.guests - b.guests || a.price - b.price,
     );
-  }
 
-  // Show all relevant errors together
-  if (errors.length > 0) {
-    setSearchError(errors.join(" "));
-    return;
-  }
+    const selectedRoom = matchingRooms[0];
 
-  // Select the most suitable room
-  const matchingRooms = capacityRooms.sort(
-    (a, b) => a.guests - b.guests || a.price - b.price,
-  );
+    // Prepare booking information
+    const searchParams = new URLSearchParams({
+      destination,
+      checkIn,
+      checkOut,
+      adults: String(adults),
+      children: String(children),
+      guests: String(totalGuests),
+      rooms: String(roomCount),
+    });
 
-  const selectedRoom = matchingRooms[0];
+    setSearchError("");
+    setShowMobileSearchPanel(false);
 
-  // Prepare booking information
-  const searchParams = new URLSearchParams({
-    destination,
-    checkIn,
-    checkOut,
-    adults: String(adults),
-    children: String(children),
-    guests: String(totalGuests),
-    rooms: String(roomCount),
-  });
-
-  setSearchError("");
-  setShowMobileSearchPanel(false);
-
-  router.push(`/rooms/${selectedRoom.id}?${searchParams.toString()}`);
-};
+    router.push(`/rooms/${selectedRoom.id}?${searchParams.toString()}`);
+  };
 
   return (
     <main>
@@ -1039,6 +1039,7 @@ const handleBookingSearch = () => {
                           className="shrink-0 text-[var(--primary)]"
                           size={20}
                         />
+
                         <input
                           type="text"
                           value={destination}
@@ -1051,23 +1052,52 @@ const handleBookingSearch = () => {
                         />
                       </div>
 
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {destinations.map((place) => (
-                          <button
-                            key={place}
-                            onClick={() => {
-                              setDestination(place);
-                              setSearchError("");
-                            }}
-                            className={`rounded-full border px-3 py-2 text-xs transition ${
-                              destination === place
-                                ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--primary)]"
-                                : "border-[var(--border)] bg-[var(--surface)]/70 text-[var(--foreground)]/75 hover:border-[var(--primary)]"
-                            }`}
-                          >
-                            {place}
-                          </button>
-                        ))}
+                      {/* Available Destinations */}
+                      <div className="mt-4">
+                        <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-[var(--foreground)]/45">
+                          {destination
+                            ? "Matching destinations"
+                            : "Available destinations"}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          {roomLocations
+                            .filter((place) => place !== "All Locations")
+                            .filter((place) =>
+                              place
+                                .toLowerCase()
+                                .includes(destination.trim().toLowerCase()),
+                            )
+                            .map((place) => (
+                              <button
+                                key={place}
+                                type="button"
+                                onClick={() => {
+                                  setDestination(place);
+                                  setSearchError("");
+                                }}
+                                className={`rounded-full border px-3 py-2 text-xs transition ${
+                                  destination === place
+                                    ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--primary)]"
+                                    : "border-[var(--border)] bg-[var(--surface)]/70 text-[var(--foreground)]/75 hover:border-[var(--primary)]"
+                                }`}
+                              >
+                                {place}
+                              </button>
+                            ))}
+
+                          {roomLocations.filter(
+                            (place) =>
+                              place !== "All Locations" &&
+                              place
+                                .toLowerCase()
+                                .includes(destination.trim().toLowerCase()),
+                          ).length === 0 && (
+                            <p className="py-2 text-xs text-[var(--foreground)]/45">
+                              No matching destinations found.
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
 
@@ -1235,10 +1265,11 @@ const handleBookingSearch = () => {
           </div>
         </div>
       </section>
+
       {/* Featured Hotels */}
       <section className="w-full bg-[var(--background)] text-[var(--foreground)] pt-12 lg:py-15 lg:mt-10 transition-colors duration-500">
         {/* Heading */}
-        <div className="mb-12 text-center">
+        <div className="mb-6 lg:mb-8 text-center">
           <h2 className={`${sectionHeadingClass} mb-10`}>
             Discover Our Experiences
           </h2>
@@ -1262,7 +1293,7 @@ const handleBookingSearch = () => {
         </div>
 
         {/* Hotel Cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {featuredExperiences
             .filter((hotel) => hotel.category === activeCategory)
             .map((hotel) => (
@@ -1271,20 +1302,18 @@ const handleBookingSearch = () => {
                 className="group overflow-hidden rounded-3xl lg:rounded-4xl border border-[var(--border)]/60 bg-[var(--surface)] shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               >
                 {/* Hotel Image */}
-                <div className="h-64 overflow-hidden">
+                <div className="h-44 lg:h-64 overflow-hidden">
                   <img
                     src={hotel.image}
                     alt={hotel.name}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-
-                  
                 </div>
 
                 {/* Hotel Details */}
                 <div className="p-4 lg:p-5">
                   <h3
-                    className={`${cormorant.className} text-[32px] truncate font-semibold leading-none`}
+                    className={`${cormorant.className} text-[25px] lg:text-[32px] truncate font-semibold leading-none`}
                   >
                     {hotel.name}
                   </h3>
@@ -1297,9 +1326,9 @@ const handleBookingSearch = () => {
             ))}
 
           {/* Promotional Card */}
-          <div className="relative flex min-h-[350px] flex-col overflow-hidden rounded-3xl lg:rounded-[35px] bg-[var(--primary)] p-7 lg:p-8 text-white shadow-lg transition-all duration-500">
+          <div className="relative flex flex-col overflow-hidden rounded-3xl lg:rounded-[35px] bg-[var(--primary)] p-7 lg:p-8 text-white shadow-lg transition-all duration-500">
             <h3
-              className={`${cormorant.className} text-4xl lg:text-5xl font-semibold leading-tight`}
+              className={`${cormorant.className} text-2xl text-4xl lg:text-5xl font-semibold leading-tight`}
             >
               Make Every Stay Special
             </h3>
@@ -1327,6 +1356,7 @@ const handleBookingSearch = () => {
           </div>
         </div>
       </section>
+
       {/* Exclusive Hotel Collection */}
       <section className="w-full overflow-hidden bg-[var(--background)] pt-16 text-[var(--foreground)] transition-colors duration-500 lg:py-15">
         {/* Section Heading */}
@@ -1344,9 +1374,9 @@ const handleBookingSearch = () => {
 
         {/* Featured Hotel */}
         {editorialHotels.length > 0 && (
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-12 lg:gap-6">
             {/* Main Featured Image */}
-            <div className="group relative min-h-[420px] overflow-hidden rounded-3xl lg:rounded-4xl sm:min-h-[520px] lg:col-span-8 lg:min-h-[580px] lg:rounded-[36px]">
+            <div className="group relative min-h-[390px] sm:min-h-[350px] lg:min-h-[420px] overflow-hidden rounded-3xl lg:rounded-4xl lg:col-span-8 lg:rounded-[36px]">
               <img
                 src={editorialHotels[0].image}
                 alt={editorialHotels[0].name}
@@ -1397,17 +1427,16 @@ const handleBookingSearch = () => {
             </div>
 
             {/* Editorial Side Panel */}
-            <div className="flex flex-col justify-between rounded-3xl lg:rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
+            <div className="w-fit flex flex-col justify-between rounded-3xl lg:rounded-4xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-8 lg:col-span-4 lg:rounded-[36px] lg:p-9">
               <div>
                 <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
                   The {BRAND_NAME} Collection
                 </span>
-
                 <h3
                   className={`${cormorant.className} mt-2 lg:mt-5 text-4xl font-medium leading-none lg:leading-tight sm:text-5xl`}
                 >
                   A little more
-                  <br />
+                  <br className="hidden lg:block" />
                   <span className="italic">than just a stay.</span>
                 </h3>
 
@@ -1475,8 +1504,9 @@ const handleBookingSearch = () => {
               </div>
 
               {/* Destination Tabs */}
-              <div className="mb-6 flex items-center justify-between border-b border-[var(--border)]/70">
-                <div className="flex items-center gap-7 overflow-x-auto scrollbar-hide">
+              <div className="mb-6 flex flex-col gap-4 border-b border-[var(--border)]/70 sm:flex-row sm:items-center sm:justify-between">
+                {/* Hotel Tabs */}
+                <div className="flex min-w-0 items-center gap-6 overflow-x-auto hide-scrollbar sm:gap-7">
                   {hotelTabs.map((tab) => (
                     <button
                       key={tab}
@@ -1496,9 +1526,10 @@ const handleBookingSearch = () => {
                   ))}
                 </div>
 
+                {/* View All */}
                 <Link
                   href="/rooms#room-collection"
-                  className="mb-3 group flex w-fit items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)]"
+                  className="group mb-3 flex w-fit shrink-0 items-center gap-2 text-xs font-medium tracking-wide text-[var(--foreground)] transition-colors hover:text-[var(--primary)] sm:ml-5"
                 >
                   View all stays
                   <ArrowUpRight
@@ -1509,14 +1540,14 @@ const handleBookingSearch = () => {
               </div>
 
               {/* Hotel Cards */}
-              <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-16">
+              <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16 xl:grid-cols-4 xl:gap-x-7 ">
                 {filteredTrendingRooms.slice(0, 4).map((room) => (
                   <article
                     key={room.id}
                     className="group relative min-w-0 cursor-pointer"
                   >
                     {/* Image */}
-                    <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[250px]">
+                    <div className="relative h-[250px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[250px]">
                       <img
                         src={room.image}
                         alt={room.name}
@@ -1653,6 +1684,7 @@ const handleBookingSearch = () => {
           </>
         )}
       </section>
+
       {/* Editorial Destination Showcase */}
       <section className="editorial-showcase relative left-1/2 flex w-screen -translate-x-1/2 flex-col items-center overflow-hidden px-5 pt-8 lg:pt-10 text-[var(--foreground)]">
         {/* Brand Title - Always Visible */}
@@ -1669,11 +1701,11 @@ const handleBookingSearch = () => {
         </div>
 
         {/* Editorial Slide */}
-        <div className="relative grid w-full px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="relative lg:w-full pr-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] flex flex-col justify-center items-center gap-10 lg:grid lg:grid-cols-2 lg:gap-16">
           {/* Left Content */}
           <div
             key={`content-${activeSlide}`}
-            className="editorial-slide-content order-2 flex flex-col items-start lg:order-1"
+            className="editorial-slide-content order-2 flex flex-col w-fit items-start lg:order-1"
           >
             {/* Heading */}
             <h2 className={`${sectionHeadingClass} max-w-[550px]`}>
@@ -1708,7 +1740,7 @@ const handleBookingSearch = () => {
           </div>
 
           {/* Right Image - Premium Stacked Card Deck */}
-          <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
+          <div className="order-1 flex w-full justify-center lg:order-2 lg:justify-end">
             <div className="relative w-full max-w-[560px]">
               {/* Decorative Backplate - Outer Arch */}
               <div
@@ -1792,6 +1824,7 @@ const handleBookingSearch = () => {
           </div>
         </div>
       </section>
+
       {/* Newsletter Section */}
       <section className="relative flex w-full justify-center overflow-hidden bg-[var(--background)] px-5 py-12 text-[var(--foreground)] transition-colors duration-500 sm:py-24 lg:pb-18 lg:pt-28">
         <div className="w-full max-w-[750px]">
@@ -1824,13 +1857,13 @@ const handleBookingSearch = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter Email Address"
-                  className="h-[54px] min-w-0 flex-1 border border-[var(--border)] bg-[var(--surface)] px-6 text-sm text-[var(--foreground)] outline-none transition-all duration-300 placeholder:text-[var(--foreground)]/40 focus:border-[var(--primary)] sm:h-[58px]"
+                  className="min-w-0 flex-1 border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--foreground)] outline-none transition-all duration-300 placeholder:text-[var(--foreground)]/40 focus:border-[var(--primary)] sm:h-[58px]"
                 />
 
                 {/* Subscribe Button */}
                 <button
                   type="submit"
-                  className="group flex h-[54px] shrink-0 items-center justify-center gap-3 border border-[var(--primary)] bg-[var(--primary)] px-7 text-sm font-medium text-white transition-all duration-300 hover:brightness-110 sm:h-[58px]"
+                  className="group flex shrink-0 items-center justify-center gap-3 border border-[var(--primary)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:brightness-110 sm:h-[58px]"
                 >
                   Subscribe
                   <ArrowUpRight
