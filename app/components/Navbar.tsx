@@ -34,15 +34,9 @@ const Navbar = () => {
     <div className="sticky top-0 z-40 ">
       {/* Desktop Navbar */}
       <div
-        className={`w-full
-    bg-[var(--background)]/85
-    backdrop-blur-xl
-    border-b-[0.5px] border-[var(--primary)]/20
-    text-sm text-white
-    transition-all duration-300
-    ${isMenuOpen ? "hidden" : ""}`}
+        className={`w-full bg-[var(--background)]/85 backdrop-blur-xl border-b-[0.5px] border-[var(--primary)]/20 text-sm text-white transition-all duration-300 ${isMenuOpen ? "hidden" : ""}`}
       >
-        <div className="mx-auto max-w-[1350px] px-5 sm:px-7 py-3 flex justify-between items-center">
+        <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-3 flex justify-between items-center">
           <Logo />
 
           {/* Page Navgation Buttons */}
@@ -71,19 +65,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Wishlist */}
           <div className="flex gap-2">
+            {/* Wishlist */}
             <Link
               href="/wishlist"
-              className={`relative flex items-center justify-center text-[var(--primary)]`}
+              className="relative flex items-center justify-center text-[var(--primary)]"
             >
-              <Heart size={28} strokeWidth={1.5} fill={"currentColor"} />
+              <Heart size={28} strokeWidth={1.5} fill="currentColor" />
 
-              <span className="absolute -right-[1] -top-[-13px] flex leading-none text-[9px] font-medium text-white">
+              <span className="absolute inset-0 flex items-center justify-center pt-[1px] text-[9px] font-semibold leading-none text-white">
                 {wishlistCount}
               </span>
             </Link>
-            
+
             {/* Change Theme Button */}
             <ChangeTheme />
 

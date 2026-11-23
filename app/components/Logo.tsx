@@ -23,7 +23,7 @@ const Logo = ({ name = BRAND_NAME, variant = "default" }) => {
           isFooter ? "text-[#f5eee2]" : "text-[var(--foreground)]"
         }`}
       >
-        <span className="relative top-[3px] text-md leading-none text-[var(--primary)]">
+        <span className="relative top-[1px] lg:top-[2px] text-md leading-none text-[var(--primary)]">
           ✦
         </span>
 
