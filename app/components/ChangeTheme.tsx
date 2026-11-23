@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Palette, Check, ChevronDown } from "lucide-react";
 
 const themes = [
@@ -15,6 +15,7 @@ const themes = [
 export default function ChangeTheme() {
   const [selected, setSelected] = useState("earth");
   const [open, setOpen] = useState(false);
+  const themeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("website-theme") || "earth";
@@ -25,6 +26,23 @@ export default function ChangeTheme() {
     setSelected(activeTheme);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        themeRef.current &&
+        !themeRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const changeTheme = (theme: string) => {
     setSelected(theme);
     document.documentElement.dataset.theme = theme;
@@ -32,7 +50,7 @@ export default function ChangeTheme() {
   };
 
   return (
-    <div className="relative">
+    <div ref={themeRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-1 lg:px-4 lg:py-2 text-[var(--foreground)]"

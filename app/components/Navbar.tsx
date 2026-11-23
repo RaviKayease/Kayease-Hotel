@@ -71,23 +71,19 @@ const Navbar = () => {
             ))}
           </div>
 
+          {/* Wishlist */}
           <div className="flex gap-2">
             <Link
               href="/wishlist"
               className={`relative flex items-center justify-center text-[var(--primary)]`}
             >
-              <Heart
-                size={28}
-                strokeWidth={1.5}
-                fill={"currentColor"}
-              />
+              <Heart size={28} strokeWidth={1.5} fill={"currentColor"} />
 
-              {wishlistCount > 0 && (
-                <span className="absolute -right-[1] -top-[-13px] flex leading-none text-[9px] font-medium text-white">
-                  {wishlistCount}
-                </span>
-              )}
+              <span className="absolute -right-[1] -top-[-13px] flex leading-none text-[9px] font-medium text-white">
+                {wishlistCount}
+              </span>
             </Link>
+            
             {/* Change Theme Button */}
             <ChangeTheme />
 
