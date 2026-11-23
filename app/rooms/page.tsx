@@ -46,8 +46,8 @@ const RoomsPage = () => {
   const MAX_ROOM_PRICE = Math.max(...rooms.map((room) => room.price));
   const MAX_GUESTS = Math.max(...rooms.map((room) => room.guests));
 
-  const [minPrice, setMinPrice] = useState(MIN_ROOM_PRICE);
-  const [maxPrice, setMaxPrice] = useState(MAX_ROOM_PRICE);
+  const [minPrice, setMinPrice] = useState<number | "">(MIN_ROOM_PRICE);
+  const [maxPrice, setMaxPrice] = useState<number | "">(MAX_ROOM_PRICE);
 
   const [minRating, setMinRating] = useState(0);
 
@@ -63,7 +63,9 @@ const RoomsPage = () => {
     const matchesLocation =
       activeLocation === "All Locations" || room.location === activeLocation;
 
-    const matchesPrice = room.price >= minPrice && room.price <= maxPrice;
+    const matchesPrice =
+      (minPrice === "" || room.price >= minPrice) &&
+      (maxPrice === "" || room.price <= maxPrice);
 
     const matchesRating = room.rating >= minRating;
 
@@ -79,8 +81,8 @@ const RoomsPage = () => {
   });
 
   const activeFilterCount =
-    Number(minPrice > MIN_ROOM_PRICE) +
-    Number(maxPrice < MAX_ROOM_PRICE) +
+    Number(minPrice === "" || minPrice > MIN_ROOM_PRICE) +
+    Number(maxPrice === "" || maxPrice < MAX_ROOM_PRICE) +
     Number(minRating > 0) +
     Number(minGuests > 1);
 
@@ -156,7 +158,7 @@ const RoomsPage = () => {
       <section className="t-12 sm:pt-16 lg:pt-10">
         <div className="text-center">
           <h1
-            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
+            className={`${cormorant.className} dream-stay-animation font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[8vw] leading-none`}
           >
             Rooms & Suites
           </h1>
@@ -315,7 +317,6 @@ const RoomsPage = () => {
                   className="flex w-full flex-col gap-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] px-5 py-3 sm:px-6 lg:flex-row lg:px-4 lg:py-3"
                 >
                   {/* PRICE RANGE */}
-
                   <div className="flex min-w-0 flex-[1.5] flex-col gap-2 pr-6 py-1 lg:py-0 border-r border-[var(--border)]">
                     <div className="flex items-center justify-between">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/65">
@@ -351,15 +352,10 @@ const RoomsPage = () => {
                               step={100}
                               value={minPrice}
                               onChange={(e) => {
-                                const value = Number(e.target.value);
-
-                                if (e.target.value === "") return;
-
                                 setMinPrice(
-                                  Math.min(
-                                    Math.max(value, MIN_ROOM_PRICE),
-                                    maxPrice,
-                                  ),
+                                  e.target.value === ""
+                                    ? ""
+                                    : Number(e.target.value),
                                 );
                               }}
                               className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
@@ -373,10 +369,15 @@ const RoomsPage = () => {
                             type="button"
                             onClick={() =>
                               setMinPrice((prev) =>
-                                Math.max(prev - 100, MIN_ROOM_PRICE),
+                                Math.max(
+                                  (prev === "" ? MIN_ROOM_PRICE : prev) - 100,
+                                  MIN_ROOM_PRICE,
+                                ),
                               )
                             }
-                            disabled={minPrice <= MIN_ROOM_PRICE}
+                            disabled={
+                              minPrice !== "" && minPrice <= MIN_ROOM_PRICE
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
                             aria-label="Decrease minimum price"
                           >
@@ -389,10 +390,17 @@ const RoomsPage = () => {
                             type="button"
                             onClick={() =>
                               setMinPrice((prev) =>
-                                Math.min(prev + 100, maxPrice),
+                                Math.min(
+                                  (prev === "" ? MIN_ROOM_PRICE : prev) + 100,
+                                  maxPrice === "" ? Infinity : maxPrice,
+                                ),
                               )
                             }
-                            disabled={minPrice >= maxPrice}
+                            disabled={
+                              minPrice !== "" &&
+                              maxPrice !== "" &&
+                              minPrice >= maxPrice
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
                             aria-label="Increase minimum price"
                           >
@@ -419,20 +427,15 @@ const RoomsPage = () => {
                             <input
                               id="max-room-price"
                               type="number"
-                              min={minPrice}
-                              max={MAX_ROOM_PRICE}
+                              min={undefined}
+                              max={undefined}
                               step={100}
                               value={maxPrice}
                               onChange={(e) => {
-                                const value = Number(e.target.value);
-
-                                if (e.target.value === "") return;
-
                                 setMaxPrice(
-                                  Math.max(
-                                    Math.min(value, MAX_ROOM_PRICE),
-                                    minPrice,
-                                  ),
+                                  e.target.value === ""
+                                    ? ""
+                                    : Number(e.target.value),
                                 );
                               }}
                               className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
@@ -446,10 +449,17 @@ const RoomsPage = () => {
                             type="button"
                             onClick={() =>
                               setMaxPrice((prev) =>
-                                Math.max(prev - 100, minPrice),
+                                Math.max(
+                                  (prev === "" ? MAX_ROOM_PRICE : prev) - 100,
+                                  minPrice === "" ? 0 : minPrice,
+                                ),
                               )
                             }
-                            disabled={maxPrice <= minPrice}
+                            disabled={
+                              maxPrice !== "" &&
+                              minPrice !== "" &&
+                              maxPrice <= minPrice
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
                             aria-label="Decrease maximum price"
                           >
@@ -462,10 +472,15 @@ const RoomsPage = () => {
                             type="button"
                             onClick={() =>
                               setMaxPrice((prev) =>
-                                Math.min(prev + 100, MAX_ROOM_PRICE),
+                                Math.min(
+                                  (prev === "" ? MAX_ROOM_PRICE : prev) + 100,
+                                  MAX_ROOM_PRICE,
+                                ),
                               )
                             }
-                            disabled={maxPrice >= MAX_ROOM_PRICE}
+                            disabled={
+                              maxPrice !== "" && maxPrice >= MAX_ROOM_PRICE
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all duration-200 hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
                             aria-label="Increase maximum price"
                           >

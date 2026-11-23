@@ -1271,16 +1271,14 @@ const handleBookingSearch = () => {
                 className="group overflow-hidden rounded-3xl lg:rounded-4xl border border-[var(--border)]/60 bg-[var(--surface)] shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               >
                 {/* Hotel Image */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="h-64 overflow-hidden">
                   <img
                     src={hotel.image}
                     alt={hotel.name}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
-                  <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
-                    {hotel.category}
-                  </span>
+                  
                 </div>
 
                 {/* Hotel Details */}
