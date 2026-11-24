@@ -50,12 +50,12 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
   return (
     <main>
       {/* EDITORIAL INTRO */}
-      <section className="pb-12 pt-16 sm:pb-10 sm:pt-24 lg:pt-10">
+      <section className="pt-10 lg:pt-15">
         <div className="mx-auto max-w-[1450px]">
-          <div className="mt-9 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
             <div className="lg:col-span-10">
               <h1
-                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[10vw] xl:text-[6vw] leading-none`}
               >
                 {post.title}
                 <span className="text-[var(--primary)]">.</span>
@@ -66,9 +66,9 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       </section>
 
       {/* FEATURE IMAGE */}
-      <section className="px-3 sm:px-5 lg:px-8">
+      <section className="mt-5">
         <div className="mx-auto max-w-[1500px]">
-          <div className="relative h-[350px] overflow-hidden sm:h-[550px] lg:h-[760px] rounded-4xl">
+          <div className="relative h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] overflow-hidden rounded-4xl">
             <img
               src={post.image}
               alt={post.title}
@@ -93,7 +93,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
           <div className="mt-8 flex justify-between border-t border-[var(--border)] pt-3 sm:gap-5">
             <p className=" text-xs font-medium">{post.author}</p>
 
-            <div className="flex gap-10">
+            <div className="flex gap-3 lg:gap-10">
               <span className=" flex items-center gap-2 text-xs">
                 <CalendarDays size={13} className="text-[var(--primary)]" />
                 {post.date}
@@ -109,64 +109,41 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       </section>
 
       {/* STORY CONTENT */}
-      <section className="px-5 py-20 sm:px-10 sm:py-28 lg:px-16 lg:py-36">
+      <section>
         <div className="mx-auto max-w-[1200px]">
-          {/* Opening statement */}
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-20">
-            <div className="lg:col-span-4">
-              <p className="text-[9px] font-medium uppercase tracking-[0.25em] text-[var(--primary)]">
-                A little introduction
-              </p>
-
-              <div className="mt-8 h-px w-12 bg-[var(--border)]" />
-
-              <p className="mt-5 text-xs leading-7 text-[var(--foreground)]/45">
-                Take your time. There is always something beautiful waiting to
-                be discovered.
-              </p>
-            </div>
-
-            <div className="lg:col-span-8">
-              <p className={`${sectionHeadingClass}`}>{post.excerpt}</p>
-            </div>
-          </div>
-
           {/* Article sections */}
+          {post.content.map((section, index) => (
+            <section
+              key={section.heading}
+              id={`section-${index + 1}`}
+              className="grid grid-cols-1 gap-7 border-b border-[var(--border)] py-10 sm:py-16 lg:grid-cols-12 lg:gap-16"
+            >
+              <div className="lg:col-span-2">
+                <span className="text-[11px] font-medium tracking-[0.15em] text-[var(--primary)]">
+                  0{index + 1}
+                </span>
 
-          <div className="mt-24 border-t border-[var(--border)] sm:mt-32">
-            {post.content.map((section, index) => (
-              <section
-                key={section.heading}
-                id={`section-${index + 1}`}
-                className="grid grid-cols-1 gap-7 border-b border-[var(--border)] py-12 sm:py-16 lg:grid-cols-12 lg:gap-16"
-              >
-                <div className="lg:col-span-2">
-                  <span className="text-[11px] font-medium tracking-[0.15em] text-[var(--primary)]">
-                    0{index + 1}
-                  </span>
+                <span className="ml-4 inline-block h-px w-8 align-middle bg-[var(--border)]" />
+              </div>
 
-                  <span className="ml-4 inline-block h-px w-8 align-middle bg-[var(--border)]" />
+              <div className="lg:col-span-10">
+                <h2 className={`${sectionHeadingClass} mb-2`}>
+                  {section.heading}
+                </h2>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
+                  {section.paragraphs.map((paragraph, paragraphIndex) => (
+                    <p
+                      key={paragraphIndex}
+                      className="text-sm leading-8 text-[var(--foreground)]/65 sm:text-[15px] sm:leading-9"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
-
-                <div className="lg:col-span-10">
-                  <h2 className={`${sectionHeadingClass}`}>
-                    {section.heading}
-                  </h2>
-
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
-                    {section.paragraphs.map((paragraph, paragraphIndex) => (
-                      <p
-                        key={paragraphIndex}
-                        className="text-sm leading-8 text-[var(--foreground)]/65 sm:text-[15px] sm:leading-9"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            ))}
-          </div>
+              </div>
+            </section>
+          ))}
 
           {/* Quote */}
           {post.quote && (
@@ -195,35 +172,17 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
       {/* RELATED STORIES */}
       {fallbackPosts.length > 0 && (
-        <section className="relative left-1/2 flex w-screen -translate-x-1/2 overflow-hidden bg-[var(--foreground)]/[0.025] px-5 py-24 sm:px-10 sm:py-28 lg:px-16">
+        <section className="relative left-1/2 flex w-screen -translate-x-1/2 overflow-hidden bg-[var(--foreground)]/[0.025] px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15 ">
           <div className="mx-auto max-w-[1450px]">
             {/* Header */}
-            <div className="mb-16 flex flex-col justify-between gap-8 lg:mb-20 lg:flex-row lg:items-end">
+            <div className="mb-10 lg:mb-16 flex flex-col justify-between gap-8 lg:mb-20 lg:flex-row lg:items-end">
               <div>
-                <p className="mb-6 flex items-center gap-3 text-[9px] font-medium uppercase tracking-[0.28em] text-[var(--primary)]">
-                  <span className="h-px w-8 bg-[var(--primary)]" />
-                  More from the journal
-                </p>
-
                 <h2
-                  className={`${cormorant.className} text-6xl font-medium leading-[0.88] tracking-[-0.045em] sm:text-7xl lg:text-[105px]`}
+                  className={`${cormorant.className} text-5xl font-medium leading-[0.88] tracking-[-0.045em] sm:text-7xl lg:text-[105px]`}
                 >
                   Keep wandering
                   <span className="italic text-[var(--primary)]">.</span>
                 </h2>
-              </div>
-
-              <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between lg:w-[340px] lg:flex-col lg:items-start">
-                <Link
-                  href="/blogs"
-                  className="group inline-flex items-center gap-4 border-b border-[var(--foreground)]/30 pb-2 text-[9px] font-medium uppercase tracking-[0.2em] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
-                >
-                  Explore all stories
-                  <ArrowUpRight
-                    size={15}
-                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
-                </Link>
               </div>
             </div>
 
@@ -231,7 +190,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             {fallbackPosts[0] && (
               <Link
                 href={`/blogs/${fallbackPosts[0].slug}`}
-                className="group mb-16 grid grid-cols-1 gap-8 border-y border-[var(--border)] py-8 md:grid-cols-[1.35fr_0.85fr] md:items-center md:gap-12 lg:mb-24 lg:gap-20 lg:py-12"
+                className="group mb-16 grid grid-cols-1 gap-8 border-y border-[var(--border)] py-8 xl:grid-cols-[1.35fr_0.85fr] xl:items-center xl:gap-12 lg:mb-24 lg:gap-20 lg:py-12"
               >
                 <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] rounded-[24px]">
                   <img
@@ -289,17 +248,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             {/* Other Stories */}
             {fallbackPosts.length > 1 && (
               <div>
-                <div className="mb-9 flex items-center justify-between">
-                  <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-[var(--foreground)]/50">
-                    Continue exploring
-                  </p>
-
-                  <span className="text-[9px] uppercase tracking-[0.16em] text-[var(--foreground)]/40">
-                    {String(fallbackPosts.length - 1).padStart(2, "0")} stories
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-10">
                   {fallbackPosts.slice(1).map((relatedPost, index) => (
                     <Link
                       key={relatedPost.id}
@@ -365,7 +314,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       )}
 
       {/* FINAL SECTION */}
-      <section className="px-5 py-24 sm:px-10 sm:py-32 lg:px-16">
+      <section className="py-10 px-3 sm:px-10 sm:py-15 md:py-20 lg:py-24 lg:px-16">
         <div className="mx-auto max-w-[1450px]">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-9">
