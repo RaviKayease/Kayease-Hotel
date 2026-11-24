@@ -44,12 +44,12 @@ const ContactPage = () => {
     "Something else",
   ];
 
- const [formData, setFormData] = useState<ContactFormData>({
-   name: "",
-   email: "",
-   subject: "General enquiry",
-   message: "",
- });
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
+    email: "",
+    subject: "General enquiry",
+    message: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,15 +70,15 @@ const ContactPage = () => {
         submittedAt: new Date().toISOString(),
       };
 
-     const storedEnquiries = localStorage.getItem("hotelEnquiries");
+      const storedEnquiries = localStorage.getItem("hotelEnquiries");
 
-     const existingEnquiries = storedEnquiries
-       ? JSON.parse(storedEnquiries)
-       : [];
+      const existingEnquiries = storedEnquiries
+        ? JSON.parse(storedEnquiries)
+        : [];
 
-     if (!Array.isArray(existingEnquiries)) {
-       throw new Error("Invalid enquiry storage");
-     }
+      if (!Array.isArray(existingEnquiries)) {
+        throw new Error("Invalid enquiry storage");
+      }
 
       localStorage.setItem(
         "hotelEnquiries",
@@ -122,7 +122,7 @@ const ContactPage = () => {
   return (
     <main>
       {/* INTRODUCTION */}
-      <section className="mx-auto max-w-[1400px] px-5 pb-12 pt-16 sm:px-8 sm:pb-5 sm:pt-20 lg:px-12 lg:pt-20">
+      <section className="mx-auto max-w-[1400px] pt-10 lg:pt-15">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-8">
             <h1
@@ -136,12 +136,12 @@ const ContactPage = () => {
       </section>
 
       {/* MAIN CONTACT EXPERIENCE */}
-      <section className="mx-auto max-w-[1400px] px-5 pb-20 sm:px-8 sm:pb-24 lg:px-12 lg:pb-32">
+      <section className="mx-auto max-w-[1400px] pt-3 lg:pt-5">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           {/* LEFT IMAGE AND INFORMATION */}
           <div className="flex flex-col lg:col-span-5">
             {/* Image */}
-            <div className="group relative h-[360px] overflow-hidden rounded-[28px] sm:h-[470px] lg:h-[510px] lg:rounded-[34px]">
+            <div className="group relative h-[25vh] sm:h-[35vh] md:h-[45vh] overflow-hidden rounded-[28px] lg:rounded-[34px]">
               <Image
                 src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85"
                 alt="Welcoming luxury hotel entrance and hospitality space"
@@ -168,8 +168,8 @@ const ContactPage = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="mt-9 grid grid-cols-1 gap-7 sm:grid-cols-2">
-              <div>
+            <div className="mt-9 grid grid-cols-2 gap-7 sm:gap-10 md:gap-15">
+              <div className="mx-auto w-fit lg:mx-0">
                 <div className="mb-3 flex items-center gap-3 text-[var(--primary)]">
                   <Mail size={16} strokeWidth={1.5} />
                   <p className="text-[9px] font-semibold uppercase tracking-[0.18em]">
@@ -183,7 +183,7 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <div>
+              <div className="mx-auto w-fit lg:mx-0">
                 <div className="mb-3 flex items-center gap-3 text-[var(--primary)]">
                   <Phone size={16} strokeWidth={1.5} />
                   <p className="text-[9px] font-semibold uppercase tracking-[0.18em]">
@@ -197,7 +197,7 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <div>
+              <div className="mx-auto w-fit lg:mx-0">
                 <div className="mb-3 flex items-center gap-3 text-[var(--primary)]">
                   <Clock3 size={16} strokeWidth={1.5} />
                   <p className="text-[9px] font-semibold uppercase tracking-[0.18em]">
@@ -211,7 +211,7 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <div>
+              <div className="mx-auto w-fit lg:mx-0">
                 <div className="mb-3 flex items-center gap-3 text-[var(--primary)]">
                   <FaInstagram size={16} />
                   <p className="text-[9px] font-semibold uppercase tracking-[0.18em]">
@@ -484,7 +484,7 @@ const ContactPage = () => {
       </section>
 
       {/* CLOSING SECTION */}
-      <section className="relative mx-auto max-w-[1400px] px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12 lg:pb-36">
+      <section className="relative mx-auto max-w-[1400px] py-10 lg:pt-15">
         <div className="relative isolate overflow-hidden rounded-[32px] bg-[var(--surface)] px-6 py-20 text-center shadow-[0_25px_70px_rgba(0,0,0,0.10)] sm:rounded-[40px] sm:px-12 sm:py-28 lg:py-32">
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
@@ -529,8 +529,8 @@ const ContactPage = () => {
       </section>
 
       {/* QUICK QUESTIONS */}
-      <section className="mx-auto max-w-[1400px] px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+      <section className="mx-auto max-w-[1400px] py-10 lg:pt-15">
+        <div className="grid grid-cols-1 gap-12 xl:grid-cols-12 xl:gap-16">
           {/* LEFT HEADING */}
           <div className="lg:col-span-5">
             <div className="mb-5 flex items-center gap-3">
