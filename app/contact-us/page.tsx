@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import { BRAND_NAME } from "../components/brand";
+import { contactUsPageData, subjectOptions } from "@/app/data/contactUsData";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -35,14 +36,6 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [submitStatus, setSubmitStatus] = useState("");
-
-  const subjectOptions = [
-    "General enquiry",
-    "Reservation assistance",
-    "Property information",
-    "Partnership enquiry",
-    "Something else",
-  ];
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -128,7 +121,7 @@ const ContactPage = () => {
             <h1
               className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
             >
-              Let's talk
+              {contactUsPageData.hero.title}
               <span className="italic text-[var(--primary)]">.</span>
             </h1>
           </div>
@@ -143,8 +136,8 @@ const ContactPage = () => {
             {/* Image */}
             <div className="group relative h-[25vh] sm:h-[35vh] md:h-[45vh] overflow-hidden rounded-[28px] lg:rounded-[34px]">
               <Image
-                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85"
-                alt="Welcoming luxury hotel entrance and hospitality space"
+                src={contactUsPageData.contactInfo.image.src}
+                alt={contactUsPageData.contactInfo.image.alt}
                 fill
                 priority
                 unoptimized
@@ -156,13 +149,13 @@ const ContactPage = () => {
 
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white sm:p-9">
                 <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.25em] text-white/70">
-                  The {BRAND_NAME} Experience
+                  The {BRAND_NAME} {contactUsPageData.contactInfo.image.eyebrow}
                 </p>
 
                 <h2
                   className={`${cormorant.className} max-w-sm text-4xl leading-[1.02] sm:text-5xl lg:text-[52px]`}
                 >
-                  A little help goes a long way.
+                  {contactUsPageData.contactInfo.image.heading}
                 </h2>
               </div>
             </div>
@@ -177,9 +170,11 @@ const ContactPage = () => {
                   </p>
                 </div>
 
-                <p className="text-sm font-medium">hello@example.com</p>
+                <p className="text-sm font-medium">
+                  {contactUsPageData.contactInfo.email.address}
+                </p>
                 <p className="mt-1 text-[11px] text-[var(--foreground)]/45">
-                  For general enquiries
+                  {contactUsPageData.contactInfo.email.description}
                 </p>
               </div>
 
@@ -191,9 +186,11 @@ const ContactPage = () => {
                   </p>
                 </div>
 
-                <p className="text-sm font-medium">+91 98765 43210</p>
+                <p className="text-sm font-medium">
+                  {contactUsPageData.contactInfo.phone.number}
+                </p>
                 <p className="mt-1 text-[11px] text-[var(--foreground)]/45">
-                  Speak with our team
+                  {contactUsPageData.contactInfo.phone.description}
                 </p>
               </div>
 
@@ -205,9 +202,11 @@ const ContactPage = () => {
                   </p>
                 </div>
 
-                <p className="text-sm font-medium">Monday – Saturday</p>
+                <p className="text-sm font-medium">
+                  {contactUsPageData.contactInfo.workingHours.days}
+                </p>
                 <p className="mt-1 text-[11px] text-[var(--foreground)]/45">
-                  10:00 AM – 6:00 PM
+                  {contactUsPageData.contactInfo.workingHours.hours}
                 </p>
               </div>
 
@@ -220,10 +219,10 @@ const ContactPage = () => {
                 </div>
 
                 <a
-                  href="#"
+                  href={contactUsPageData.contactInfo.social.url}
                   className="group inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[var(--primary)]"
                 >
-                  Instagram
+                  {contactUsPageData.contactInfo.social.platform}
                   <ArrowUpRight
                     size={14}
                     className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -231,7 +230,7 @@ const ContactPage = () => {
                 </a>
 
                 <p className="mt-1 text-[11px] text-[var(--foreground)]/45">
-                  A little inspiration every day
+                  {contactUsPageData.contactInfo.social.description}
                 </p>
               </div>
             </div>
@@ -249,15 +248,14 @@ const ContactPage = () => {
               </div>
 
               <h2 className={`${sectionHeadingClass}`}>
-                Tell us a little
+                {contactUsPageData.enquirySection.heading}
                 <span className="block italic text-[var(--primary)]">
-                  about it.
+                  {contactUsPageData.enquirySection.highlight}
                 </span>
               </h2>
 
               <p className="mt-5 max-w-md text-xs leading-7 text-[var(--foreground)]/55 sm:text-sm">
-                We'd love to know what you're looking for. Share a few details
-                and let's make your next stay special.
+                {contactUsPageData.enquirySection.description}
               </p>
             </div>
 
@@ -489,8 +487,8 @@ const ContactPage = () => {
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
             <Image
-              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=2000&q=85"
-              alt="Beautiful scenic mountain destination"
+              src={contactUsPageData.closingSection.image.src}
+              alt={contactUsPageData.closingSection.image.alt}
               fill
               unoptimized
               sizes="100vw"
@@ -507,9 +505,9 @@ const ContactPage = () => {
           <h2
             className={`${cormorant.className} mx-auto max-w-3xl text-5xl font-medium leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-[76px]`}
           >
-            Your next beautiful
+            {contactUsPageData.closingSection.heading}
             <span className="block italic text-[var(--primary)]">
-              escape awaits.
+              {contactUsPageData.closingSection.highlight}
             </span>
           </h2>
 
@@ -543,15 +541,14 @@ const ContactPage = () => {
             <h2
               className={`${cormorant.className} max-w-md text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-[68px]`}
             >
-              A few things you
+              {contactUsPageData.faqSection.heading}
               <span className="block italic text-[var(--primary)]">
-                might wonder.
+                {contactUsPageData.faqSection.highlight}
               </span>
             </h2>
 
             <p className="mt-6 max-w-sm text-sm leading-7 text-[var(--foreground)]/55">
-              From planning your stay to finding the right property, here are a
-              few answers to help you get started.
+              {contactUsPageData.faqSection.description}
             </p>
 
             <p className="mt-8 text-xs text-[var(--foreground)]/45">
@@ -562,28 +559,7 @@ const ContactPage = () => {
           {/* RIGHT FAQ LIST */}
           <div className="lg:col-span-7">
             <div className="border-t border-[var(--border)]">
-              {[
-                {
-                  question: "How can I make a reservation?",
-                  answer:
-                    "You can explore our available stays and make a reservation through our website. If you need assistance, simply send us an enquiry and our team will guide you.",
-                },
-                {
-                  question: "Can I ask about a specific property?",
-                  answer:
-                    "Absolutely. Share the property name or destination you're interested in through our contact form, and we'll help you with the details.",
-                },
-                {
-                  question: "Can I modify or cancel my booking?",
-                  answer:
-                    "For changes or cancellation requests, please contact our team with your booking details. The applicable booking terms and conditions will guide the process.",
-                },
-                {
-                  question: "How soon can I expect a response?",
-                  answer:
-                    "Our team aims to respond to enquiries during working hours, Monday to Saturday, between 10:00 AM and 6:00 PM.",
-                },
-              ].map((item, index) => (
+              {contactUsPageData.faqSection.items.map((item, index) => (
                 <details
                   key={index}
                   className="group border-b border-[var(--border)]"
