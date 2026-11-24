@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Menu, X, Plus, Minus, Heart } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
@@ -9,9 +9,7 @@ import { getWishlist } from "@/app/utils/wishlist";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [expandedCollection, setExpandedCollection] = useState<string | null>(
-    null,
-  );
+
   const pathname = usePathname();
 
   const [wishlistCount, setWishlistCount] = useState(0);
@@ -134,6 +132,7 @@ const Navbar = () => {
 
             <nav className="flex flex-col">
               {[
+                { name: "Home", href: "/" },
                 { name: "Rooms", href: "/rooms" },
                 { name: "About Us", href: "/about-us" },
                 { name: "Contact Us", href: "/contact-us" },

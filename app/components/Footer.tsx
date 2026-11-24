@@ -36,14 +36,14 @@ const Footer = () => {
       {/* Main Footer Container */}
       <div className="relative overflow-hidden rounded-4xl border border-[#b5a58b]/70 bg-[#191a16] text-[#f4eee3] shadow-[0_10px_35px_rgba(0,0,0,0.12)]">
         {/* Decorative Leaf Image */}
-        <div className="pointer-events-none absolute -right-0 -bottom-0 z-0 h-[300px] w-[225px] sm:-right-4 sm:-top-5 sm:h-[370px] sm:w-[278px] lg:h-[400px] lg:w-[300px]">
+        <div className="pointer-events-none absolute right-0 bottom-0 z-0 h-[300px] w-[225px] sm:h-[370px] sm:w-[278px] lg:h-[400px] lg:w-[300px]">
           <Image
             src={DecorativeLeaf}
             alt="Decorative olive green leaves"
             fill
             priority
             sizes="(max-width: 640px) 225px, (max-width: 1024px) 278px, 300px"
-            className="object-contain object-right-top opacity-90"
+            className="object-contain object-right-bottom opacity-90"
           />
         </div>
 
