@@ -85,23 +85,23 @@ const AboutPage = () => {
   return (
     <main>
       {/* HERO SECTION */}
-      <section className="px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-12 lg:pb-15 lg:pt-20">
+      <section className="pt-10 lg:pt-15">
         <div className="mx-auto max-w-[1380px]">
           {/*  Heading */}
-          <div className="mb-16 text-center">
+          <div className="mb-10 lg:mb-16 text-center">
             <h1
-              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
             >
               Beautiful Stays
             </h1>
           </div>
 
           {/* Three Image Gallery */}
-          <div className="grid grid-cols-1 gap-9 sm:grid-cols-3 sm:gap-5 lg:gap-7">
+          <div className="grid grid-cols-1 gap-9 lg:grid-cols-3 lg:gap-7">
             {stayHighlights.map((item, index) => (
               <div className="group" key={index}>
                 <div className="mb-4 flex items-center justify-between gap-3">
-                  <div>
+                  <div className="text-center w-full">
                     <h2
                       className={`${cormorant.className} text-2xl leading-none sm:text-[27px]`}
                     >
@@ -110,7 +110,7 @@ const AboutPage = () => {
                   </div>
                 </div>
 
-                <div className="relative aspect-[1.12/1] overflow-hidden rounded-[24px]">
+                <div className="relative aspect-[1.12/1] overflow-hidden rounded-[24px] h-[25vh] sm:h-[35vh] md:h-[45vh] w-full">
                   <Image
                     src={item.image}
                     alt={item.alt}
@@ -123,8 +123,8 @@ const AboutPage = () => {
             ))}
           </div>
 
-          <div className="mt-4 border-t border-[var(--border)] pt-7 text-center sm:mt-9 sm:pt-2">
-            <p className="mx-auto mt-3 max-w-xl text-xs leading-6 text-[var(--foreground)]/60 sm:text-sm">
+          <div className="mt-4 border-t border-[var(--border)] text-center sm:mt-9 sm:pt-2">
+            <p className="mx-auto mt-2 lg:mt-3 max-w-xl text-xs leading-6 text-[var(--foreground)]/60 sm:text-sm">
               Discover a more meaningful way to travel, where every place has
               something special to offer.
             </p>
@@ -133,10 +133,10 @@ const AboutPage = () => {
       </section>
 
       {/* OUR STORY */}
-      <section className="overflow-hidden px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:pt-12">
+      <section className="overflow-hidden py-12 lg:py-15 lg:mt-10">
         <div className="mx-auto max-w-[1380px]">
           {/* Section Intro */}
-          <div className="mb-12 text-center sm:mb-16">
+          <div className="mb-12 sm:mb-16">
             <h2 className={`${sectionHeadingClass}`}>
               Where every stay becomes
               <span className="italic text-[var(--primary)]"> a story.</span>
@@ -167,7 +167,7 @@ const AboutPage = () => {
 
             {/* Main Image */}
             <div className="relative lg:col-span-6">
-              <div className="group relative h-[390px] overflow-hidden sm:h-[530px] lg:h-[620px] rounded-[24px]">
+              <div className="group relative h-[390px] overflow-hidden sm:h-[430px] lg:h-[620px] rounded-[24px]">
                 <Image
                   src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90"
                   alt="Luxury resort surrounded by tropical nature"
@@ -232,10 +232,10 @@ const AboutPage = () => {
       </section>
 
       {/* BRAND PHILOSOPHY */}
-      <section className="relative left-1/2 flex w-screen -translate-x-1/2 editorial-showcase overflow-hidden px-5 py-24 text-[var(--foreground)] transition-colors duration-500 sm:py-28 lg:py-36">
+      <section className="relative left-1/2 flex w-screen -translate-x-1/2 editorial-showcase overflow-hidden px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15 text-[var(--foreground)] transition-colors duration-500">
         <div className="mx-auto max-w-[1350px]">
           {/* Section Introduction */}
-          <div className="mb-16 grid gap-8 lg:mb-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <div>
               <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
                 WHAT WE BELIEVE IN
@@ -295,16 +295,16 @@ const AboutPage = () => {
       </section>
 
       {/* OUR EXPERIENCE */}
-      <section className="overflow-hidden px-5 py-24 transition-colors duration-500 sm:py-28 lg:py-36">
+      <section className="overflow-hidden pt-12 lg:py-15 mb-10 transition-colors duration-500">
         <div className="mx-auto max-w-[1500px]">
           {/* Section Heading */}
-          <div className="mb-16 grid gap-8 lg:mb-24 lg:grid-cols-[1fr_0.65fr] lg:items-end">
+          <div className="mb-10 grid gap-8 lg:mb-24 lg:grid-cols-[1fr_0.65fr] lg:items-end">
             <div>
               <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
                 THE EXPERIENCE
               </p>
 
-              <h2 className={`${sectionHeadingClass} max-w-3xl`}>
+              <h2 className={`${sectionHeadingClass} w-full`}>
                 More than a destination.
                 <span className="block italic text-[var(--primary)]">
                   A feeling to remember.
@@ -318,7 +318,7 @@ const AboutPage = () => {
             {/* Featured Experience */}
             {experiences[0] && (
               <article className="group min-w-0">
-                <div className="relative h-[420px] overflow-hidden sm:h-[560px] lg:h-[680px] rounded-[24px]">
+                <div className="relative h-[420px] overflow-hidden lg:h-[680px] rounded-[24px]">
                   <Image
                     src={experiences[0].image}
                     alt={experiences[0].title}
@@ -355,7 +355,7 @@ const AboutPage = () => {
             <div className="flex flex-col gap-10 sm:gap-12 lg:justify-between lg:pt-20">
               {experiences.slice(1, 3).map((item, index) => (
                 <article key={item.title} className="group min-w-0">
-                  <div className="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-[310px] rounded-[24px]">
+                  <div className="relative h-[300px] overflow-hidden lg:h-[310px] rounded-[24px]">
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -386,7 +386,7 @@ const AboutPage = () => {
       </section>
 
       {/* BRAND STATEMENT */}
-      <section className="relative mx-5 overflow-hidden rounded-3xl lg:mx-8 lg:rounded-[40px]">
+      <section className="relative overflow-hidden rounded-3xl lg:mx-8 lg:rounded-[40px]">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=2000&q=85"
@@ -445,7 +445,7 @@ const AboutPage = () => {
             className="group mx-auto mt-9 inline-flex items-center gap-6 rounded-full bg-[var(--primary)] px-7 py-4 text-xs font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:brightness-95 sm:text-sm"
           >
             Explore Our Collection
-            <span className="flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+            <span className="flex h-4 h-4 md:h-8 md:w-8 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
               <ArrowUpRight size={18} />
             </span>
           </Link>
