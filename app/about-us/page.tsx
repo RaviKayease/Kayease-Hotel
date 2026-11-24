@@ -4,6 +4,14 @@ import Link from "next/link";
 import { Cormorant_Garamond } from "next/font/google";
 import { ArrowUpRight, Sparkles, Heart, Compass, Leaf } from "lucide-react";
 import { BRAND_NAME } from "../components/brand";
+import {
+  aboutUsHero,
+  aboutUsStory,
+  aboutUsValues,
+  aboutUsExperiences,
+  aboutUsBrandStatement,
+  aboutUsFinalSection,
+} from "@/app/data/aboutUsData";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -12,74 +20,7 @@ const cormorant = Cormorant_Garamond({
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
-const values = [
-  {
-    number: "01",
-    icon: Heart,
-    title: "Thoughtful Hospitality",
-    description:
-      "We believe true luxury is found in the little things. Every detail matters when it comes to creating a stay that feels personal, welcoming, and memorable.",
-  },
-  {
-    number: "02",
-    icon: Sparkles,
-    title: "Exceptional Experiences",
-    description:
-      "From beautiful surroundings to carefully considered spaces, we celebrate experiences that make every journey feel a little more extraordinary.",
-  },
-  {
-    number: "03",
-    icon: Leaf,
-    title: "Meaningful Escapes",
-    description:
-      "We believe travel should be more than simply visiting a destination. It should give you the opportunity to slow down, reconnect, and discover something new.",
-  },
-];
-
-const experiences = [
-  {
-    title: "Beautifully Considered Spaces",
-    description:
-      "Discover thoughtfully selected spaces where beautiful design meets everyday comfort.",
-    image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
-  },
-  {
-    title: "Moments Worth Remembering",
-    description:
-      "From peaceful mornings to unforgettable evenings, make room for moments that matter.",
-    image:
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85",
-  },
-  {
-    title: "Destinations to Discover",
-    description:
-      "Explore inspiring surroundings and discover places that make you want to stay a little longer.",
-    image:
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=85",
-  },
-];
-
-const stayHighlights = [
-  {
-    title: "Thoughtful Living",
-    image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
-    alt: "Elegant luxury hotel suite",
-  },
-  {
-    title: "Remarkable Destinations",
-    image:
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85",
-    alt: "Beautiful architectural hotel exterior",
-  },
-  {
-    title: "Meaningful Experiences",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85",
-    alt: "Sophisticated luxury hotel living space",
-  },
-];
+const valueIcons = [Heart, Sparkles, Leaf];
 
 const AboutPage = () => {
   return (
@@ -92,14 +33,14 @@ const AboutPage = () => {
             <h1
               className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
             >
-              Beautiful Stays
+              {aboutUsHero.heading}
             </h1>
           </div>
 
           {/* Three Image Gallery */}
           <div className="grid grid-cols-1 gap-9 lg:grid-cols-3 lg:gap-7">
-            {stayHighlights.map((item, index) => (
-              <div className="group" key={index}>
+            {aboutUsHero.stayHighlights.map((item) => (
+              <div className="group" key={item.title}>
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div className="text-center w-full">
                     <h2
@@ -125,8 +66,7 @@ const AboutPage = () => {
 
           <div className="mt-4 border-t border-[var(--border)] text-center sm:mt-9 sm:pt-2">
             <p className="mx-auto mt-2 lg:mt-3 max-w-xl text-xs leading-6 text-[var(--foreground)]/60 sm:text-sm">
-              Discover a more meaningful way to travel, where every place has
-              something special to offer.
+              {aboutUsHero.description}
             </p>
           </div>
         </div>
@@ -138,8 +78,11 @@ const AboutPage = () => {
           {/* Section Intro */}
           <div className="mb-12 sm:mb-16">
             <h2 className={`${sectionHeadingClass}`}>
-              Where every stay becomes
-              <span className="italic text-[var(--primary)]"> a story.</span>
+              {aboutUsStory.heading}
+              <span className="italic text-[var(--primary)]">
+                {" "}
+                {aboutUsStory.highlightedHeading}
+              </span>
             </h2>
           </div>
 
@@ -154,12 +97,11 @@ const AboutPage = () => {
               <h3
                 className={`${cormorant.className} text-3xl leading-[1.08] sm:text-4xl`}
               >
-                Travel is not just about where you go.
+                {aboutUsStory.belief.heading}
               </h3>
 
               <p className="mt-5 text-sm leading-7 text-[var(--foreground)]/60">
-                It is about how a place makes you feel, the moments you
-                discover, and the memories you carry with you.
+                {aboutUsStory.belief.description}
               </p>
 
               <div className="mt-7 h-px w-14 bg-[var(--primary)]" />
@@ -169,8 +111,8 @@ const AboutPage = () => {
             <div className="relative lg:col-span-6">
               <div className="group relative h-[390px] overflow-hidden sm:h-[430px] lg:h-[620px] rounded-[24px]">
                 <Image
-                  src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90"
-                  alt="Luxury resort surrounded by tropical nature"
+                  src={aboutUsStory.mainImage.src}
+                  alt={aboutUsStory.mainImage.alt}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -182,7 +124,7 @@ const AboutPage = () => {
                 <p
                   className={`${cormorant.className} text-2xl italic sm:text-3xl`}
                 >
-                  The beauty of getting away.
+                  {aboutUsStory.imageCaption}
                 </p>
               </div>
             </div>
@@ -191,8 +133,8 @@ const AboutPage = () => {
             <div className="flex flex-col gap-7 lg:col-span-3 lg:pl-3">
               <div className="relative h-[220px] overflow-hidden sm:h-[280px] lg:h-[250px] rounded-[24px]">
                 <Image
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=85"
-                  alt="Elegant and thoughtfully designed hotel interior"
+                  src={aboutUsStory.approach.image.src}
+                  alt={aboutUsStory.approach.image.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 25vw"
                   className="object-cover transition-transform duration-700 hover:scale-105"
@@ -207,12 +149,11 @@ const AboutPage = () => {
                 <h3
                   className={`${cormorant.className} text-3xl leading-tight sm:text-4xl`}
                 >
-                  Thoughtful stays. Meaningful moments.
+                  {aboutUsStory.approach.heading}
                 </h3>
 
                 <p className="mt-4 text-sm leading-7 text-[var(--foreground)]/60">
-                  At {BRAND_NAME}, we bring beautiful places and thoughtful
-                  hospitality together to make every journey feel special.
+                  At {BRAND_NAME}, {aboutUsStory.approach.description}
                 </p>
 
                 <Link
@@ -242,10 +183,10 @@ const AboutPage = () => {
               </p>
 
               <h2 className={`${sectionHeadingClass} max-w-3xl`}>
-                Hospitality is found in
+                {aboutUsValues.heading}
                 <span className="italic text-[var(--primary)]">
                   {" "}
-                  the details.
+                  {aboutUsValues.highlightedHeading}
                 </span>
               </h2>
             </div>
@@ -253,12 +194,12 @@ const AboutPage = () => {
 
           {/* Values List */}
           <div className="border-t border-[var(--border)]">
-            {values.map((item) => {
-              const Icon = item.icon;
+            {aboutUsValues.values.map((item, index) => {
+              const Icon = valueIcons[index] ?? Heart;
 
               return (
                 <article
-                  key={item.number}
+                  key={item.title}
                   className="group grid gap-5 border-b border-[var(--border)] py-9 transition-all duration-500 sm:py-11 lg:grid-cols-[100px_1fr_1.1fr] lg:items-center lg:gap-10"
                 >
                   {/* Number and Icon */}
@@ -266,7 +207,7 @@ const AboutPage = () => {
                     <span
                       className={`${cormorant.className} text-3xl text-[var(--foreground)]/35`}
                     >
-                      {item.number}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
 
                     <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] text-[var(--primary)] transition-all duration-500 group-hover:border-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white">
@@ -305,9 +246,9 @@ const AboutPage = () => {
               </p>
 
               <h2 className={`${sectionHeadingClass} w-full`}>
-                More than a destination.
+                {aboutUsExperiences.heading}
                 <span className="block italic text-[var(--primary)]">
-                  A feeling to remember.
+                  {aboutUsExperiences.highlightedHeading}
                 </span>
               </h2>
             </div>
@@ -316,12 +257,12 @@ const AboutPage = () => {
           {/* Editorial Experience Gallery */}
           <div className="grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-14">
             {/* Featured Experience */}
-            {experiences[0] && (
+            {aboutUsExperiences.experiences[0] && (
               <article className="group min-w-0">
                 <div className="relative h-[420px] overflow-hidden lg:h-[680px] rounded-[24px]">
                   <Image
-                    src={experiences[0].image}
-                    alt={experiences[0].title}
+                    src={aboutUsExperiences.experiences[0].image}
+                    alt={aboutUsExperiences.experiences[0].alt}
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -341,11 +282,11 @@ const AboutPage = () => {
                   <h3
                     className={`${cormorant.className} text-3xl font-medium sm:text-4xl lg:text-5xl`}
                   >
-                    {experiences[0].title}
+                    {aboutUsExperiences.experiences[0].title}
                   </h3>
 
                   <p className="max-w-sm text-sm leading-7 text-[var(--foreground)]/55 sm:text-right">
-                    {experiences[0].description}
+                    {aboutUsExperiences.experiences[0].description}
                   </p>
                 </div>
               </article>
@@ -353,12 +294,12 @@ const AboutPage = () => {
 
             {/* Supporting Experiences */}
             <div className="flex flex-col gap-10 sm:gap-12 lg:justify-between lg:pt-20">
-              {experiences.slice(1, 3).map((item, index) => (
+              {aboutUsExperiences.experiences.slice(1, 3).map((item) => (
                 <article key={item.title} className="group min-w-0">
                   <div className="relative h-[300px] overflow-hidden lg:h-[310px] rounded-[24px]">
                     <Image
                       src={item.image}
-                      alt={item.title}
+                      alt={item.alt}
                       fill
                       sizes="(max-width: 1024px) 100vw, 35vw"
                       className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
@@ -389,8 +330,8 @@ const AboutPage = () => {
       <section className="relative overflow-hidden rounded-3xl lg:mx-8 lg:rounded-[40px]">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=2000&q=85"
-            alt="Peaceful ocean landscape"
+            src={aboutUsBrandStatement.backgroundImage.src}
+            alt={aboutUsBrandStatement.backgroundImage.alt}
             fill
             sizes="100vw"
             className="object-cover"
@@ -407,15 +348,14 @@ const AboutPage = () => {
           <h2
             className={`${cormorant.className} text-5xl font-medium leading-[1.05] sm:text-6xl lg:text-8xl`}
           >
-            Not just a destination.
+            {aboutUsBrandStatement.heading}
             <span className="block italic text-white/75">
-              A feeling to remember.
+              {aboutUsBrandStatement.highlightedHeading}
             </span>
           </h2>
 
           <p className="mt-7 max-w-xl text-sm leading-7 text-white/75 sm:text-base">
-            Wherever life takes you, we believe there is always room for a
-            little more beauty, comfort, and discovery.
+            {aboutUsBrandStatement.description}
           </p>
 
           <div className="mt-9 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white/80">
@@ -434,9 +374,9 @@ const AboutPage = () => {
           </div>
 
           <h2 className={sectionHeadingClass}>
-            Your next beautiful
+            {aboutUsFinalSection.heading}
             <span className="block italic text-[var(--primary)]">
-              escape awaits.
+              {aboutUsFinalSection.highlightedHeading}
             </span>
           </h2>
 
