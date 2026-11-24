@@ -8,6 +8,9 @@ import {
   roomCategories,
   roomLocations,
   guestReviews,
+  roomsHero,
+  roomsCollectionContent,
+  guestExperienceContent,
 } from "../data/roomsPageData";
 import {
   ArrowUpRight,
@@ -158,15 +161,15 @@ const RoomsPage = () => {
           <h1
             className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
           >
-            Rooms & Suites
+            {roomsHero.title}
           </h1>
         </div>
 
         {/* Hero Image */}
         <div className="group relative mt-5 h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] overflow-hidden rounded-[25px] sm:mt-5 sm:rounded-[35px] lg:rounded-[45px]">
           <img
-            src="https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp"
-            alt="Luxury boutique hotel suite"
+            src={roomsHero.image}
+            alt={roomsHero.imageAlt}
             className="h-full w-full object-cover"
           />
 
@@ -175,14 +178,16 @@ const RoomsPage = () => {
           <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-5 p-6 text-white sm:flex-row sm:items-end sm:justify-between sm:p-10 lg:p-14">
             <div>
               <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.3em] text-white/70">
-                A PLACE TO CALL YOUR OWN
+                {roomsHero.eyebrow}
               </p>
 
               <h2
                 className={`${cormorant.className} text-4xl leading-none sm:text-6xl lg:text-7xl`}
               >
-                Your own kind of
-                <span className="block italic">beautiful.</span>
+                {roomsHero.heading}
+                <span className="block italic">
+                  {roomsHero.highlightedHeading}
+                </span>
               </h2>
             </div>
           </div>
@@ -192,8 +197,10 @@ const RoomsPage = () => {
       {/* Room Collection */}
       <section id="room-collection" className="w-full pt-12 lg:py-15 lg:mt-10">
         {/* Heading */}
-        <div className="text-center">
-          <h2 className={`${sectionHeadingClass}`}>Find Your Perfect Stay</h2>
+        <div className="text-center sm:text-start">
+          <h2 className={`${sectionHeadingClass}`}>
+            {roomsCollectionContent.heading}
+          </h2>
         </div>
 
         {/* Filters */}
@@ -202,7 +209,7 @@ const RoomsPage = () => {
             {/* Room Categories */}
             <div className="hide-scrollbar min-w-0 flex-1 overflow-x-auto">
               <div className="flex w-max gap-3 whitespace-nowrap">
-                {roomCategories.map((category) => (
+                {["All Rooms", ...roomCategories].map((category) => (
                   <button
                     key={category}
                     onClick={() => setActiveCategory(category)}
@@ -1048,13 +1055,13 @@ const RoomsPage = () => {
             <div>
               <p className="mb-5 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
                 <Sparkles size={14} />
-                MOMENTS THAT MATTER
+                {guestExperienceContent.eyebrow}
               </p>
 
               <h2 className={`${sectionHeadingClass}`}>
-                Memories made
+                {guestExperienceContent.heading}
                 <span className="block italic text-[var(--primary)]">
-                  with us.
+                  {guestExperienceContent.highlightedHeading}
                 </span>
               </h2>
             </div>
@@ -1167,8 +1174,7 @@ const RoomsPage = () => {
           {/* Bottom Information */}
           <div className="flex flex-col items-center justify-between gap-6 pt-6 sm:flex-row">
             <p className="max-w-md text-center text-[10px] leading-6 tracking-wide text-[var(--foreground)]/50 sm:text-left">
-              The finest memories are the ones we create together. We look
-              forward to welcoming you.
+              {guestExperienceContent.bottomMessage}
             </p>
           </div>
         </div>

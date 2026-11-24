@@ -1,11 +1,49 @@
+// ============================================================
+// ROOMS PAGE — HERO SECTION
+// Customizable hero title, image, and introductory content
+// ============================================================
+
+export const roomsHero = {
+  title: "Rooms & Suites",
+
+  image:
+    "https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp",
+
+  imageAlt: "Luxury boutique hotel suite",
+
+  eyebrow: "A PLACE TO CALL YOUR OWN",
+
+  heading: "Your own kind of",
+
+  highlightedHeading: "beautiful.",
+};
+
+// ============================================================
+// ROOMS PAGE — ROOM COLLECTION SECTION
+// Main heading displayed above the room collection
+// ============================================================
+
+export const roomsCollectionContent = {
+  heading: "Find Your Perfect Stay",
+};
+
+// ============================================================
+// ROOMS PAGE — ROOM COLLECTION SECTION
+// Room categories used to organize hotel accommodations
+// ============================================================
+
 export const roomCategories = [
-  "All Rooms",
   "Deluxe Rooms",
   "Premium Rooms",
   "Suites",
   "Luxury Rooms",
 ];
 
+// ============================================================
+// ROOMS PAGE — ROOM COLLECTION SECTION
+// Hotel room details displayed in the room cards
+// Includes room information, images, pricing, and features
+// ============================================================
 
 export const rooms = [
   // ================ DELUXE ROOMS ================
@@ -178,7 +216,7 @@ export const rooms = [
     image:
       "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
     images: [
-      "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+      "https://thepointsguy.global.sslfastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
@@ -193,6 +231,11 @@ export const rooms = [
   },
 ];
 
+// ============================================================
+// ROOMS PAGE — LOCATION FILTER SECTION
+// Hotel locations associated with the available rooms
+// ============================================================
+
 export const roomLocations = [
   "All Locations",
   "Italy",
@@ -200,6 +243,27 @@ export const roomLocations = [
   "Australia",
   "India",
 ];
+
+// ============================================================
+// ROOMS PAGE — GUEST EXPERIENCES & REVIEWS SECTION
+// Customizable guest experience section heading and message
+// ============================================================
+
+export const guestExperienceContent = {
+  eyebrow: "MOMENTS THAT MATTER",
+
+  heading: "Memories made",
+
+  highlightedHeading: "with us.",
+
+  bottomMessage:
+    "The finest memories are the ones we create together. We look forward to welcoming you.",
+};
+
+// ============================================================
+// ROOMS PAGE — GUEST EXPERIENCES & REVIEWS SECTION
+// Guest testimonials, images, featured status, and ratings
+// ============================================================
 
 export const guestReviews = [
   {
