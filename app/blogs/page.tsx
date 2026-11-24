@@ -12,21 +12,12 @@ import {
   BookOpen,
   X,
 } from "lucide-react";
-import { blogPosts } from "@/app/data/blogPosts";
+import { blogPosts, categories, blogPageData } from "@/app/data/blogPosts";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
-
-const categories = [
-  "All Stories",
-  "Destinations",
-  "Travel Guides",
-  "Experiences",
-  "Hospitality",
-  "Inspiration",
-];
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
@@ -61,9 +52,9 @@ const Page = () => {
               <h1
                 className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
               >
-                Stories worth
+                {blogPageData.hero.title}
                 <span className="block italic text-[var(--primary)]">
-                  travelling for.
+                  {blogPageData.hero.highlight}
                 </span>
               </h1>
             </div>
@@ -146,7 +137,10 @@ const Page = () => {
           <div className="mb-5 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
               <h2 className={`${sectionHeadingClass}`}>
-                The latest <span className="italic">stories.</span>
+                {blogPageData.latestStories.title}{" "}
+                <span className="italic">
+                  {blogPageData.latestStories.highlight}
+                </span>
               </h2>
             </div>
           </div>
@@ -299,17 +293,16 @@ const Page = () => {
             <h2
               className={`${cormorant.className} max-w-4xl text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-[90px]`}
             >
-              Let the next story
+              {blogPageData.closingSection.title}
               <span className="block italic text-[var(--primary)]">
-                be yours.
+                {blogPageData.closingSection.highlight}
               </span>
             </h2>
           </div>
 
           <div className="text-center lg:col-span-4 lg:pl-8 lg:text-left">
             <p className="text-sm leading-7 text-[var(--foreground)]/55">
-              Find your next favourite destination, discover extraordinary stays
-              and create moments that deserve to be remembered.
+              {blogPageData.closingSection.description}
             </p>
 
             <Link

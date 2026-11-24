@@ -1,3 +1,5 @@
+// Blog article data, blog categories, and hotel-customizable blog page content.
+
 export type BlogPost = {
   id: number;
   title: string;
@@ -16,6 +18,7 @@ export type BlogPost = {
   quote?: string;
 };
 
+// Blog articles displayed on the blog listing and individual blog pages.
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
@@ -246,3 +249,33 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
+
+// Blog categories used to organize and filter articles.
+export const categories = [
+  "All Stories",
+  "Destinations",
+  "Travel Guides",
+  "Experiences",
+  "Hospitality",
+  "Inspiration",
+];
+
+// Hotel-customizable editorial content displayed on the blog listing page.
+export const blogPageData = {
+  hero: {
+    title: "Stories worth",
+    highlight: "travelling for.",
+  },
+
+  latestStories: {
+    title: "The latest",
+    highlight: "stories.",
+  },
+
+  closingSection: {
+    title: "Let the next story",
+    highlight: "be yours.",
+    description:
+      "Find your next favourite destination, discover extraordinary stays and create moments that deserve to be remembered.",
+  },
+};
