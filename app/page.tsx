@@ -1333,7 +1333,7 @@ const HomePage = () => {
                 </Link>
               </div>
 
-              {/* Hotel Cards */}
+              {/* Room Cards */}
               <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16 xl:grid-cols-4 xl:gap-x-7 ">
                 {filteredTrendingRooms.slice(0, 4).map((room) => (
                   <article

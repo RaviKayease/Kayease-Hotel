@@ -10,7 +10,6 @@ import {
   guestReviews,
 } from "../data/roomsPageData";
 import {
-  ArrowDown,
   ArrowUpRight,
   BedDouble,
   Heart,
@@ -20,7 +19,6 @@ import {
   Users,
   ChevronDown,
   Check,
-  X,
   Minus,
   Plus,
   SlidersHorizontal,
@@ -155,17 +153,17 @@ const RoomsPage = () => {
   return (
     <main>
       {/* Hero Section */}
-      <section className="sm:pt-16 lg:pt-10">
+      <section className="pt-10 lg:pt-15">
         <div className="text-center">
           <h1
-            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+            className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
           >
             Rooms & Suites
           </h1>
         </div>
 
         {/* Hero Image */}
-        <div className="group relative mt-12 h-[340px] overflow-hidden rounded-[25px] sm:mt-5 sm:h-[480px] sm:rounded-[35px] lg:h-[620px] lg:rounded-[45px]">
+        <div className="group relative mt-5 h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] overflow-hidden rounded-[25px] sm:mt-5 sm:rounded-[35px] lg:rounded-[45px]">
           <img
             src="https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp"
             alt="Luxury boutique hotel suite"
@@ -192,15 +190,10 @@ const RoomsPage = () => {
       </section>
 
       {/* Room Collection */}
-      <section
-        id="room-collection"
-        className="w-full scroll-mt-24 pb-20 sm:pb-28 lg:pt-15"
-      >
+      <section id="room-collection" className="w-full pt-12 lg:py-15 lg:mt-10">
         {/* Heading */}
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 className={`${sectionHeadingClass}`}>Find Your Perfect Stay</h2>
-          </div>
+        <div className="text-center">
+          <h2 className={`${sectionHeadingClass}`}>Find Your Perfect Stay</h2>
         </div>
 
         {/* Filters */}
@@ -226,7 +219,7 @@ const RoomsPage = () => {
             </div>
 
             {/* Filters */}
-            <div className="flex w-full shrink-0 gap-3 lg:w-auto">
+            <div className="flex w-full flex-1 gap-3 lg:w-auto lg:flex-none">
               {/* Location Filter */}
               <div
                 ref={locationRef}
@@ -285,12 +278,12 @@ const RoomsPage = () => {
               </div>
 
               {/* Price, Rating & Guest Filter */}
-              <div className="flex w-full shrink-0 gap-3 lg:w-auto">
+              <div className="flex w-full flex-1 gap-3 lg:w-auto lg:flex-none">
                 <div className="w-full flex-1 lg:flex-none">
                   {/* Filters Button */}
                   <button
                     onClick={() => setIsFilterOpen(true)}
-                    className="flex h-[48px] w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-xs font-medium text-[var(--foreground)] transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    className="flex h-[48px] w-full shrink-0 items-center justify-between gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-xs font-medium text-[var(--foreground)] transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
                     <SlidersHorizontal size={15} />
                     Filters
@@ -306,7 +299,7 @@ const RoomsPage = () => {
               {/* Filter Bottom Sheet */}
               <div
                 ref={filterRef}
-                className={`absolute left-0 right-0 top-[-35px] z-30 w-full origin-right overflow-hidden transition-transform duration-500 ease-in-out ${
+                className={`hidden xl:block absolute left-0 right-0 top-[-35px] z-30 w-full origin-right overflow-hidden transition-transform duration-500 ease-in-out ${
                   isFilterOpen ? "scale-x-100" : "scale-x-0"
                 }`}
               >
@@ -586,19 +579,350 @@ const RoomsPage = () => {
                   </div>
                 </div>
               </div>
+
+              {/* RESPONSIVE FILTER BOTTOM SHEET - BELOW XL */}
+              {isFilterOpen && (
+                <div
+                  className="xl:hidden fixed inset-0 z-[200] flex items-end bg-[var(--foreground)]/40 backdrop-blur-sm"
+                  onClick={() => setIsFilterOpen(false)}
+                >
+                  <div
+                    ref={filterRef}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Room filters"
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-full max-h-[90dvh] overflow-hidden rounded-t-[30px] border-t border-[rgb(var(--glass-border)/0.5)] bg-[rgb(var(--glass)/0.88)] text-[var(--glass-text)] shadow-xl backdrop-blur-2xl animate-[slideUp_0.3s_ease-out]"
+                  >
+                    {/* HEADER */}
+                    <div className="flex items-center justify-between px-6 pt-5 pb-4">
+                      <div>
+                        <p
+                          className={`${cormorant.className} text-2xl font-semibold text-[var(--foreground)]`}
+                        >
+                          Refine your stay
+                        </p>
+
+                        <p className="mt-1 text-xs text-[var(--foreground)]/60">
+                          Customize your room preferences.
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsFilterOpen(false)}
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--background)] text-xl text-[var(--foreground)] transition hover:brightness-95"
+                        aria-label="Close filters"
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    {/* SCROLLABLE FILTER CONTENT */}
+                    <div className="max-h-[calc(90dvh-145px)] overflow-y-auto overscroll-contain px-5 pb-5">
+                      {/* PRICE RANGE */}
+                      <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                        <div className="mb-4 flex items-center justify-between">
+                          <p className="text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
+                            PRICE PER NIGHT
+                          </p>
+
+                          <span className="rounded-md bg-[var(--surface)] px-2 py-1 text-[10px] font-medium text-[var(--foreground)]/50">
+                            INR
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          {/* MINIMUM PRICE */}
+                          <div className="flex h-12 min-w-0 items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--background)] pl-3 pr-2 transition-colors focus-within:border-[var(--primary)]/60">
+                            <div className="min-w-0 flex-1">
+                              <label
+                                htmlFor="mobile-min-room-price"
+                                className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                              >
+                                Minimum price
+                              </label>
+
+                              <div className="flex items-center gap-1">
+                                <span className="text-sm font-semibold text-[var(--foreground)]">
+                                  ₹
+                                </span>
+
+                                <input
+                                  id="mobile-min-room-price"
+                                  type="number"
+                                  min={MIN_ROOM_PRICE}
+                                  max={maxPrice}
+                                  step={100}
+                                  value={minPrice}
+                                  onChange={(e) => {
+                                    setMinPrice(
+                                      e.target.value === ""
+                                        ? ""
+                                        : Number(e.target.value),
+                                    );
+                                  }}
+                                  className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                  aria-label="Minimum price"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="ml-2 flex shrink-0 items-center gap-0.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.5">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMinPrice((prev) =>
+                                    Math.max(
+                                      (prev === "" ? MIN_ROOM_PRICE : prev) -
+                                        100,
+                                      MIN_ROOM_PRICE,
+                                    ),
+                                  )
+                                }
+                                disabled={
+                                  minPrice !== "" && minPrice <= MIN_ROOM_PRICE
+                                }
+                                className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                                aria-label="Decrease minimum price"
+                              >
+                                −
+                              </button>
+
+                              <div className="h-4 w-px bg-[var(--border)]" />
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMinPrice((prev) =>
+                                    Math.min(
+                                      (prev === "" ? MIN_ROOM_PRICE : prev) +
+                                        100,
+                                      maxPrice === "" ? Infinity : maxPrice,
+                                    ),
+                                  )
+                                }
+                                disabled={
+                                  minPrice !== "" &&
+                                  maxPrice !== "" &&
+                                  minPrice >= maxPrice
+                                }
+                                className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                                aria-label="Increase minimum price"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* MAXIMUM PRICE */}
+                          <div className="flex h-12 min-w-0 items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--background)] pl-3 pr-2 transition-colors focus-within:border-[var(--primary)]/60">
+                            <div className="min-w-0 flex-1">
+                              <label
+                                htmlFor="mobile-max-room-price"
+                                className="mb-0.5 block text-[9px] leading-tight text-[var(--foreground)]/45"
+                              >
+                                Maximum price
+                              </label>
+
+                              <div className="flex items-center gap-1">
+                                <span className="text-sm font-semibold text-[var(--foreground)]">
+                                  ₹
+                                </span>
+
+                                <input
+                                  id="mobile-max-room-price"
+                                  type="number"
+                                  step={100}
+                                  value={maxPrice}
+                                  onChange={(e) => {
+                                    setMaxPrice(
+                                      e.target.value === ""
+                                        ? ""
+                                        : Number(e.target.value),
+                                    );
+                                  }}
+                                  className="w-full min-w-0 bg-transparent text-sm font-semibold tabular-nums text-[var(--foreground)] outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                  aria-label="Maximum price"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="ml-2 flex shrink-0 items-center gap-0.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.5">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMaxPrice((prev) =>
+                                    Math.max(
+                                      (prev === "" ? MAX_ROOM_PRICE : prev) -
+                                        100,
+                                      minPrice === "" ? 0 : minPrice,
+                                    ),
+                                  )
+                                }
+                                disabled={
+                                  maxPrice !== "" &&
+                                  minPrice !== "" &&
+                                  maxPrice <= minPrice
+                                }
+                                className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                                aria-label="Decrease maximum price"
+                              >
+                                −
+                              </button>
+
+                              <div className="h-4 w-px bg-[var(--border)]" />
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMaxPrice((prev) =>
+                                    Math.min(
+                                      (prev === "" ? MAX_ROOM_PRICE : prev) +
+                                        100,
+                                      MAX_ROOM_PRICE,
+                                    ),
+                                  )
+                                }
+                                disabled={
+                                  maxPrice !== "" && maxPrice >= MAX_ROOM_PRICE
+                                }
+                                className="flex h-7 w-7 items-center justify-center rounded-md text-sm font-medium text-[var(--foreground)]/55 transition-all hover:bg-[var(--background)] hover:text-[var(--primary)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-25"
+                                aria-label="Increase maximum price"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* GUEST RATING */}
+                      <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                        <p className="mb-3 text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
+                          GUEST RATING
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          {[
+                            { label: "Any", value: 0 },
+                            { label: "4.0+", value: 4 },
+                            { label: "4.5+", value: 4.5 },
+                          ].map((rating) => (
+                            <button
+                              key={rating.value}
+                              type="button"
+                              onClick={() => setMinRating(rating.value)}
+                              className={`flex h-11 items-center gap-1.5 rounded-lg border px-4 text-xs transition-all duration-200 ${
+                                minRating === rating.value
+                                  ? "border-[var(--primary)]/30 bg-[var(--primary)]/10 font-semibold text-[var(--primary)]"
+                                  : "border-[var(--border)] bg-transparent text-[var(--foreground)]/60 hover:border-[var(--primary)]/40 hover:text-[var(--primary)]"
+                              }`}
+                            >
+                              {rating.value !== 0 && (
+                                <Star
+                                  size={12}
+                                  fill={
+                                    minRating === rating.value
+                                      ? "currentColor"
+                                      : "none"
+                                  }
+                                />
+                              )}
+
+                              {rating.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* GUESTS */}
+                      <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)]/60 p-4">
+                        <p className="mb-3 text-xs font-semibold tracking-widest text-[var(--foreground)]/60">
+                          GUESTS
+                        </p>
+
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-[var(--foreground)]">
+                              Minimum guests
+                            </p>
+
+                            <p className="text-[11px] text-[var(--foreground)]/55">
+                              Number of guests staying
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-4">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setMinGuests((prev) => Math.max(1, prev - 1))
+                              }
+                              disabled={minGuests <= 1}
+                              aria-label="Decrease guests"
+                              className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--primary)] text-[var(--primary)] transition hover:bg-[var(--primary)]/10 disabled:cursor-not-allowed disabled:opacity-30"
+                            >
+                              <Minus size={14} />
+                            </button>
+
+                            <span className="w-4 text-center text-sm font-semibold tabular-nums text-[var(--foreground)]">
+                              {minGuests}
+                            </span>
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setMinGuests((prev) =>
+                                  Math.min(MAX_GUESTS, prev + 1),
+                                )
+                              }
+                              disabled={minGuests >= MAX_GUESTS}
+                              aria-label="Increase guests"
+                              className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-white transition hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-30"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* STICKY ACTION BUTTONS */}
+                    <div className="flex items-center gap-3 border-t border-[var(--border)] bg-[var(--surface)]/95 px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+                      <button
+                        type="button"
+                        onClick={resetFilters}
+                        className="flex flex-1 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--background)] py-4 text-sm font-semibold text-[var(--foreground)]/70 transition hover:border-[var(--primary)]"
+                      >
+                        Reset
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsFilterOpen(false)}
+                        className="flex flex-[1.5] items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] py-4 text-sm font-semibold text-white shadow-lg transition hover:brightness-90 active:scale-[0.98]"
+                      >
+                        Apply Filters
+                        <ArrowUpRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Room Cards */}
-        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:gap-x-7 lg:gap-y-16 px-10">
+        <div className="my-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
           {filteredRooms.map((room) => (
             <article
               key={room.id}
               className="group relative min-w-0 cursor-pointer"
             >
               {/* Image */}
-              <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] xl:h-[350px]">
+              <div className="relative h-[250px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[300px] lg:h-[330px] lg:rounded-[30px]">
                 <img
                   src={room.image}
                   alt={room.name}
@@ -717,7 +1041,7 @@ const RoomsPage = () => {
       </section>
 
       {/* Guest Experiences & Reviews */}
-      <section className="relative left-1/2 w-screen -translate-x-1/2 editorial-showcase overflow-hidden py-20 text-[var(--foreground)] transition-colors duration-500">
+      <section className="relative left-1/2 w-screen -translate-x-1/2 editorial-showcase overflow-hidden px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15 mb-10 text-[var(--foreground)] transition-colors duration-500">
         <div className="mx-auto w-full max-w-[1350px]">
           {/* Section Heading */}
           <div className="mb-12 flex flex-col justify-between gap-6 sm:mb-16 lg:flex-row lg:items-end">
