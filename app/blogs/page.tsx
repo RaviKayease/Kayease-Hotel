@@ -53,13 +53,13 @@ const Page = () => {
   return (
     <main>
       {/* EDITORIAL INTRO + FEATURED STORY */}
-      <section className="relative px-5 pt-16 pb-10 sm:px-8 sm:pb-12 lg:px-12 lg:pb-10">
+      <section className="relative pt-10 lg:pt-15">
         <div className="mx-auto max-w-[1350px]">
           {/* Editorial Intro */}
-          <div className="mb-6 flex flex-col items-start justify-between gap-8 pb-5 sm:flex-row sm:items-end">
+          <div className="lg:mb-3 flex flex-col items-start justify-between gap-8 pb-5 sm:flex-row sm:items-end">
             <div className="max-w-3xl">
               <h1
-                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-[0.9]`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
               >
                 Stories worth
                 <span className="block italic text-[var(--primary)]">
@@ -70,7 +70,7 @@ const Page = () => {
           </div>
 
           {/* Featured Story */}
-          <article className="grid grid-cols-1 overflow-hidden border border-[var(--border)] lg:grid-cols-12 rounded-[24px]">
+          <article className="grid grid-cols-1 overflow-hidden border border-[var(--border)] xl:grid-cols-12 rounded-[24px]">
             {/* Image */}
             <Link
               href={`/blogs/${featuredPost.slug}`}
@@ -139,14 +139,11 @@ const Page = () => {
       </section>
 
       {/* JOURNAL COLLECTION */}
-      <section
-        id="journal"
-        className="px-5 pb-20 pt-2 sm:px-8 sm:pb-28 lg:px-12"
-      >
+      <section id="journal" className="py-15">
         <div className="mx-auto max-w-[1350px]">
           {/* Section heading */}
 
-          <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div className="mb-5 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
               <h2 className={`${sectionHeadingClass}`}>
                 The latest <span className="italic">stories.</span>
@@ -156,7 +153,7 @@ const Page = () => {
 
           {/* Filters and search */}
           <div className="flex flex-col gap-5 border-y border-[var(--border)] py-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-6 overflow-x-auto hide-scrollbar">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -202,14 +199,14 @@ const Page = () => {
 
           {/* Article collection */}
           {filteredPosts.length > 0 ? (
-            <div className="mt-10 grid grid-cols-1 gap-x-7 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
+            <div className="mt-10 grid grid-cols-1 gap-x-7 gap-y-12 sm:grid-cols-2 xl:grid-cols-3 xl:gap-y-16">
               {filteredPosts.map((post, index) => (
                 <article key={post.id} className="group relative min-w-0">
                   {/* Article image */}
 
                   <Link
                     href={`/blogs/${post.slug}`}
-                    className="relative block h-[310px] overflow-hidden bg-[var(--surface)] sm:h-[340px] lg:h-[370px] rounded-[24px]"
+                    className="relative block h-[210px] overflow-hidden bg-[var(--surface)] sm:h-[300px] lg:h-[370px] rounded-[24px]"
                   >
                     <img
                       src={post.image}
@@ -296,9 +293,9 @@ const Page = () => {
       </section>
 
       {/* CLOSING EDITORIAL SECTION */}
-      <section className="relative overflow-hidden px-5 py-20 sm:px-8 sm:pb-28 sm:pt-18 lg:px-12">
+      <section className="relative overflow-hidden py-10 sm:py-15 lg:py-20">
         <div className="mx-auto grid max-w-[1350px] grid-cols-1 items-center gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-8">
+          <div className="text-center lg:col-span-8 lg:text-left">
             <h2
               className={`${cormorant.className} max-w-4xl text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-[90px]`}
             >
@@ -309,7 +306,7 @@ const Page = () => {
             </h2>
           </div>
 
-          <div className="lg:col-span-4 lg:pl-8">
+          <div className="text-center lg:col-span-4 lg:pl-8 lg:text-left">
             <p className="text-sm leading-7 text-[var(--foreground)]/55">
               Find your next favourite destination, discover extraordinary stays
               and create moments that deserve to be remembered.
@@ -317,7 +314,7 @@ const Page = () => {
 
             <Link
               href="/rooms"
-              className="group mt-7 inline-flex items-center gap-5 border-b border-[var(--primary)]/60 pb-3 text-[10px] font-medium uppercase tracking-[0.18em]"
+              className="group mt-7 inline-flex items-center justify-center gap-5 border-b border-[var(--primary)]/60 pb-3 text-[10px] font-medium uppercase tracking-[0.18em]"
             >
               Explore our stays
               <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
