@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Cormorant_Garamond } from "next/font/google";
 import {
-  ArrowLeft,
   ArrowUpRight,
   BedDouble,
   Heart,
@@ -12,11 +11,11 @@ import {
   Star,
   Users,
   Trash2,
-  ArrowRight,
 } from "lucide-react";
 
 import { rooms } from "../data/roomsPageData";
 import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
+import { wishlistPageContent } from "@/app/data/wishlistData";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -71,7 +70,7 @@ const WishlistPage = () => {
           <h1
             className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
           >
-            Your Saved Stays
+            {wishlistPageContent.hero.heading}
           </h1>
 
           <div className="mt-8 flex items-center gap-3 rounded-full border border-[var(--border)] px-5 py-3">
@@ -90,7 +89,9 @@ const WishlistPage = () => {
         {/* COLLECTION HEADING */}
         <div className="mb-8 flex flex-col justify-between gap-5 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-center">
           <div>
-            <h2 className={`${sectionHeadingClass}`}>Places to dream about.</h2>
+            <h2 className={`${sectionHeadingClass}`}>
+              {wishlistPageContent.collection.heading}
+            </h2>
           </div>
 
           {savedRooms.length > 0 && (
@@ -126,8 +127,7 @@ const WishlistPage = () => {
             </h3>
 
             <p className="mt-4 max-w-sm text-xs leading-7 text-[var(--foreground)]/50">
-              When a room catches your eye, save it here. Your favourite stays
-              will be waiting for you whenever you return.
+              {wishlistPageContent.emptyState.description}
             </p>
 
             <Link
@@ -199,10 +199,6 @@ const WishlistPage = () => {
                         {room.description}
                       </p>
                     </div>
-
-                    <span className="shrink-0 pt-2 text-[9px] font-medium uppercase tracking-wider text-[var(--primary)]">
-                      {room.category}
-                    </span>
                   </div>
 
                   {/* ROOM FEATURES */}
@@ -274,7 +270,7 @@ const WishlistPage = () => {
               </p>
 
               <p className={`${cormorant.className} mt-2 text-3xl font-medium`}>
-                There's more to discover.
+                {wishlistPageContent.bottomCta.heading}
               </p>
             </div>
 
