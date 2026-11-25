@@ -67,7 +67,7 @@ const FAQsPage = () => {
   return (
     <main>
       {/* ================= HERO SECTION ================= */}
-      <section className="relative px-5 pb-14 pt-16 sm:px-10 sm:pb-20 sm:pt-24 lg:px-16 lg:pb-24 lg:pt-28">
+      <section className="pt-10 lg:pt-15">
         {/* Decorative Background */}
         <div className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-[var(--primary)]/[0.045] blur-3xl" />
 
@@ -75,7 +75,7 @@ const FAQsPage = () => {
           <div className="flex flex-col items-center text-center">
             {/* Heading */}
             <h1
-              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
             >
               A few things,
               <span className="block italic text-[var(--primary)]">
@@ -87,7 +87,7 @@ const FAQsPage = () => {
       </section>
 
       {/* ================= FAQ CONTENT ================= */}
-      <section className="px-5 pb-20 sm:px-10 sm:pb-28 lg:px-16">
+      <section className="py-10 lg:py-15">
         <div className="mx-auto max-w-[1250px]">
           {/* Section Header */}
           <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -139,7 +139,7 @@ const FAQsPage = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="mb-12 flex w-full items-center gap-2 overflow-x-auto hide-scrollbar pb-2">
+          <div className="mb-3 lg:mb-12 flex w-full items-center gap-2 overflow-x-auto hide-scrollbar pb-2">
             {categories.map((category) => {
               const Icon = categoryIcons[category];
               const isActive = activeCategory === category;
@@ -392,7 +392,7 @@ const FAQsPage = () => {
       </section>
 
       {/* ================= BOTTOM CTA ================= */}
-      <section className="px-5 pb-20 sm:px-10 sm:pb-28 lg:px-16">
+      <section className="pb-10">
         <div className="relative mx-auto max-w-[1350px] overflow-hidden rounded-3xl bg-[var(--primary)] px-7 py-12 text-white sm:rounded-[35px] sm:px-12 sm:py-16 lg:px-20 lg:py-20">
           {/* Decorative Elements */}
           <div className="pointer-events-none absolute -right-10 -top-24 text-[270px] font-light leading-none text-white/[0.07]">
