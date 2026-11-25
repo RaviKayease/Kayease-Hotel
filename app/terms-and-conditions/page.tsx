@@ -24,14 +24,14 @@ const page = () => {
   return (
     <main>
       {/* HERO */}
-      <section className="relative overflow-hidden text-[var(--foreground)] transition-colors duration-300">
-        <div className="mx-auto max-w-[1440px] px-5 pb-10 pt-12 sm:px-10 sm:pb-14 sm:pt-16 lg:px-16">
+      <section className="py-10 lg:py-15">
+        <div className="mx-auto max-w-[1440px]">
           {/* Hero content */}
           <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
             {/* Left content */}
             <div className="relative z-10">
               <h1
-                className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+                className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
               >
                 The
                 <br />
@@ -40,7 +40,7 @@ const page = () => {
                 </span>
               </h1>
 
-              <p className="mt-9 max-w-[440px] text-sm leading-8 text-[var(--foreground)]/65">
+              <p className="mt-4 lg:mt-9 max-w-[440px] text-sm leading-8 text-[var(--foreground)]/65">
                 A little clarity goes a long way. These terms explain how our
                 platform works, what you can expect when booking, and the
                 responsibilities that help make every stay a better experience.
@@ -134,7 +134,7 @@ const page = () => {
       {/* CONTENT AREA */}
       <section
         id="terms-content"
-        className="relative left-1/2 flex w-screen -translate-x-1/2 border-t border-[var(--border)] bg-[var(--editorial-background)] px-5 py-14 transition-colors duration-300 sm:px-10 sm:py-20 lg:px-16"
+        className="relative left-1/2 flex w-screen -translate-x-1/2 border-t border-[var(--border)] bg-[var(--editorial-background)] px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15 transition-colors duration-300"
       >
         <div className="mx-auto max-w-[1250px]">
           <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
@@ -316,7 +316,7 @@ const page = () => {
       </section>
 
       {/* RELATED LINKS */}
-      <section className="bg-[var(--background)] px-5 py-16 transition-colors duration-300 sm:px-10 sm:py-20 lg:px-16">
+      <section className="bg-[var(--background)] transition-colors duration-300 py-10 lg:py-15">
         <div className="mx-auto max-w-[1250px]">
           <div className="flex flex-col justify-between gap-5 border-b border-[var(--border)] pb-7 sm:flex-row sm:items-end">
             <div>
