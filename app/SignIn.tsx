@@ -2,15 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Eye,
-  EyeOff,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import { Cormorant_Garamond } from "next/font/google";
 import { BRAND_NAME } from "@/app/components/brand";
+import { useRouter } from "next/navigation";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -36,7 +31,7 @@ const SignIn = ({ mode }: AuthLayoutProps) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const [error, setError] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,9 +47,7 @@ const SignIn = ({ mode }: AuthLayoutProps) => {
       return;
     }
 
-    // Frontend demonstration only.
-    // Connect your authentication API here later.
-    setSubmitted(true);
+    router.push("/");
   };
 
   return (
@@ -130,242 +123,200 @@ const SignIn = ({ mode }: AuthLayoutProps) => {
               </p>
             </div>
 
-            {/* Success State */}
-            {submitted ? (
-              <div
-                role="status"
-                aria-live="polite"
-                className="rounded-2xl border border-[var(--primary)]/25 bg-[var(--surface)] p-6 text-center sm:p-7"
-              >
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--primary)]/10">
-                  <CheckCircle2 size={27} className="text-[var(--primary)]" />
-                </div>
-
-                <h3
-                  className={`${cormorant.className} mt-5 text-3xl font-semibold`}
-                >
-                  {isSignUp ? "You're all set!" : "Welcome back!"}
-                </h3>
-
-                <p className="mt-3 text-sm leading-6 text-[var(--foreground)]/60">
-                  {isSignUp
-                    ? "Your registration form has been completed successfully."
-                    : "Your sign-in form has been submitted successfully."}
-                </p>
-
-                <p className="mt-3 text-[10px] leading-5 text-[var(--foreground)]/45">
-                  This is a frontend demonstration. No account has been created
-                  or authenticated yet.
-                </p>
-
-                <Link
-                  href="/"
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3.5 text-sm font-medium text-white transition hover:brightness-90"
-                >
-                  Explore stays
-                  <ArrowUpRight size={17} />
-                </Link>
-              </div>
-            ) : (
-              /* Authentication Form */
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                {/* Full Name */}
-                {isSignUp && (
-                  <div>
-                    <label
-                      htmlFor="fullName"
-                      className="mb-2 block text-xs font-semibold tracking-wide"
-                    >
-                      Full Name
-                    </label>
-
-                    <input
-                      id="fullName"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your full name"
-                      className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
-                    />
-                  </div>
-                )}
-
-                {/* Email */}
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+              {/* Full Name */}
+              {isSignUp && (
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="fullName"
                     className="mb-2 block text-xs font-semibold tracking-wide"
                   >
-                    Email Address
+                    Full Name
                   </label>
 
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="fullName"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your full name"
                     className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
                   />
                 </div>
+              )}
 
-                {/* Password */}
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-xs font-semibold tracking-wide"
+                >
+                  Email Address
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-xs font-semibold tracking-wide"
+                >
+                  Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete={
+                      isSignUp ? "new-password" : "current-password"
+                    }
+                    required
+                    minLength={8}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 pr-12 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--foreground)]/45 transition hover:text-[var(--primary)]"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Confirm Password */}
+              {isSignUp && (
                 <div>
                   <label
-                    htmlFor="password"
+                    htmlFor="confirmPassword"
                     className="mb-2 block text-xs font-semibold tracking-wide"
                   >
-                    Password
+                    Confirm Password
                   </label>
 
                   <div className="relative">
                     <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      autoComplete={
-                        isSignUp ? "new-password" : "current-password"
-                      }
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      autoComplete="new-password"
                       required
                       minLength={8}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Re-enter your password"
                       className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 pr-12 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
                     />
 
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       aria-label={
-                        showPassword ? "Hide password" : "Show password"
+                        showConfirmPassword
+                          ? "Hide confirm password"
+                          : "Show confirm password"
                       }
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--foreground)]/45 transition hover:text-[var(--primary)]"
                     >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      {showConfirmPassword ? (
+                        <EyeOff size={18} />
+                      ) : (
+                        <Eye size={18} />
+                      )}
                     </button>
                   </div>
                 </div>
+              )}
 
-                {/* Confirm Password */}
-                {isSignUp && (
-                  <div>
-                    <label
-                      htmlFor="confirmPassword"
-                      className="mb-2 block text-xs font-semibold tracking-wide"
-                    >
-                      Confirm Password
-                    </label>
-
-                    <div className="relative">
-                      <input
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                        autoComplete="new-password"
-                        required
-                        minLength={8}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Re-enter your password"
-                        className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 pr-12 text-sm outline-none transition placeholder:text-[var(--foreground)]/35 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 sm:h-[52px]"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                        aria-label={
-                          showConfirmPassword
-                            ? "Hide confirm password"
-                            : "Show confirm password"
-                        }
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--foreground)]/45 transition hover:text-[var(--primary)]"
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff size={18} />
-                        ) : (
-                          <Eye size={18} />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Remember Me / Terms */}
-                {isSignUp ? (
-                  <label className="flex cursor-pointer items-start gap-3 text-xs leading-5 text-[var(--foreground)]/60">
+              {/* Remember Me / Terms */}
+              {isSignUp ? (
+                <label className="flex cursor-pointer items-start gap-3 text-xs leading-5 text-[var(--foreground)]/60">
+                  <input
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    className="mt-1 h-4 w-4 shrink-0 accent-[var(--primary)]"
+                  />
+                  <span>I agree to the terms and privacy policy.</span>
+                </label>
+              ) : (
+                <div className="flex items-center justify-between gap-3">
+                  <label className="flex cursor-pointer items-center gap-2 text-xs text-[var(--foreground)]/60">
                     <input
                       type="checkbox"
-                      checked={acceptedTerms}
-                      onChange={(e) => setAcceptedTerms(e.target.checked)}
-                      className="mt-1 h-4 w-4 shrink-0 accent-[var(--primary)]"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="h-4 w-4 accent-[var(--primary)]"
                     />
-                    <span>I agree to the terms and privacy policy.</span>
+                    Remember me
                   </label>
-                ) : (
-                  <div className="flex items-center justify-between gap-3">
-                    <label className="flex cursor-pointer items-center gap-2 text-xs text-[var(--foreground)]/60">
-                      <input
-                        type="checkbox"
-                        checked={rememberMe}
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                        className="h-4 w-4 accent-[var(--primary)]"
-                      />
-                      Remember me
-                    </label>
-                  </div>
-                )}
+                </div>
+              )}
 
-                {/* Error */}
-                {error && (
-                  <p
-                    role="alert"
-                    className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-2.5 text-xs text-red-600"
-                  >
-                    {error}
-                  </p>
-                )}
-
-                {/* Submit */}
-                <button
-                  type="submit"
-                  className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-[var(--primary)] text-sm font-semibold text-white shadow-lg shadow-[var(--primary)]/15 transition duration-300 hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 sm:h-14"
+              {/* Error */}
+              {error && (
+                <p
+                  role="alert"
+                  className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-2.5 text-xs text-red-600"
                 >
-                  {isSignUp ? "Create Account" : "Sign In"}
-
-                  <ArrowUpRight
-                    size={18}
-                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
-                </button>
-              </form>
-            )}
-
-            {/* Switch Authentication */}
-            {!submitted && (
-              <div className="mt-7 border-t border-[var(--border)] pt-5 text-center sm:mt-8 sm:pt-6">
-                <p className="text-xs text-[var(--foreground)]/55">
-                  {isSignUp
-                    ? "Already have an account?"
-                    : "Don't have an account?"}
-
-                  <Link
-                    href={isSignUp ? "/sign-in" : "/sign-up"}
-                    className="ml-1.5 font-semibold text-[var(--primary)] transition hover:underline"
-                  >
-                    {isSignUp ? "Sign In" : "Create Account"}
-                  </Link>
+                  {error}
                 </p>
-              </div>
-            )}
+              )}
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-[var(--primary)] text-sm font-semibold text-white shadow-lg shadow-[var(--primary)]/15 transition duration-300 hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 sm:h-14"
+              >
+                {isSignUp ? "Create Account" : "Sign In"}
+
+                <ArrowUpRight
+                  size={18}
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </button>
+            </form>
+
+            <div className="mt-7 border-t border-[var(--border)] pt-5 text-center sm:mt-8 sm:pt-6">
+              <p className="text-xs text-[var(--foreground)]/55">
+                {isSignUp
+                  ? "Already have an account?"
+                  : "Don't have an account?"}
+
+                <Link
+                  href={isSignUp ? "/sign-in" : "/sign-up"}
+                  className="ml-1.5 font-semibold text-[var(--primary)] transition hover:underline"
+                >
+                  {isSignUp ? "Sign In" : "Create Account"}
+                </Link>
+              </p>
+            </div>
 
             {/* Footer */}
             <p className="mt-7 text-center text-[9px] tracking-wide text-[var(--foreground)]/35 sm:mt-10">
