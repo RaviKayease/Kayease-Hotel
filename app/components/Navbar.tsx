@@ -80,9 +80,12 @@ const Navbar = () => {
             <ChangeTheme />
 
             {/* Login Button */}
-            <button className="hidden lg:block font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90">
+            <Link
+              href="/sign-in"
+              className="hidden lg:inline-flex items-center justify-center font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90"
+            >
               Login
-            </button>
+            </Link>
 
             {/* Menu Button */}
             <button
@@ -137,6 +140,7 @@ const Navbar = () => {
                 { name: "About Us", href: "/about-us" },
                 { name: "Contact Us", href: "/contact-us" },
                 { name: "Blogs", href: "/blogs" },
+                { name: "Login", href: "/sign-in" },
               ].map((item, index) => (
                 <Link
                   key={item.name}

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { Suspense } from "react";
+import LayoutContent from "./components/LayoutContent";
 
 export const metadata: Metadata = {
   title: "Hotel Site",
@@ -16,37 +15,33 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-        (function () {
-          try {
-            const theme = localStorage.getItem("website-theme") || "earth";
-            const validThemes = [
-              "earth",
-              "ocean",
-              "forest",
-              "purple",
-              "rose",
-              "dark"
-            ];
+              (function () {
+                try {
+                  const theme = localStorage.getItem("website-theme") || "earth";
+                  const validThemes = [
+                    "earth",
+                    "ocean",
+                    "forest",
+                    "purple",
+                    "rose",
+                    "dark"
+                  ];
 
-            document.documentElement.dataset.theme =
-              validThemes.includes(theme) ? theme : "earth";
-          } catch (error) {
-            document.documentElement.dataset.theme = "earth";
-          }
-        })();
-      `,
+                  document.documentElement.dataset.theme =
+                    validThemes.includes(theme) ? theme : "earth";
+                } catch (error) {
+                  document.documentElement.dataset.theme = "earth";
+                }
+              })();
+            `,
           }}
         />
       </head>
 
       <body>
         <Suspense fallback={null}>
-          <Navbar />
+          <LayoutContent>{children}</LayoutContent>
         </Suspense>
-        <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw]">
-          {children}
-          <Footer />
-        </div>
       </body>
     </html>
   );
