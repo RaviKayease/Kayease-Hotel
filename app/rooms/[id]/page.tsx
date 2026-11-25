@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 import { rooms } from "../../data/roomsPageData";
+import { detailedRoomPageContent } from "@/app/data/roomDetailContentData";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -503,13 +504,13 @@ const RoomDetailContent = () => {
 
               <div className="absolute bottom-10 left-10 text-white">
                 <span className="mb-3 block text-[9px] uppercase tracking-[0.25em] text-white/75">
-                  The room experience
+                  {detailedRoomPageContent.roomExperience.galleryEyebrow}
                 </span>
 
                 <span
                   className={`${cormorant.className} block max-w-[450px] text-6xl leading-[1.05]`}
                 >
-                  A little world of your own.
+                  {detailedRoomPageContent.roomExperience.galleryHeading}
                 </span>
               </div>
             </button>
@@ -671,17 +672,18 @@ const RoomDetailContent = () => {
           {/* SECTION INTRO */}
           <div className="mb-10">
             <p className="mb-4 text-[9px] uppercase tracking-[0.25em] text-[var(--primary)]">
-              Designed around you
+              {detailedRoomPageContent.roomExperience.eyebrow}
             </p>
 
             <h2 className={`${sectionHeadingClass}`}>
-              Everything you need
-              <span className="italic text-[var(--primary)]"> to unwind.</span>
+              {detailedRoomPageContent.roomExperience.heading}
+              <span className="italic text-[var(--primary)]">
+                {detailedRoomPageContent.roomExperience.highlightedHeading}
+              </span>
             </h2>
 
             <p className="mt-5 max-w-[510px] text-xs leading-[2] text-[var(--muted)]">
-              Thoughtfully considered details, generous comfort and little
-              touches that make your stay feel like your own.
+              {detailedRoomPageContent.roomExperience.description}
             </p>
           </div>
 
@@ -762,11 +764,7 @@ const RoomDetailContent = () => {
             </div>
 
             <div className="space-y-5">
-              {[
-                "Check-in and check-out timings will be confirmed with your reservation.",
-                "Room preferences are subject to availability.",
-                "Special requests can be shared with our team before arrival.",
-              ].map((item, index) => (
+              {detailedRoomPageContent.roomPolicies.map((item, index) => (
                 <div key={index} className="flex items-start gap-4">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--border)] text-[9px] text-[var(--primary)]">
                     0{index + 1}
@@ -1378,17 +1376,18 @@ const RoomDetailContent = () => {
           <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <p className="mb-4 text-[9px] uppercase tracking-[0.24em] text-[var(--primary)]">
-                Continue exploring
+                {detailedRoomPageContent.exploreRooms.eyebrow}
               </p>
 
               <h2 className={`${sectionHeadingClass}`}>
-                Find another place
-                <span className="italic"> to belong.</span>
+                {detailedRoomPageContent.exploreRooms.heading}
+                <span className="italic">
+                  {detailedRoomPageContent.exploreRooms.highlightedHeading}
+                </span>
               </h2>
 
               <p className="mt-4 max-w-[450px] text-xs leading-[1.9] text-[var(--muted)]">
-                Each room has its own personality. Discover another thoughtfully
-                designed space for your next stay.
+                {detailedRoomPageContent.exploreRooms.description}
               </p>
             </div>
 
