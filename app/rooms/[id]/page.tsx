@@ -411,16 +411,16 @@ const RoomDetailContent = () => {
   return (
     <main>
       {/* PAGE INTRO */}
-      <section className="pb-5 pt-12 sm:pt-16">
-        <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+      <section className="pt-10 lg:pt-15">
+        <div className="flex flex-col justify-between gap-4 lg:gap-7 lg:flex-row lg:items-end">
           <div>
             <h1
-              className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+              className={`${cormorant.className} font-bold lg:font-semibold text-[10vw] xl:text-[6vw] leading-none`}
             >
               {room.name}
             </h1>
 
-            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-[var(--muted)]">
+            <div className="mt-3 lg:mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-[var(--muted)]">
               <span className="inline-flex items-center gap-2">
                 <MapPin size={14} />
                 {room.location}
@@ -445,10 +445,6 @@ const RoomDetailContent = () => {
           </div>
 
           <div className="lg:text-right">
-            <p className="mb-1 text-[9px] uppercase tracking-[0.2em] text-[var(--muted)]">
-              Starting from
-            </p>
-
             <p className={`${cormorant.className} text-4xl`}>
               ₹{room.price.toLocaleString("en-IN")}
               <span className="ml-2 font-sans text-xs text-[var(--muted)]">
@@ -460,84 +456,113 @@ const RoomDetailContent = () => {
       </section>
 
       {/* ROOM TOUR */}
-      <section className="pb-10 border-b border-[var(--border)]">
+      <section className="py-4 lg:py-6 border-b border-[var(--border)]">
         {/* EDITORIAL PHOTO GRID */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-12 sm:grid-rows-2 sm:gap-4 sm:h-[540px] lg:h-[640px]">
-          {/* FEATURED PHOTO */}
-          <button
-            type="button"
-            onClick={() => openGallery(0)}
-            className="group relative min-h-[330px] overflow-hidden rounded-[24px] text-left sm:col-span-7 sm:row-span-2 sm:min-h-0"
-          >
-            <img
-              src={roomImages[0]}
-              alt={`${room.name} main view`}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.04]"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
-
-            <div className="absolute bottom-7 left-7 text-white sm:bottom-10 sm:left-10">
-              <span className="mb-3 block text-[9px] uppercase tracking-[0.25em] text-white/75">
-                The room experience
-              </span>
-
-              <span
-                className={`${cormorant.className} block max-w-[450px] text-4xl leading-[1.05] sm:text-6xl`}
-              >
-                A little world of your own.
-              </span>
-            </div>
-          </button>
-
-          {/* SECOND PHOTO */}
-          <button
-            type="button"
-            onClick={() => openGallery(1)}
-            className="group relative min-h-[220px] overflow-hidden rounded-[24px] sm:col-span-5 sm:min-h-0"
-          >
-            <img
-              src={roomImages[1] || roomImages[0]}
-              alt={`${room.name} interior`}
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
-            />
-          </button>
-
-          {/* THIRD PHOTO */}
-          <button
-            type="button"
-            onClick={() => openGallery(2)}
-            className="group relative min-h-[220px] overflow-hidden rounded-[24px] sm:col-span-3 sm:min-h-0"
-          >
-            <img
-              src={roomImages[2] || roomImages[0]}
-              alt={`${room.name} room details`}
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
-            />
-          </button>
-
-          {/* FOURTH PHOTO / GALLERY BUTTON */}
-          <div className="relative min-h-[220px] overflow-hidden rounded-[24px] sm:col-span-2 sm:min-h-0">
+        <div>
+          {/* MOBILE / TABLET AIRBNB-STYLE GALLERY */}
+          <div className="lg:hidden">
             <button
               type="button"
-              onClick={() => openGallery(3)}
-              className="group absolute inset-0"
+              onClick={() => openGallery(0)}
+              className="group relative block h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] w-full overflow-hidden rounded-[20px] text-left"
             >
               <img
-                src={roomImages[3] || roomImages[0]}
-                alt={`${room.name} additional view`}
-                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                src={roomImages[0]}
+                alt={`${room.name} main view`}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
 
-              <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
-              <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white">
-                <Images size={22} strokeWidth={1.3} />
-                <span className="text-[9px] uppercase tracking-[0.16em]">
-                  View gallery
-                </span>
+              <span className="absolute bottom-4 right-4 rounded-lg bg-[#292929]/80 px-3 py-2 text-[11px] font-medium tracking-wide text-white backdrop-blur-sm">
+                <Images
+                  size={13}
+                  className="mr-2 inline-block"
+                  strokeWidth={1.5}
+                />
+                1 / {roomImages.length}
               </span>
             </button>
+          </div>
+
+          {/* DESKTOP GALLERY - EXISTING LAYOUT */}
+          <div className="hidden lg:grid lg:h-[640px] lg:grid-cols-12 lg:grid-rows-2 lg:gap-4">
+            {/* FEATURED PHOTO */}
+            <button
+              type="button"
+              onClick={() => openGallery(0)}
+              className="group relative min-h-0 overflow-hidden rounded-[24px] text-left lg:col-span-7 lg:row-span-2"
+            >
+              <img
+                src={roomImages[0]}
+                alt={`${room.name} main view`}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.04]"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+
+              <div className="absolute bottom-10 left-10 text-white">
+                <span className="mb-3 block text-[9px] uppercase tracking-[0.25em] text-white/75">
+                  The room experience
+                </span>
+
+                <span
+                  className={`${cormorant.className} block max-w-[450px] text-6xl leading-[1.05]`}
+                >
+                  A little world of your own.
+                </span>
+              </div>
+            </button>
+
+            {/* SECOND PHOTO */}
+            <button
+              type="button"
+              onClick={() => openGallery(1)}
+              className="group relative min-h-0 overflow-hidden rounded-[24px] lg:col-span-5"
+            >
+              <img
+                src={roomImages[1] || roomImages[0]}
+                alt={`${room.name} interior`}
+                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+              />
+            </button>
+
+            {/* THIRD PHOTO */}
+            <button
+              type="button"
+              onClick={() => openGallery(2)}
+              className="group relative min-h-0 overflow-hidden rounded-[24px] lg:col-span-3"
+            >
+              <img
+                src={roomImages[2] || roomImages[0]}
+                alt={`${room.name} room details`}
+                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+              />
+            </button>
+
+            {/* FOURTH PHOTO / GALLERY BUTTON */}
+            <div className="relative min-h-0 overflow-hidden rounded-[24px] lg:col-span-2">
+              <button
+                type="button"
+                onClick={() => openGallery(3)}
+                className="group absolute inset-0"
+              >
+                <img
+                  src={roomImages[3] || roomImages[0]}
+                  alt={`${room.name} additional view`}
+                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                />
+
+                <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/40" />
+
+                <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white">
+                  <Images size={22} strokeWidth={1.3} />
+                  <span className="text-[9px] uppercase tracking-[0.16em]">
+                    View gallery
+                  </span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -640,7 +665,7 @@ const RoomDetailContent = () => {
       )}
 
       {/* ROOM DETAILS + BOOKING */}
-      <section className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-[1fr_420px] lg:gap-20 lg:py-24">
+      <section className="grid grid-cols-1 gap-5 lg:gap-12 py-10 lg:grid-cols-[1fr_420px]">
         {/* LEFT CONTENT */}
         <div>
           {/* SECTION INTRO */}
@@ -660,19 +685,8 @@ const RoomDetailContent = () => {
             </p>
           </div>
 
-          {/* AT A GLANCE */}
-          <div className="border-y border-[var(--border)] py-9">
-            <div className="mb-9 flex items-center justify-between">
-              <p className="text-[9px] uppercase tracking-[0.22em] text-[var(--muted)]">
-                The essentials
-              </p>
-
-              <span className="text-[9px] uppercase tracking-[0.15em] text-[var(--muted)]">
-                At a glance
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4">
+          <div className="border-y border-[var(--border)] py-9 flex justify-center lg:justify-start">
+            <div className="grid grid-cols-2 gap-x-15 lg:gap-x-30 gap-y-10 sm:grid-cols-4">
               {[
                 {
                   icon: Users,
@@ -719,7 +733,7 @@ const RoomDetailContent = () => {
           </div>
 
           {/* GOOD TO KNOW */}
-          <div className="mt-9 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-7 sm:p-9">
+          <div className="mt-4 lg:mt-9 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-7 sm:p-9">
             <div className="mb-8 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)]/10">
@@ -1359,7 +1373,7 @@ const RoomDetailContent = () => {
       </section>
 
       {/* EXPLORE MORE ROOMS */}
-      <section className=" relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--surface)] px-5 py-20 sm:px-8 sm:py-28 lg:px-14">
+      <section className=" relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--surface)] px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15">
         <div className="mx-auto max-w-[1500px]">
           <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
@@ -1391,7 +1405,7 @@ const RoomDetailContent = () => {
           </div>
 
           {/* ONE IMAGE PER ROOM */}
-          <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-16">
+          <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-16 xl:grid-cols-4">
             {additionalRooms.map((room) => (
               <article
                 key={room.id}
@@ -1516,7 +1530,7 @@ const RoomDetailContent = () => {
       </section>
 
       {/* GUEST REVIEWS */}
-      <section id="reviews" className="py-20 sm:py-28">
+      <section id="reviews" className="py-10 lg:py-15">
         <div>
           {/* SECTION HEADER */}
           <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
