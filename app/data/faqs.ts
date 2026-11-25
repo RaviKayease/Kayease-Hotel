@@ -1,13 +1,11 @@
-export const categories = [
-  "All Questions",
-  "Reservations",
-  "Your Stay",
-  "Payments",
-  "Changes & Support",
-];
+// =====================================================
+// FAQ QUESTIONS & ANSWERS
+// =====================================================
 
-export const faqData = [
-  // RESERVATIONS
+export const faqsPageData = [
+  // -----------------------------------------------------
+  // SECTION 1: RESERVATIONS
+  // -----------------------------------------------------
   {
     id: 1,
     category: "Reservations",
@@ -44,7 +42,9 @@ export const faqData = [
       "Availability and booking options depend on your selected travel dates. We recommend choosing your intended check-in and check-out dates so you can explore suitable stays for your trip.",
   },
 
-  // YOUR STAY
+  // -----------------------------------------------------
+  // SECTION 2: YOUR STAY
+  // -----------------------------------------------------
   {
     id: 6,
     category: "Your Stay",
@@ -74,7 +74,9 @@ export const faqData = [
       "Absolutely. If you are celebrating a special occasion or have particular preferences, you can contact us with your request. We will help you understand the available options, although special arrangements are subject to property availability.",
   },
 
-  // PAYMENTS
+  // -----------------------------------------------------
+  // SECTION 3: PAYMENTS
+  // -----------------------------------------------------
   {
     id: 10,
     category: "Payments",
@@ -97,7 +99,9 @@ export const faqData = [
       "Once your payment has been successfully processed, check your booking confirmation and payment details. If an amount has been deducted but your booking is not confirmed, please contact our support team with your transaction details.",
   },
 
-  // CHANGES & SUPPORT
+  // -----------------------------------------------------
+  // SECTION 4: CHANGES & SUPPORT
+  // -----------------------------------------------------
   {
     id: 13,
     category: "Changes & Support",
@@ -127,3 +131,63 @@ export const faqData = [
       "You can reach out to us through our Contact page. Share your booking reference, registered contact details, and a brief explanation of your query so our team can assist you more effectively.",
   },
 ];
+
+// =====================================================
+// FAQ PAGE CONTENT
+// Hotel-specific headings, descriptions, and paragraphs
+// =====================================================
+
+export const faqsPageContent = {
+  // -----------------------------------------------------
+  // SECTION 1: HERO
+  // -----------------------------------------------------
+  hero: {
+    heading: "A few things,",
+    highlightedHeading: "made clear.",
+  },
+
+  // -----------------------------------------------------
+  // SECTION 2: FAQ LIST / HELP DESK
+  // -----------------------------------------------------
+  faqSection: {
+    eyebrow: "THE HELP DESK",
+    heading: "How can we help?",
+    description:
+      "Browse through our frequently asked questions or search for something specific.",
+  },
+
+  // -----------------------------------------------------
+  // SECTION 3: CONTACT / SUPPORT CARD
+  // -----------------------------------------------------
+  contactCard: {
+    eyebrow: "STILL CURIOUS?",
+    heading: "We're happy",
+    highlightedHeading: "to help.",
+    description:
+      "Sometimes you just need a little more information. Our team is here to help make planning your next stay simple and enjoyable.",
+  },
+
+  // -----------------------------------------------------
+  // SECTION 4: QUICK INFORMATION
+  // -----------------------------------------------------
+  quickInformation: {
+    heading: "QUICK INFORMATION",
+  },
+
+  // -----------------------------------------------------
+  // SECTION 5: BOTTOM CALL TO ACTION
+  // -----------------------------------------------------
+  bottomCTA: {
+    eyebrow: "WE'RE JUST A MESSAGE AWAY",
+    heading: "Your next question",
+    highlightedHeading: "starts a conversation.",
+    description:
+      "Whether you're planning a getaway or need help with an existing reservation, we're always happy to hear from you.",
+  },
+
+  // -----------------------------------------------------
+  // SECTION 6: BOTTOM NOTE
+  // -----------------------------------------------------
+  bottomNote:
+    "Still have a question? Our team would be delighted to help you find the information you need.",
+};

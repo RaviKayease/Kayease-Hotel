@@ -15,7 +15,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { categories, faqData } from "../data/faqs";
+import { faqsPageData , faqsPageContent } from "../data/faqs";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -32,6 +32,14 @@ const categoryIcons: Record<string, React.ElementType> = {
   "Changes & Support": MessageCircle,
 };
 
+const categories = [
+  "All Questions",
+  "Reservations",
+  "Your Stay",
+  "Payments",
+  "Changes & Support",
+];
+
 const FAQsPage = () => {
   const [activeCategory, setActiveCategory] = useState("All Questions");
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,18 +48,18 @@ const FAQsPage = () => {
   const filteredFAQs = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
 
-    return faqData.filter((faq) => {
-      const matchesCategory =
-        activeCategory === "All Questions" || faq.category === activeCategory;
+  return faqsPageData.filter((faq) => {
+    const matchesCategory =
+      activeCategory === "All Questions" || faq.category === activeCategory;
 
-      const matchesSearch =
-        !query ||
-        faq.question.toLowerCase().includes(query) ||
-        faq.answer.toLowerCase().includes(query) ||
-        faq.category.toLowerCase().includes(query);
+    const matchesSearch =
+      !query ||
+      faq.question.toLowerCase().includes(query) ||
+      faq.answer.toLowerCase().includes(query) ||
+      faq.category.toLowerCase().includes(query);
 
-      return matchesCategory && matchesSearch;
-    });
+    return matchesCategory && matchesSearch;
+  });
   }, [activeCategory, searchQuery]);
 
   const handleCategoryChange = (category: string) => {
@@ -77,9 +85,9 @@ const FAQsPage = () => {
             <h1
               className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
             >
-              A few things,
+              {faqsPageContent.hero.heading}
               <span className="block italic text-[var(--primary)]">
-                made clear.
+                {faqsPageContent.hero.highlightedHeading}
               </span>
             </h1>
           </div>
@@ -93,18 +101,17 @@ const FAQsPage = () => {
           <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                THE HELP DESK
+                {faqsPageContent.faqSection.eyebrow}
               </p>
 
               <h2
                 className={`${sectionHeadingClass} text-4xl sm:text-5xl lg:text-6xl`}
               >
-                How can we help?
+                {faqsPageContent.faqSection.heading}
               </h2>
 
               <p className="mt-3 max-w-md text-xs leading-6 text-[var(--foreground)]/55 sm:text-sm">
-                Browse through our frequently asked questions or search for
-                something specific.
+                {faqsPageContent.faqSection.description}
               </p>
             </div>
 
@@ -177,22 +184,20 @@ const FAQsPage = () => {
                   </div>
 
                   <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                    STILL CURIOUS?
+                    {faqsPageContent.contactCard.eyebrow}
                   </p>
 
                   <h3
                     className={`${cormorant.className} text-4xl font-medium leading-[1.05] sm:text-5xl`}
                   >
-                    We're happy
+                    {faqsPageContent.contactCard.heading}
                     <span className="block italic text-[var(--primary)]">
-                      to help.
+                      {faqsPageContent.contactCard.highlightedHeading}
                     </span>
                   </h3>
 
                   <p className="mt-5 text-sm leading-7 text-[var(--foreground)]/55">
-                    Sometimes you just need a little more information. Our team
-                    is here to help make planning your next stay simple and
-                    enjoyable.
+                    {faqsPageContent.contactCard.description}
                   </p>
 
                   <div className="my-8 h-px w-full bg-[var(--border)]" />
@@ -215,7 +220,7 @@ const FAQsPage = () => {
               {/* Additional Links */}
               <div className="mt-6 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-7">
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]/45">
-                  QUICK INFORMATION
+                  {faqsPageContent.quickInformation.heading}
                 </p>
 
                 <div className="space-y-4">
@@ -381,8 +386,7 @@ const FAQsPage = () => {
                   />
 
                   <p className="text-xs leading-6 text-[var(--foreground)]/55">
-                    Still have a question? Our team would be delighted to help
-                    you find the information you need.
+                    {faqsPageContent.bottomNote}
                   </p>
                 </div>
               )}
@@ -404,21 +408,20 @@ const FAQsPage = () => {
           <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <p className="mb-5 text-[9px] font-medium uppercase tracking-[0.3em] text-white/65">
-                WE'RE JUST A MESSAGE AWAY
+                {faqsPageContent.bottomCTA.eyebrow}
               </p>
 
               <h2
                 className={`${cormorant.className} text-5xl font-medium leading-[0.95] sm:text-6xl lg:text-[76px]`}
               >
-                Your next question
+                {faqsPageContent.bottomCTA.heading}
                 <span className="block italic text-white/75">
-                  starts a conversation.
+                  {faqsPageContent.bottomCTA.highlightedHeading}
                 </span>
               </h2>
 
               <p className="mt-6 max-w-lg text-sm leading-7 text-white/75">
-                Whether you're planning a getaway or need help with an existing
-                reservation, we're always happy to hear from you.
+                {faqsPageContent.bottomCTA.description}
               </p>
             </div>
 
