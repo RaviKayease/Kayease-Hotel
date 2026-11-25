@@ -5,9 +5,13 @@ import { Cormorant_Garamond } from "next/font/google";
 import { ArrowUpRight, ArrowDown, ShieldCheck, Mail } from "lucide-react";
 import {
   privacySections,
+  privacyPolicyBusiness,
+  privacyHero,
   privacyPrinciples,
+  privacyPolicyIntroduction,
+  privacyContact,
+  privacyRelatedHeading,
 } from "@/app/data/privacyPolicyData";
-
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -22,8 +26,8 @@ const page = () => {
       <section className="py-10 lg:py-15">
         <div className="relative mx-auto min-h-[480px] max-w-[1600px] overflow-hidden rounded-3xl bg-[var(--editorial-background)] sm:min-h-[560px] sm:rounded-4xl lg:min-h-[650px]">
           <Image
-            src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=2200&q=85"
-            alt="Quiet architectural space surrounded by natural light"
+            src={privacyHero.image.src}
+            alt={privacyHero.image.alt}
             fill
             priority
             sizes="100vw"
@@ -46,14 +50,13 @@ const page = () => {
               <h1
                 className={`${cormorant.className} text-[clamp(3.5rem,8vw,7.5rem)] font-bold leading-[0.95] lg:font-semibold`}
               >
-                Privacy is
+                {privacyHero.heading[0]}
                 <br />
-                <span className="italic">personal.</span>
+                <span className="italic">{privacyHero.heading[1]}</span>
               </h1>
 
               <p className="mt-6 max-w-[440px] text-xs leading-7 text-white/75 sm:mt-8 sm:text-sm">
-                We believe trust is built through transparency. Discover how we
-                handle your information and the choices that remain yours.
+                {privacyHero.description}
               </p>
 
               <a
@@ -67,11 +70,11 @@ const page = () => {
 
             <div className="flex flex-col justify-between gap-3 border-t border-white/30 pt-5 sm:flex-row sm:items-center sm:gap-4">
               <span className="text-[9px] uppercase tracking-[0.16em] text-white/70">
-                [Legal Business Name]
+                {privacyPolicyBusiness.legalName}
               </span>
 
               <span className="text-[9px] uppercase tracking-[0.16em] text-white/70">
-                Effective date · [Insert date]
+                Effective date · {privacyPolicyBusiness.effectiveDate}
               </span>
             </div>
           </div>
@@ -111,9 +114,11 @@ const page = () => {
           <div className="mb-8 flex flex-col justify-between gap-5 sm:mb-10 lg:flex-row lg:items-end lg:gap-7">
             <div>
               <h2 className={sectionHeadingClass}>
-                What you should
+                {privacyPolicyIntroduction.heading[0]}
                 <br />
-                <span className="italic text-[var(--primary)]">know.</span>
+                <span className="italic text-[var(--primary)]">
+                  {privacyPolicyIntroduction.heading[1]}
+                </span>
               </h2>
             </div>
           </div>
@@ -133,7 +138,7 @@ const page = () => {
                 <div className="flex items-start justify-between gap-5">
                   <div className="min-w-0">
                     <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
-                      Section {section.number}
+                      Section {String(index + 1).padStart(2, "0")}
                     </span>
 
                     <h3
@@ -149,15 +154,17 @@ const page = () => {
                 </p>
 
                 <div className="mt-7 space-y-0">
-                  {section.items.map(([title, text]) => (
+                  {section.items.map((item) => (
                     <div
-                      key={title}
+                      key={item.title}
                       className="grid grid-cols-1 gap-2 border-t border-[var(--border)]/70 py-4 md:grid-cols-[145px_minmax(0,1fr)] md:gap-5"
                     >
-                      <h4 className="text-[11px] font-semibold">{title}</h4>
+                      <h4 className="text-[11px] font-semibold">
+                        {item.title}
+                      </h4>
 
                       <p className="text-[11px] leading-6 text-[var(--foreground)]/55">
-                        {text}
+                        {item.text}
                       </p>
                     </div>
                   ))}
@@ -181,18 +188,17 @@ const page = () => {
             <h2
               className={`${cormorant.className} text-[clamp(2.8rem,7vw,6rem)] leading-[0.95]`}
             >
-              Questions about
+              {privacyContact.heading[0]}
               <br />
               <span className="italic text-[var(--primary)]">
-                your privacy?
+                {privacyContact.heading[1]}
               </span>
             </h2>
           </div>
 
           <div className="lg:pb-2">
             <p className="max-w-[390px] text-sm leading-7 text-[var(--foreground)]/65">
-              If you have a question, concern, or request about your personal
-              information, our team is available to help.
+              {privacyContact.description}
             </p>
 
             <Link
