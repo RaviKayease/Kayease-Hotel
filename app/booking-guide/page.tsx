@@ -10,6 +10,7 @@ import {
   Check,
   CircleHelp,
 } from "lucide-react";
+import { bookingGuidePageData } from "@/app/data/bookingGuideData";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -17,13 +18,6 @@ const cormorant = Cormorant_Garamond({
 });
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
-
-const essentials = [
-  "Check the property's location and amenities.",
-  "Confirm your dates and the number of guests.",
-  "Read the cancellation and payment conditions.",
-  "Review the final price before confirming.",
-];
 
 const page = () => {
   return (
@@ -39,8 +33,8 @@ const page = () => {
 
           <div className="relative h-[25vh] min-h-[420px] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] overflow-hidden rounded-4xl">
             <img
-              src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2400&q=90"
-              alt="Beautiful secluded holiday cabin surrounded by nature"
+              src={bookingGuidePageData.hero.image}
+              alt={bookingGuidePageData.hero.imageAlt}
               className="absolute inset-0 h-full w-full object-cover"
             />
 
@@ -59,21 +53,22 @@ const page = () => {
 
               <div>
                 <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.2em] text-white/75 sm:mb-5 sm:text-[10px] sm:tracking-[0.3em]">
-                  Everything you need to know
+                  {bookingGuidePageData.hero.eyebrow}
                 </p>
 
                 <h1
                   className={`${cormorant.className} text-[13vw] font-bold leading-[0.95] sm:text-[11vw] sm:font-semibold xl:text-[6vw]`}
                 >
-                  The art of
+                  {bookingGuidePageData.hero.title}
                   <br />
-                  <span className="italic">booking well.</span>
+                  <span className="italic">
+                    {bookingGuidePageData.hero.highlightedTitle}
+                  </span>
                 </h1>
 
                 <div className="mt-5 flex flex-col justify-between gap-4 sm:mt-9 sm:flex-row sm:items-end sm:gap-7">
                   <p className="max-w-[390px] text-[11px] leading-5 text-white/75 sm:text-sm sm:leading-6">
-                    A few thoughtful steps between finding your perfect stay and
-                    being right where you want to be.
+                    {bookingGuidePageData.hero.description}
                   </p>
 
                   <a
@@ -104,23 +99,23 @@ const page = () => {
               </div>
 
               <h2 className={`${sectionHeadingClass}`}>
-                Four steps.
+                {bookingGuidePageData.journey.heading}
                 <br />
                 <span className="italic text-[var(--primary)]">
-                  One beautiful escape.
+                  {bookingGuidePageData.journey.highlightedHeading}
                 </span>
               </h2>
             </div>
           </div>
 
           {/* Steps */}
-          <div className="space-y-10">
+          <div className="space-y-10 lg:space-y-20">
             {/* Step 01 */}
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
               <div className="group relative h-[340px] overflow-hidden lg:h-[540px] rounded-[24px]">
                 <img
-                  src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85"
-                  alt="Beautiful destination surrounded by mountains and nature"
+                  src={bookingGuidePageData.journey.steps[0].image}
+                  alt={bookingGuidePageData.journey.steps[0].imageAlt}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
@@ -130,23 +125,23 @@ const page = () => {
                   01
                 </span>
                 <span className="absolute right-7 top-7 text-[9px] uppercase tracking-[0.2em] text-white/80">
-                  The discovery
+                  {bookingGuidePageData.journey.steps[0].imageLabel}
                 </span>
               </div>
 
               <div className="lg:pl-4">
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                  First things first
+                  {bookingGuidePageData.journey.steps[0].eyebrow}
                 </p>
                 <h3 className={`${sectionHeadingClass}`}>
-                  Find somewhere
+                  {bookingGuidePageData.journey.steps[0].title}
                   <br />
-                  <span className="italic">to fall for.</span>
+                  <span className="italic">
+                    {bookingGuidePageData.journey.steps[0].highlightedTitle}
+                  </span>
                 </h3>
                 <p className="mt-6 max-w-[400px] text-sm leading-7 text-[var(--foreground)]/55">
-                  Begin with a little inspiration. Browse through our collection
-                  of stays, explore the destinations and discover a place that
-                  feels just right for your next getaway.
+                  {bookingGuidePageData.journey.steps[0].description}
                 </p>
                 <div className="mt-9 flex items-center gap-4 border-t border-[var(--border)] pt-5">
                   <Search
@@ -165,17 +160,17 @@ const page = () => {
             <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
               <div className="order-2 lg:order-1 lg:pl-12">
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                  Make it your own
+                  {bookingGuidePageData.journey.steps[1].eyebrow}
                 </p>
                 <h3 className={`${sectionHeadingClass}`}>
-                  Choose your
+                  {bookingGuidePageData.journey.steps[1].title}
                   <br />
-                  <span className="italic">perfect moment.</span>
+                  <span className="italic">
+                    {bookingGuidePageData.journey.steps[1].highlightedTitle}
+                  </span>
                 </h3>
                 <p className="mt-6 max-w-[400px] text-sm leading-7 text-[var(--foreground)]/55">
-                  Pick the dates that work for you, enter the number of guests
-                  and explore the availability. Your getaway begins to take
-                  shape, one detail at a time.
+                  {bookingGuidePageData.journey.steps[1].description}
                 </p>
                 <div className="mt-9 flex items-center gap-4 border-t border-[var(--border)] pt-5">
                   <CalendarDays
@@ -191,8 +186,8 @@ const page = () => {
 
               <div className="group relative order-1 h-[340px] overflow-hidden lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
-                  src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1600&q=85"
-                  alt="Peaceful luxury accommodation overlooking a scenic landscape"
+                  src={bookingGuidePageData.journey.steps[1].image}
+                  alt={bookingGuidePageData.journey.steps[1].imageAlt}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
@@ -202,7 +197,7 @@ const page = () => {
                   02
                 </span>
                 <span className="absolute right-7 top-7 text-[9px] uppercase tracking-[0.2em] text-white/80">
-                  The planning
+                  {bookingGuidePageData.journey.steps[1].imageLabel}
                 </span>
               </div>
             </div>
@@ -211,8 +206,8 @@ const page = () => {
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
               <div className="group relative h-[340px] overflow-hidden lg:h-[540px] rounded-[24px]">
                 <img
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85"
-                  alt="Elegant interior of a carefully designed accommodation"
+                  src={bookingGuidePageData.journey.steps[2].image}
+                  alt={bookingGuidePageData.journey.steps[2].imageAlt}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
@@ -222,23 +217,23 @@ const page = () => {
                   03
                 </span>
                 <span className="absolute right-7 top-7 text-[9px] uppercase tracking-[0.2em] text-white/80">
-                  The details
+                  {bookingGuidePageData.journey.steps[2].imageLabel}
                 </span>
               </div>
 
               <div className="lg:pl-4">
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                  A moment to review
+                  {bookingGuidePageData.journey.steps[2].eyebrow}
                 </p>
                 <h3 className={`${sectionHeadingClass}`}>
-                  Every detail,
+                  {bookingGuidePageData.journey.steps[2].title}
                   <br />
-                  <span className="italic">just right.</span>
+                  <span className="italic">
+                    {bookingGuidePageData.journey.steps[2].highlightedTitle}
+                  </span>
                 </h3>
                 <p className="mt-6 max-w-[400px] text-sm leading-7 text-[var(--foreground)]/55">
-                  Take a final look at your selected stay, travel dates, guest
-                  information and booking conditions. Make sure everything is
-                  exactly as you want it.
+                  {bookingGuidePageData.journey.steps[2].description}
                 </p>
                 <div className="mt-9 flex items-center gap-4 border-t border-[var(--border)] pt-5">
                   <ClipboardList
@@ -257,17 +252,17 @@ const page = () => {
             <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
               <div className="order-2 lg:order-1 lg:pl-12">
                 <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-                  And just like that
+                  {bookingGuidePageData.journey.steps[3].eyebrow}
                 </p>
                 <h3 className={`${sectionHeadingClass}`}>
-                  It's time to
+                  {bookingGuidePageData.journey.steps[3].title}
                   <br />
-                  <span className="italic">look forward.</span>
+                  <span className="italic">
+                    {bookingGuidePageData.journey.steps[3].highlightedTitle}
+                  </span>
                 </h3>
                 <p className="mt-6 max-w-[400px] text-sm leading-7 text-[var(--foreground)]/55">
-                  Complete your reservation by following the checkout
-                  instructions. Once confirmed, keep your booking details close
-                  and start looking forward to the experience ahead.
+                  {bookingGuidePageData.journey.steps[3].description}
                 </p>
                 <div className="mt-9 flex items-center gap-4 border-t border-[var(--border)] pt-5">
                   <Check
@@ -283,8 +278,8 @@ const page = () => {
 
               <div className="group relative order-1 h-[340px] overflow-hidden lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
-                  src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85"
-                  alt="Beautiful scenic destination ready to be explored"
+                  src={bookingGuidePageData.journey.steps[3].image}
+                  alt={bookingGuidePageData.journey.steps[3].imageAlt}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
@@ -294,7 +289,7 @@ const page = () => {
                   04
                 </span>
                 <span className="absolute right-7 top-7 text-[9px] uppercase tracking-[0.2em] text-white/80">
-                  The beginning
+                  {bookingGuidePageData.journey.steps[3].imageLabel}
                 </span>
               </div>
             </div>
@@ -307,8 +302,8 @@ const page = () => {
         <div className="mx-auto grid max-w-[1250px] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-24">
           <div className="relative min-h-[410px] lg:min-h-[480px] xl:min-h-[510px] overflow-hidden rounded-[24px]">
             <img
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
-              alt="Beautifully designed and welcoming holiday accommodation"
+              src={bookingGuidePageData.essentials.image}
+              alt={bookingGuidePageData.essentials.imageAlt}
               className="absolute inset-0 h-full w-full object-cover"
             />
 
@@ -316,34 +311,35 @@ const page = () => {
 
             <div className="absolute bottom-8 left-8 right-8 text-white sm:bottom-10 sm:left-10">
               <p className="text-[9px] uppercase tracking-[0.25em] text-white/70">
-                A little attention goes a long way
+                {bookingGuidePageData.essentials.imageEyebrow}
               </p>
               <p
                 className={`${cormorant.className} mt-3 max-w-[350px] text-4xl leading-[1.05] sm:text-5xl`}
               >
-                The details make the difference.
+                {bookingGuidePageData.essentials.imageTitle}
               </p>
             </div>
           </div>
 
           <div>
             <p className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
-              Before you confirm
+              {bookingGuidePageData.essentials.eyebrow}
             </p>
 
             <h2 className={`${sectionHeadingClass}`}>
-              A few things
+              {bookingGuidePageData.essentials.title}
               <br />
-              to keep in <span className="italic">mind.</span>
+              <span className="italic">
+                {bookingGuidePageData.essentials.highlightedTitle}
+              </span>
             </h2>
 
             <p className="mt-6 max-w-[410px] text-sm leading-7 text-[var(--foreground)]/55">
-              Before making your reservation, take a moment to go through these
-              essentials. It helps ensure everything is just right.
+              {bookingGuidePageData.essentials.description}
             </p>
 
             <div className="mt-10 border-t border-[var(--border)]">
-              {essentials.map((item, index) => (
+              {bookingGuidePageData.essentials.items.map((item, index) => (
                 <div
                   key={item}
                   className="flex items-start gap-5 border-b border-[var(--border)] py-5"
@@ -369,20 +365,21 @@ const page = () => {
 
           <div className="relative mx-auto max-w-[680px]">
             <p className="mb-6 text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]/55">
-              Your next chapter awaits
+              {bookingGuidePageData.finalCta.eyebrow}
             </p>
 
             <h2
               className={`${cormorant.className} text-5xl font-medium leading-[0.95] tracking-[-0.035em] sm:text-7xl`}
             >
-              Now, all that's left
+              {bookingGuidePageData.finalCta.title}
               <br />
-              is to <span className="italic">get away.</span>
+              <span className="italic">
+                {bookingGuidePageData.finalCta.highlightedTitle}
+              </span>
             </h2>
 
             <p className="mx-auto mt-6 max-w-[410px] text-xs leading-7 text-[var(--foreground)]/55 sm:text-sm">
-              Find somewhere special, make it yours and start looking forward to
-              the moments ahead.
+              {bookingGuidePageData.finalCta.description}
             </p>
 
             <Link
