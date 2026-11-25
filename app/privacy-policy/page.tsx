@@ -2,12 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Cormorant_Garamond } from "next/font/google";
-import {
-  ArrowUpRight,
-  ArrowDown,
-  ShieldCheck,
-  Mail,
-} from "lucide-react";
+import { ArrowUpRight, ArrowDown, ShieldCheck, Mail } from "lucide-react";
 import {
   privacySections,
   privacyPrinciples,
@@ -24,7 +19,7 @@ const page = () => {
   return (
     <main>
       {/* HERO */}
-      <section className="px-4 py-7 sm:px-0 md:py-10 lg:py-16 xl:py-18 2xl:py-20">
+      <section className="py-10 lg:py-15">
         <div className="relative mx-auto min-h-[480px] max-w-[1600px] overflow-hidden rounded-3xl bg-[var(--editorial-background)] sm:min-h-[560px] sm:rounded-4xl lg:min-h-[650px]">
           <Image
             src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=2200&q=85"
@@ -84,7 +79,7 @@ const page = () => {
       </section>
 
       {/* THREE PRINCIPLES */}
-      <section className="relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--surface)] px-4 py-7 sm:px-0 md:py-10 lg:py-16 xl:py-18 2xl:py-20">
+      <section className="relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--surface)] px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15">
         <div className="mx-auto grid max-w-[1350px] gap-9 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-[8vw]">
           {privacyPrinciples.map((item) => (
             <div key={item.title} className="flex flex-col items-center">
@@ -111,10 +106,7 @@ const page = () => {
       </section>
 
       {/* POLICY CONTENT */}
-      <section
-        id="policy"
-        className="scroll-mt-16 px-4 py-7 sm:px-0 md:py-10 lg:py-16 xl:py-18 2xl:py-20"
-      >
+      <section id="policy" className="scroll-mt-16 py-10 lg:py-15">
         <div className="mx-auto max-w-[1350px]">
           <div className="mb-8 flex flex-col justify-between gap-5 sm:mb-10 lg:flex-row lg:items-end lg:gap-7">
             <div>
@@ -183,7 +175,7 @@ const page = () => {
       </section>
 
       {/* CONTACT */}
-      <section className="relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--editorial-background)] px-7 py-7 sm:px-7 md:py-10 lg:py-16 xl:py-18 2xl:py-20">
+      <section className="relative left-1/2 flex w-screen -translate-x-1/2 bg-[var(--editorial-background)] px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-10 lg:py-15">
         <div className="md:mx-auto grid max-w-[1350px] gap-10 sm:gap-12 lg:grid-cols-[1fr_0.7fr] lg:items-end">
           <div>
             <h2
@@ -219,7 +211,7 @@ const page = () => {
       </section>
 
       {/* RELATED POLICIES */}
-      <section className="px-4 py-7 sm:px-0 md:py-10 lg:py-16 xl:py-18 2xl:py-20">
+      <section className="py-10 lg:py-15">
         <div className="mx-auto max-w-[1350px]">
           <div className="mb-8 sm:mb-10">
             <h2 className={sectionHeadingClass}>Other policies</h2>
