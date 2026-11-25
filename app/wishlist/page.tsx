@@ -66,10 +66,10 @@ const WishlistPage = () => {
   return (
     <main className="overflow-hidden">
       {/* HERO */}
-      <section className="mx-auto w-full max-w-[1500px] px-5 pb-12 pt-16 sm:px-8 sm:pb-16 sm:pt-24 lg:px-12">
+      <section className="mx-auto w-full max-w-[1500px] pt-10 lg:pt-15">
         <div className="flex flex-col items-center text-center">
           <h1
-            className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+            className={`${cormorant.className} font-bold lg:font-semibold text-[13vw] xl:text-[6vw] leading-none`}
           >
             Your Saved Stays
           </h1>
@@ -86,9 +86,9 @@ const WishlistPage = () => {
       </section>
 
       {/* WISHLIST COLLECTION */}
-      <section className="mx-auto w-full max-w-[1500px] px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12">
+      <section className="mx-auto w-full max-w-[1500px] py-10 lg:py-15">
         {/* COLLECTION HEADING */}
-        <div className="mb-8 flex flex-col justify-between gap-5 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-end">
+        <div className="mb-8 flex flex-col justify-between gap-5 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-center">
           <div>
             <h2 className={`${sectionHeadingClass}`}>Places to dream about.</h2>
           </div>
@@ -147,7 +147,7 @@ const WishlistPage = () => {
             {savedRooms.map((room) => (
               <article key={room.id} className="group min-w-0">
                 {/* IMAGE */}
-                <div className="relative h-[300px] overflow-hidden rounded-[24px] bg-[var(--border)] sm:h-[330px] lg:h-[350px]">
+                <div className="relative h-[250px] sm:h-[300px] lg:h-[330px] lg:rounded-[30px] overflow-hidden rounded-[24px] bg-[var(--border)]">
                   <img
                     src={room.image}
                     alt={room.name}
