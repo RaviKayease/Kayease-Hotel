@@ -69,17 +69,6 @@ const page = () => {
                   <FileText size={17} className="text-[var(--primary)]" />
                 </div>
 
-                {/* Document number */}
-                <div className="mt-10">
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-[var(--foreground)]/45">
-                    Document no.
-                  </span>
-                  <p className={`${cormorant.className} mt-1 text-5xl`}>
-                    {termsDocumentInfo.documentNumber}
-                    <span className="text-[var(--primary)]">.</span>
-                  </p>
-                </div>
-
                 {/* Document title */}
                 <div className="relative z-10 mt-9">
                   <h2 className={`${sectionHeadingClass}`}>
@@ -110,7 +99,6 @@ const page = () => {
                       Version
                     </p>
                     <p className="mt-2 text-xs font-medium">
-                      {" "}
                       {termsDocumentInfo.version}
                     </p>
                   </div>
@@ -277,7 +265,9 @@ const page = () => {
                       Business name
                     </span>
 
-                    <p className="mt-2 text-sm">[Legal Business Name]</p>
+                    <p className="mt-2 text-sm">
+                      {termsDocumentInfo.businessName}
+                    </p>
                   </div>
 
                   <div>
@@ -285,7 +275,7 @@ const page = () => {
                       Email address
                     </span>
 
-                    <p className="mt-2 text-sm">[Business Email Address]</p>
+                    <p className="mt-2 text-sm">{termsDocumentInfo.email}</p>
                   </div>
 
                   <div className="sm:col-span-2">
@@ -294,7 +284,7 @@ const page = () => {
                     </span>
 
                     <p className="mt-2 text-sm">
-                      [Registered Business Address]
+                      {termsDocumentInfo.registeredAddress}
                     </p>
                   </div>
                 </div>

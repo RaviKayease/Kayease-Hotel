@@ -1,6 +1,9 @@
+// Terms and Conditions content displayed on the website.
+// Hotel owners can customize section titles and legal wording.
+
 export const termsSections = [
   {
-    id: "01",
+    id: "01", // Unique section identifier used for navigation.
     title: "Acceptance of Terms",
     paragraphs: [
       "By accessing or using this website, you agree to be bound by these Terms and Conditions and all applicable laws and regulations. These terms apply to every visitor, registered user and individual making a reservation through our platform.",
@@ -124,11 +127,12 @@ export const termsSections = [
   },
 ];
 
+// Legal document and business contact information.
+// Replace the placeholder values with the hotel's actual details.
 export const termsDocumentInfo = {
-  documentNumber: "001",
-  effectiveDate: "[Insert date]",
-  version: "01 / 2026",
-  businessName: "[Legal Business Name]",
-  email: "[Business Email Address]",
-  registeredAddress: "[Registered Business Address]",
+  effectiveDate: "[Insert effective date]", // Date these terms become effective.
+  version: "1.0", // Current version of the legal document.
+  businessName: "[Legal Business Name]", // Official registered business name.
+  email: "[Business Email Address]", // Business contact email for legal queries.
+  registeredAddress: "[Registered Business Address]", // Official registered business address.
 };
