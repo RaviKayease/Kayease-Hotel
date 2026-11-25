@@ -67,6 +67,7 @@ const RoomDetailContent = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
+  const [cartMessage, setCartMessage] = useState("");
 
   const [activeDatePicker, setActiveDatePicker] = useState<
     "checkIn" | "checkOut" | null
@@ -96,7 +97,6 @@ const RoomDetailContent = () => {
   const [reviewError, setReviewError] = useState("");
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [reservationSubmitted, setReservationSubmitted] = useState(false);
-  const [reservationMessage, setReservationMessage] = useState("");
   const searchParams = useSearchParams();
 
   const averageReviewRating = useMemo(() => {
@@ -229,6 +229,46 @@ const RoomDetailContent = () => {
     return activeDatePicker === "checkIn" ? date < today : date <= checkIn;
   };
 
+  const handleAddToCart = () => {
+    if (!room) return;
+
+    try {
+      const savedCart = localStorage.getItem("hotelCart");
+      const existingCart = savedCart ? JSON.parse(savedCart) : [];
+
+      if (!Array.isArray(existingCart)) {
+        throw new Error("Invalid cart data");
+      }
+
+      const cartItem = {
+        id: `CART-${Date.now()}`,
+        roomId: room.id,
+        roomName: room.name,
+        image: room.image,
+        location: room.location,
+        pricePerNight: room.price,
+        checkIn,
+        checkOut,
+        adults,
+        children,
+        guests: adults + children,
+        rooms: roomCount,
+        nights,
+        totalPrice,
+      };
+
+      const updatedCart = [...existingCart, cartItem];
+
+      localStorage.setItem("hotelCart", JSON.stringify(updatedCart));
+
+      window.dispatchEvent(new Event("cartUpdated"));
+
+      setCartMessage("Room added to your cart successfully.");
+    } catch {
+      setCartMessage("Unable to add this room. Please try again.");
+    }
+  };
+
   const nights = useMemo(() => {
     if (!checkIn || !checkOut) return 1;
 
@@ -303,50 +343,6 @@ const RoomDetailContent = () => {
 
   const totalPrice = room.price * nights * roomCount;
 
-  const handleReservationRequest = () => {
-    if (reservationSubmitted) return;
-
-    try {
-      const savedReservations = localStorage.getItem("hotelReservations");
-      const existingReservations = savedReservations
-        ? JSON.parse(savedReservations)
-        : [];
-
-      if (!Array.isArray(existingReservations)) {
-        throw new Error("Invalid reservation data");
-      }
-
-      const reservation = {
-        id: `RES-${Date.now()}`,
-        roomId: room.id,
-        roomName: room.name,
-        checkIn,
-        checkOut,
-        adults,
-        children,
-        guests: adults + children,
-        rooms: roomCount,
-        nights,
-        pricePerNight: room.price,
-        totalPrice,
-        status: "Requested",
-        submittedAt: new Date().toISOString(),
-      };
-
-      localStorage.setItem(
-        "hotelReservations",
-        JSON.stringify([...existingReservations, reservation]),
-      );
-
-      setReservationSubmitted(true);
-      setReservationMessage(
-        "Your reservation request has been saved successfully.",
-      );
-    } catch {
-      setReservationMessage("Unable to save your request. Please try again.");
-    }
-  };
-
   const handleCheckIn = (value: string) => {
     setCheckIn(value);
 
@@ -354,20 +350,6 @@ const RoomDetailContent = () => {
       setCheckOut(addDays(value, 1));
     }
   };
-
-  const bookingUrl = `/contact?${new URLSearchParams({
-    room: room.name,
-    roomId: String(room.id),
-    checkIn,
-    checkOut,
-    adults: String(adults),
-    children: String(children),
-    guests: String(adults + children),
-    rooms: String(roomCount),
-    nights: String(nights),
-    pricePerNight: String(room.price),
-    total: String(totalPrice),
-  }).toString()}`;
 
   const openGallery = (index = 0) => {
     setActivePhoto(index);
@@ -1315,42 +1297,25 @@ const RoomDetailContent = () => {
                 </p>
               </div>
 
-              {/* RESERVATION BUTTON */}
+              {/* ADD TO CART */}
               <button
                 type="button"
-                onClick={handleReservationRequest}
-                disabled={reservationSubmitted}
-                className={`group mt-7 flex w-full items-center justify-between rounded-full px-6 py-3 text-[9px] uppercase tracking-[0.17em] text-[var(--background)] transition-all duration-300 ${
-                  reservationSubmitted
-                    ? "cursor-default bg-[var(--primary)]"
-                    : "bg-[var(--foreground)] hover:opacity-85"
-                }`}
+                onClick={handleAddToCart}
+                className="group mt-7 flex w-full items-center justify-between rounded-full border border-[var(--foreground)] px-6 py-3 text-[9px] uppercase tracking-[0.17em] text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--foreground)] hover:text-[var(--background)]"
               >
-                <span>
-                  {reservationSubmitted
-                    ? "Reservation Requested"
-                    : "Request reservation"}
-                </span>
+                <span>Add to cart</span>
 
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                  {reservationSubmitted ? (
-                    <Check size={16} />
-                  ) : (
-                    <ArrowUpRight size={16} />
-                  )}
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)]/10 transition-colors group-hover:bg-white/10">
+                  <Plus size={16} />
                 </span>
               </button>
 
-              {reservationMessage && (
+              {cartMessage && (
                 <p
-                  className={`mt-4 text-center text-[10px] leading-5 ${
-                    reservationSubmitted
-                      ? "text-[var(--primary)]"
-                      : "text-red-500"
-                  }`}
                   role="status"
+                  className="mt-3 text-center text-[10px] text-[var(--primary)]"
                 >
-                  {reservationMessage}
+                  {cartMessage}
                 </p>
               )}
 
