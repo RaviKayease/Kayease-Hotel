@@ -1,44 +1,49 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import ChangeTheme from "@/app/components/ChangeTheme";
-import { getWishlist } from "@/app/utils/wishlist";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const pathname = usePathname();
 
-  const [wishlistCount, setWishlistCount] = useState(0);
-
+  // Close sidebar whenever the route changes
   useEffect(() => {
-    const syncWishlist = () => {
-      setWishlistCount(getWishlist().length);
-    };
+    setIsMenuOpen(false);
+  }, [pathname]);
 
-    syncWishlist();
-
-    window.addEventListener("wishlistUpdated", syncWishlist);
+  // Prevent background scrolling while sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
 
     return () => {
-      window.removeEventListener("wishlistUpdated", syncWishlist);
+      document.body.style.overflow = "";
     };
-  }, []);
+  }, [isMenuOpen]);
 
+  const navigationLinks = [
+    { name: "Home", href: "/" },
+    { name: "Rooms", href: "/rooms", mainPage: true },
+    { name: "About Us", href: "/about-us", mainPage: true },
+    { name: "Contact Us", href: "/contact-us", mainPage: true },
+    { name: "Blogs", href: "/blogs", mainPage: true },
+    { name: "Wishlist", href: "/wishlist" },
+    { name: "Cart", href: "/cart" },
+    { name: "Login", href: "/sign-in" },
+  ];
   return (
-    <div className="sticky top-0 z-40 ">
-      {/* Desktop Navbar */}
-      <div
-        className={`w-full bg-[var(--background)]/85 backdrop-blur-xl border-b-[0.5px] border-[var(--primary)]/20 text-sm text-white transition-all duration-300 ${isMenuOpen ? "hidden" : ""}`}
-      >
-        <div className="px-[3vw] sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw] py-3 flex justify-between items-center">
+    <div className="sticky top-0 z-40">
+      {/* Main Navbar */}
+      <div className="w-full border-b-[0.5px] border-[var(--primary)]/20 bg-[var(--background)]/85 text-sm backdrop-blur-xl">
+        <div className="flex items-center justify-between px-[3vw] py-3 sm:px-[4vw] md:px-[6vw] lg:px-[8vw] xl:px-[10vw]">
           <Logo />
 
-          {/* Page Navgation Buttons */}
-          <div className="hidden lg:flex md:gap-[4vw] font-medium text-[var(--foreground)]">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-[3vw] font-medium text-sm text-[var(--foreground)]">
             {[
               { name: "Rooms", href: "/rooms" },
               { name: "About Us", href: "/about-us" },
@@ -55,98 +60,89 @@ const Navbar = () => {
                 {item.name}
 
                 <span
-                  className={`bg-[var(--primary)] h-[2px] w-1/2 rounded-md transition-all duration-300 ${
+                  className={`h-[2px] w-1/2 rounded-md bg-[var(--primary)] transition-all duration-300 ${
                     pathname === item.href ? "opacity-100" : "opacity-0"
                   }`}
                 />
               </Link>
             ))}
-          </div>
+          </nav>
 
-          <div className="flex gap-2">
-            {/* Wishlist */}
-            <Link
-              href="/wishlist"
-              className="relative flex items-center justify-center text-[var(--primary)]"
-            >
-              <Heart size={28} strokeWidth={1.5} fill="currentColor" />
-
-              <span className="absolute inset-0 flex items-center justify-center pt-[1px] text-[9px] font-semibold leading-none text-white">
-                {wishlistCount}
-              </span>
-            </Link>
-
-            {/* Change Theme Button */}
+          {/* Right Controls */}
+          <div className="flex items-center gap-3">
             <ChangeTheme />
 
-            {/* Login Button */}
-            <Link
-              href="/sign-in"
-              className="hidden lg:inline-flex items-center justify-center font-semibold rounded-full px-4 py-1 bg-[var(--primary)] text-white transition-colors duration-300 hover:brightness-90"
-            >
-              Login
-            </Link>
-
-            {/* Menu Button */}
+            {/* Menu Button - Below LG Only */}
             <button
+              type="button"
               onClick={() => setIsMenuOpen(true)}
-              className="text-[var(--foreground)] lg:hidden"
-              aria-label="Open menu"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--primary)]/10 hover:text-[var(--primary)]"
+              aria-label="Open navigation menu"
+              aria-expanded={isMenuOpen}
             >
-              <Menu size={20} strokeWidth={1.5} />
+              <Menu size={21} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Sidebar Navigation */}
       <div
-        className={`fixed inset-0 z-50 md:hidden bg-[var(--background)]
-    transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-    ${
-      isMenuOpen
-        ? "visible opacity-100"
-        : "invisible opacity-0 pointer-events-none"
-    }`}
+        className={`fixed inset-0 z-50 transition-all duration-500 ${
+          isMenuOpen
+            ? "visible opacity-100"
+            : "invisible pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!isMenuOpen}
       >
-        <div
-          className={`absolute inset-0 flex flex-col text-[var(--foreground)] overflow-y-auto
-      transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-      ${isMenuOpen ? "translate-y-0" : "-translate-y-4"}`}
+        {/* Backdrop */}
+        <button
+          type="button"
+          aria-label="Close navigation menu"
+          tabIndex={isMenuOpen ? 0 : -1}
+          onClick={() => setIsMenuOpen(false)}
+          className="absolute inset-0 h-full w-full cursor-default bg-black/40 backdrop-blur-sm"
+        />
+
+        {/* Sidebar */}
+        <aside
+          id="navigation-sidebar"
+          aria-label="Main navigation"
+          className={`absolute right-0 top-0 flex h-full w-full max-w-[420px] flex-col overflow-y-auto bg-[var(--background)] text-[var(--foreground)] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:w-[420px] ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
-          {/* Header */}
-          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 border-b border-[var(--primary)]/15 bg-[var(--background)]/95 backdrop-blur-xl">
+          {/* Sidebar Header */}
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--primary)]/15 bg-[var(--background)]/95 px-6 py-5 backdrop-blur-xl">
             <Logo />
 
             <button
+              type="button"
               onClick={() => setIsMenuOpen(false)}
-              aria-label="Close menu"
+              aria-label="Close navigation menu"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--primary)]/20 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--primary)] hover:text-white"
             >
               <X size={19} strokeWidth={1.5} />
             </button>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Links */}
           <div className="flex flex-1 flex-col p-8">
             <p className="mb-10 text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--primary)]">
               Explore
             </p>
 
             <nav className="flex flex-col">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Rooms", href: "/rooms" },
-                { name: "About Us", href: "/about-us" },
-                { name: "Contact Us", href: "/contact-us" },
-                { name: "Blogs", href: "/blogs" },
-                { name: "Login", href: "/sign-in" },
-              ].map((item, index) => (
+              {navigationLinks.map((item, index) => (
                 <Link
                   key={item.name}
                   href={item.href}
+                  tabIndex={isMenuOpen ? 0 : -1}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`group flex items-center justify-between border-b border-[var(--primary)]/15 py-6 transition-all duration-300 ${
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  className={`group ${
+                    item.mainPage ? "lg:hidden" : ""
+                  } flex items-center justify-between border-b border-[var(--primary)]/15 py-6 transition-all duration-300 ${
                     pathname === item.href
                       ? "text-[var(--primary)]"
                       : "text-[var(--foreground)] hover:text-[var(--primary)]"
@@ -154,7 +150,7 @@ const Navbar = () => {
                 >
                   <span className="flex items-center gap-5">
                     <span className="text-[10px] tracking-widest text-[var(--primary)]/60">
-                      0{index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
 
                     <span className="text-sm font-medium tracking-wide">
@@ -169,7 +165,7 @@ const Navbar = () => {
               ))}
             </nav>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
