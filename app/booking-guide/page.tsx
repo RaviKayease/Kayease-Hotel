@@ -29,15 +29,15 @@ const page = () => {
   return (
     <main>
       {/* HERO */}
-      <section className="px-5 pt-8 sm:px-10 lg:px-16">
+      <section className="pt-10 lg:pt-15">
         <div className="mx-auto max-w-[1450px]">
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-4 lg:mb-8 flex items-center justify-between">
             <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]/45">
               Your journey begins here
             </p>
           </div>
 
-          <div className="relative min-h-[580px] overflow-hidden sm:min-h-[680px] rounded-4xl">
+          <div className="relative h-[25vh] min-h-[420px] sm:h-[35vh] md:h-[45vh] lg:h-[60vh] overflow-hidden rounded-4xl">
             <img
               src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2400&q=90"
               alt="Beautiful secluded holiday cabin surrounded by nature"
@@ -46,38 +46,39 @@ const page = () => {
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-black/10" />
 
-            <div className="relative flex min-h-[580px] flex-col justify-between p-7 text-white sm:min-h-[680px] sm:p-12 lg:p-16">
-              <div className="flex items-center justify-between">
-                <span className="border border-white/40 px-4 py-2 text-[9px] uppercase tracking-[0.22em]">
+            <div className="relative flex h-full flex-col justify-between p-5 text-white sm:p-10 lg:p-16">
+              <div className="flex items-center justify-between gap-3">
+                <span className="border border-white/40 px-3 py-2 text-[8px] uppercase tracking-[0.18em] sm:px-4 sm:text-[9px] sm:tracking-[0.22em]">
                   A simpler way to stay
                 </span>
+
                 <span className="hidden text-[9px] uppercase tracking-[0.2em] text-white/65 sm:block">
                   Discover · Plan · Experience
                 </span>
               </div>
 
               <div>
-                <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.3em] text-white/75">
+                <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.2em] text-white/75 sm:mb-5 sm:text-[10px] sm:tracking-[0.3em]">
                   Everything you need to know
                 </p>
 
                 <h1
-                  className={`${cormorant.className} font-bold lg:font-semibold text-[15vw] sm:text-[13vw] xl:text-[6vw] leading-none`}
+                  className={`${cormorant.className} text-[13vw] font-bold leading-[0.95] sm:text-[11vw] sm:font-semibold xl:text-[6vw]`}
                 >
                   The art of
                   <br />
                   <span className="italic">booking well.</span>
                 </h1>
 
-                <div className="mt-9 flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
-                  <p className="max-w-[390px] text-xs leading-6 text-white/75 sm:text-sm">
+                <div className="mt-5 flex flex-col justify-between gap-4 sm:mt-9 sm:flex-row sm:items-end sm:gap-7">
+                  <p className="max-w-[390px] text-[11px] leading-5 text-white/75 sm:text-sm sm:leading-6">
                     A few thoughtful steps between finding your perfect stay and
                     being right where you want to be.
                   </p>
 
                   <a
                     href="#how-it-works"
-                    className="inline-flex w-fit items-center gap-3 border-b border-white/60 pb-3 text-[9px] font-semibold uppercase tracking-[0.2em]"
+                    className="inline-flex w-fit items-center gap-3 border-b border-white/60 pb-2 text-[8px] font-semibold uppercase tracking-[0.2em] sm:pb-3 sm:text-[9px]"
                   >
                     Explore the guide
                     <ArrowDown size={14} />
@@ -90,10 +91,7 @@ const page = () => {
       </section>
 
       {/* BOOKING JOURNEY */}
-      <section
-        id="how-it-works"
-        className="px-5 py-24 sm:px-10 sm:py-32 lg:px-16"
-      >
+      <section id="how-it-works" className="py-10 lg:py-15">
         <div className="mx-auto max-w-[1350px]">
           {/* Heading */}
           <div className="mb-5 flex flex-col justify-between gap-8 lg:mb-10 lg:flex-row lg:items-end">
@@ -116,10 +114,10 @@ const page = () => {
           </div>
 
           {/* Steps */}
-          <div className="space-y-20 sm:space-y-28">
+          <div className="space-y-10">
             {/* Step 01 */}
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px] rounded-[24px]">
+              <div className="group relative h-[340px] overflow-hidden lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85"
                   alt="Beautiful destination surrounded by mountains and nature"
@@ -191,7 +189,7 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px] rounded-[24px]">
+              <div className="group relative order-1 h-[340px] overflow-hidden lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1600&q=85"
                   alt="Peaceful luxury accommodation overlooking a scenic landscape"
@@ -211,7 +209,7 @@ const page = () => {
 
             {/* Step 03 */}
             <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="group relative h-[340px] overflow-hidden sm:h-[480px] lg:h-[540px] rounded-[24px]">
+              <div className="group relative h-[340px] overflow-hidden lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85"
                   alt="Elegant interior of a carefully designed accommodation"
@@ -283,7 +281,7 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="group relative order-1 h-[340px] overflow-hidden sm:h-[480px] lg:order-2 lg:h-[540px] rounded-[24px]">
+              <div className="group relative order-1 h-[340px] overflow-hidden lg:order-2 lg:h-[540px] rounded-[24px]">
                 <img
                   src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85"
                   alt="Beautiful scenic destination ready to be explored"
@@ -305,9 +303,9 @@ const page = () => {
       </section>
 
       {/* ESSENTIALS */}
-      <section className="px-5 py-24 sm:px-10 sm:py-32 lg:px-16">
+      <section className="pb-10 lg:p-15">
         <div className="mx-auto grid max-w-[1250px] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-24">
-          <div className="relative min-h-[440px] overflow-hidden sm:min-h-[570px] rounded-[24px]">
+          <div className="relative min-h-[410px] lg:min-h-[480px] xl:min-h-[510px] overflow-hidden rounded-[24px]">
             <img
               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
               alt="Beautifully designed and welcoming holiday accommodation"
@@ -364,7 +362,7 @@ const page = () => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="px-5 pb-24 sm:px-10 sm:pb-32 lg:px-16">
+      <section className="pb-10 lg:pb-15">
         <div className="relative mx-auto max-w-[1450px] overflow-hidden bg-[var(--editorial-background)] px-7 py-20 text-center text-[var(--foreground)] sm:px-12 sm:py-28">
           <div className="absolute -left-20 -top-32 h-80 w-80 rounded-full border border-[var(--foreground)]/[0.08]" />
           <div className="absolute -bottom-48 -right-20 h-[420px] w-[420px] rounded-full border border-[var(--foreground)]/[0.08]" />
