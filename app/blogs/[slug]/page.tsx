@@ -5,6 +5,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import { ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
 
 import { blogPosts } from "@/app/data/blogPosts";
+import { detailedBlogPageData } from "@/app/data/blogDetailedPage";
 
 export const instant = false;
 
@@ -85,7 +86,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               <p
                 className={`${cormorant.className} mt-3 text-4xl italic text-white sm:text-6xl`}
               >
-                Beyond the ordinary.
+                {detailedBlogPageData.heroTagline}
               </p>
             </div>
           </div>
@@ -161,7 +162,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               <div className="mt-10 flex items-center justify-center gap-4">
                 <span className="h-px w-8 bg-[var(--primary)]" />
                 <span className="text-[9px] uppercase tracking-[0.25em] text-[var(--foreground)]/40">
-                  The Travel Journal
+                  {detailedBlogPageData.journalLabel}
                 </span>
                 <span className="h-px w-8 bg-[var(--primary)]" />
               </div>
@@ -180,7 +181,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 <h2
                   className={`${cormorant.className} text-5xl font-medium leading-[0.88] tracking-[-0.045em] sm:text-7xl lg:text-[105px]`}
                 >
-                  Keep wandering
+                  {detailedBlogPageData.relatedStories.eyebrow}
                   <span className="italic text-[var(--primary)]">.</span>
                 </h2>
               </div>
@@ -202,7 +203,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                   <div className="absolute inset-0 bg-black/5 transition-colors duration-500 group-hover:bg-transparent" />
 
                   <span className="absolute bottom-5 left-5 bg-[var(--background)] px-4 py-2 text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--foreground)]">
-                    Editor's selection
+                    {detailedBlogPageData.relatedStories.featuredLabel}
                   </span>
                 </div>
 
@@ -319,30 +320,29 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-9">
               <p className="mb-8 text-[9px] font-medium uppercase tracking-[0.3em] text-[var(--primary)]">
-                Until the next story
+                {detailedBlogPageData.closingSection.eyebrow}
               </p>
 
               <h2
                 className={`${cormorant.className} text-[15vw] font-medium leading-[0.85] tracking-[-0.055em] sm:text-[11vw] lg:text-[90px]`}
               >
-                The world is
+                {detailedBlogPageData.closingSection.title}
                 <span className="block italic text-[var(--primary)]">
-                  yours to discover.
+                  {detailedBlogPageData.closingSection.highlightedTitle}
                 </span>
               </h2>
             </div>
 
             <div className="lg:col-span-3">
               <p className="max-w-xs text-sm leading-7 text-[var(--foreground)]/55">
-                Find a place to pause, explore somewhere new and create memories
-                that stay with you.
+                {detailedBlogPageData.closingSection.description}
               </p>
 
               <Link
                 href="/rooms"
                 className="group mt-8 inline-flex items-center gap-5 border-b border-[var(--primary)]/50 pb-3 text-[9px] font-medium uppercase tracking-[0.2em] transition-colors hover:text-[var(--primary)]"
               >
-                Explore our stays
+                {detailedBlogPageData.closingSection.ctaText}
                 <span className="group flex h-10 w-10 items-center justify-center rounded-full border border-[var(--primary)]/50 text-[var(--primary)] transition-all duration-300 group-hover:bg-[var(--primary)] group-hover:text-white">
                   <ArrowUpRight
                     className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
