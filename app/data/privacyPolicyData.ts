@@ -8,7 +8,7 @@ export const privacyPolicyBusiness = {
 // HERO CONTENT
 export const privacyHero = {
   image: {
-    src: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=2200&q=85",
+    src: "/PrivacyPolicyPageImages/PrivacyPolicyHero.jpg",
     alt: "Quiet architectural space surrounded by natural light",
   },
   eyebrow: "Privacy & protection",
