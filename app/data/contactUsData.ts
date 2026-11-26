@@ -13,7 +13,7 @@ export const contactUsPageData = {
   contactInfo: {
     // Contact image and overlay content
     image: {
-      src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85",
+      src: "/ContactUsPageImages/ContactExperience.jpg",
       alt: "Welcoming luxury hotel entrance and hospitality space",
       eyebrow: "The Experience",
       heading: "A little help goes a long way.",
@@ -62,8 +62,8 @@ export const contactUsPageData = {
   ================================ */
   closingSection: {
     image: {
-      src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=2000&q=85",
-      alt: "Beautiful scenic mountain destination",
+      src: "/ContactUsPageImages/ClosingSection.jpg",
+      alt: "Beautiful scenic mountain landscape surrounding a peaceful destination",
     },
 
     heading: "Your next beautiful",

@@ -3,60 +3,24 @@ const path = require("path");
 
 const images = [
   // ============================================
-  // 1. HERO SECTION
+  // 1. MAIN CONTACT EXPERIENCE
   // ============================================
   {
-    name: "ThoughtfulLiving.jpg",
-    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
-  },
-  {
-    name: "RemarkableDestinations.jpg",
-    url: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85",
-  },
-  {
-    name: "MeaningfulExperiences.jpg",
-    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85",
+    name: "ContactExperience.jpg",
+    url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85",
   },
 
   // ============================================
-  // 2. OUR STORY SECTION
+  // 2. CLOSING SECTION
   // ============================================
   {
-    name: "OurStory.jpg",
-    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90",
-  },
-  {
-    name: "OurApproach.jpg",
-    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=85",
-  },
-
-  // ============================================
-  // 3. OUR EXPERIENCE SECTION
-  // ============================================
-  {
-    name: "BeautifulSpaces.jpg",
-    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
-  },
-  {
-    name: "MemorableMoments.jpg",
-    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85",
-  },
-  {
-    name: "DestinationsToDiscover.jpg",
-    url: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=85",
-  },
-
-  // ============================================
-  // 4. BRAND STATEMENT SECTION
-  // ============================================
-  {
-    name: "BrandStatement.jpg",
-    url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=2000&q=85",
+    name: "ClosingSection.jpg",
+    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=2000&q=85",
   },
 ];
 
 async function downloadImages() {
-  const folder = path.join(process.cwd(), "public", "AboutUsPageImages");
+  const folder = path.join(process.cwd(), "public", "ContactUsPageImages");
 
   fs.mkdirSync(folder, { recursive: true });
 
@@ -84,7 +48,7 @@ async function downloadImages() {
     }
   }
 
-  console.log("About Us page image download completed!");
+  console.log("Contact Us page image download completed!");
 }
 
 downloadImages();
