@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "../lib/site";
+import { rooms } from "./data/roomsPageData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -16,5 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+
+    // Individual Room Detail Pages
+    ...rooms.map((room) => ({
+      url: `${SITE_URL}/rooms/${room.id}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 }
