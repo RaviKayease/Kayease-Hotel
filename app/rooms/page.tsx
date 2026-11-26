@@ -105,6 +105,8 @@ const RoomsPage = () => {
   const desktopFilterRef = useRef<HTMLDivElement | null>(null);
   const mobileFilterRef = useRef<HTMLDivElement | null>(null);
 
+  const [hasAppliedRoomFilters, setHasAppliedRoomFilters] = useState(false);
+
   const filteredRooms = rooms.filter((room) => {
     // Category
     const matchesCategory =
@@ -125,13 +127,19 @@ const RoomsPage = () => {
     // Manual guest filter
     const matchesGuests = room.guests >= minGuests;
 
-    // Homepage booking guest capacity
+    // Homepage search (only before rooms-page filters are applied)
     const matchesBookingGuests =
-      !hasGuestSearch || room.guests >= guestsPerRoom;
+      hasAppliedRoomFilters || !hasGuestSearch || room.guests >= guestsPerRoom;
 
-    // Homepage booking date availability
     const matchesDates =
-      !hasDateSearch || isRoomAvailable(room.id, searchCheckIn, searchCheckOut);
+      hasAppliedRoomFilters ||
+      !hasDateSearch ||
+      isRoomAvailable(room.id, searchCheckIn, searchCheckOut);
+
+    const matchesHomepageDestination =
+      hasAppliedRoomFilters ||
+      !searchedDestination ||
+      room.location === searchedDestination;
 
     return (
       matchesCategory &&
@@ -140,7 +148,8 @@ const RoomsPage = () => {
       matchesRating &&
       matchesGuests &&
       matchesBookingGuests &&
-      matchesDates
+      matchesDates &&
+      matchesHomepageDestination
     );
   });
 
@@ -151,8 +160,9 @@ const RoomsPage = () => {
     Number(minGuests > 1);
 
   const resetFilters = () => {
+    setHasAppliedRoomFilters(true);
     setActiveCategory("All Rooms");
-    setActiveLocation(searchedDestination || "All Locations");
+    setActiveLocation("All Locations");
     setMinPrice(MIN_ROOM_PRICE);
     setMaxPrice(MAX_ROOM_PRICE);
     setMinRating(0);
@@ -290,7 +300,10 @@ const RoomsPage = () => {
                 {["All Rooms", ...roomCategories].map((category) => (
                   <button
                     key={category}
-                    onClick={() => setActiveCategory(category)}
+                    onClick={() => {
+                      setHasAppliedRoomFilters(true);
+                      setActiveCategory(category);
+                    }}
                     className={`shrink-0 rounded-full px-5 py-3 text-[10px] font-medium transition-all duration-300 sm:px-7 sm:text-xs ${
                       activeCategory === category
                         ? "bg-[var(--primary)] text-white shadow-md"
@@ -342,6 +355,7 @@ const RoomsPage = () => {
                       <button
                         key={location}
                         onClick={() => {
+                          setHasAppliedRoomFilters(true);
                           setActiveLocation(location);
                           setIsLocationOpen(false);
                         }}
@@ -653,7 +667,10 @@ const RoomsPage = () => {
                     </button>
 
                     <button
-                      onClick={() => setIsFilterOpen(false)}
+                      onClick={() => {
+                        setHasAppliedRoomFilters(true);
+                        setIsFilterOpen(false);
+                      }}
                       className="group flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-[var(--primary)] px-5 text-xs font-semibold text-white transition-all duration-300 hover:brightness-110"
                     >
                       Apply
@@ -986,7 +1003,10 @@ const RoomsPage = () => {
 
                       <button
                         type="button"
-                        onClick={() => setIsFilterOpen(false)}
+                        onClick={() => {
+                          setHasAppliedRoomFilters(true);
+                          setIsFilterOpen(false);
+                        }}
                         className="flex flex-[1.5] items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] py-4 text-sm font-semibold text-white shadow-lg transition hover:brightness-90 active:scale-[0.98]"
                       >
                         Apply Filters
