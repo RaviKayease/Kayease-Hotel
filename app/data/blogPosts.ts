@@ -28,8 +28,7 @@ export const blogPosts: BlogPost[] = [
     category: "Inspiration",
     date: "November 18, 2026",
     readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600&q=90",
+    image: "/BlogsPageImages/SlowTravel.jpg",
     slug: "art-of-slow-travel",
     featured: true,
     author: "The Travel Journal",
@@ -67,8 +66,7 @@ export const blogPosts: BlogPost[] = [
     category: "Destinations",
     date: "November 12, 2026",
     readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1600&q=90",
+    image: "/BlogsPageImages/Kyoto.jpg",
     slug: "weekend-in-kyoto",
     author: "The Travel Journal",
     quote: "In Kyoto, even the quietest corners seem to have a story to tell.",
@@ -104,8 +102,7 @@ export const blogPosts: BlogPost[] = [
     category: "Hospitality",
     date: "November 08, 2026",
     readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=90",
+    image: "/BlogsPageImages/BoutiqueStays.jpg",
     slug: "beauty-of-boutique-stays",
     author: "The Travel Journal",
     quote:
@@ -142,8 +139,7 @@ export const blogPosts: BlogPost[] = [
     category: "Travel Guides",
     date: "November 02, 2026",
     readTime: "7 min read",
-    image:
-      "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1600&q=90",
+    image: "/BlogsPageImages/MediterraneanCoast.jpg",
     slug: "mediterranean-coast",
     author: "The Travel Journal",
     quote:
@@ -180,8 +176,7 @@ export const blogPosts: BlogPost[] = [
     category: "Experiences",
     date: "October 26, 2026",
     readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=90",
+    image: "/BlogsPageImages/LittleLuxuries.jpg",
     slug: "little-luxuries",
     author: "The Travel Journal",
     quote:
@@ -218,8 +213,7 @@ export const blogPosts: BlogPost[] = [
     category: "Inspiration",
     date: "October 19, 2026",
     readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=90",
+    image: "/BlogsPageImages/NewPlaces.jpg",
     slug: "getting-lost-in-new-places",
     author: "The Travel Journal",
     quote:
