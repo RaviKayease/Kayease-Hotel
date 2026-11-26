@@ -162,13 +162,20 @@ const WishlistPage = () => {
                   </span>
 
                   {/* REMOVE BUTTON */}
+                  {/* REMOVE BUTTON */}
                   <button
                     type="button"
                     onClick={() => removeFromWishlist(room.id)}
                     aria-label={`Remove ${room.name} from wishlist`}
-                    className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#332c26] transition-all duration-300 hover:scale-110 hover:bg-red-50 hover:text-red-500"
+                    aria-pressed={true}
+                    className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#332c26] backdrop-blur-md transition-all duration-300 hover:scale-110"
                   >
-                    <Heart size={17} strokeWidth={1.5} fill="currentColor" />
+                    <Heart
+                      size={17}
+                      strokeWidth={1.5}
+                      fill="currentColor"
+                      className="text-[var(--primary)]"
+                    />
                   </button>
 
                   {/* IMAGE BOTTOM LABEL */}

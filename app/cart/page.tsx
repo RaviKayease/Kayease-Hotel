@@ -261,7 +261,7 @@ const CartPage = () => {
               <button
                 type="button"
                 onClick={clearCart}
-                className="text-[9px] uppercase tracking-[0.15em] text-[var(--muted)] transition-colors hover:text-red-500"
+                className="text-[9px] uppercase tracking-[0.15em] text-[var(--muted)]"
               >
                 Clear cart
               </button>
@@ -311,7 +311,7 @@ const CartPage = () => {
                           type="button"
                           onClick={() => removeItem(item.id)}
                           aria-label={`Remove ${item.roomName} from cart`}
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border)] text-[var(--muted)] transition-colors hover:border-red-400 hover:text-red-500"
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border)] text-[var(--muted)]"
                         >
                           <Trash2 size={14} />
                         </button>

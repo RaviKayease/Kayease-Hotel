@@ -62,7 +62,6 @@ const RoomDetailContent = () => {
   const [checkOut, setCheckOut] = useState(addDays(today, 1));
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
-  const [roomCount, setRoomCount] = useState(1);
   const [showGuests, setShowGuests] = useState(false);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
@@ -239,8 +238,24 @@ const RoomDetailContent = () => {
         throw new Error("Invalid cart data");
       }
 
+      // Prevent overlapping bookings for the same room
+      const hasDateConflict = existingCart.some((item) => {
+        return (
+          String(item.roomId) === String(room.id) &&
+          checkIn < item.checkOut &&
+          checkOut > item.checkIn
+        );
+      });
+
+      if (hasDateConflict) {
+        setCartMessage(
+          "This room is already booked in your cart for overlapping dates. Please select different dates.",
+        );
+        return;
+      }
+
       const cartItem = {
-        id: `CART-${Date.now()}`,
+        id: `CART-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
         roomId: room.id,
         roomName: room.name,
         image: room.image,
@@ -251,11 +266,10 @@ const RoomDetailContent = () => {
         adults,
         children,
         guests: adults + children,
-        rooms: roomCount,
+        rooms: 1,
         nights,
         totalPrice,
       };
-
       const updatedCart = [...existingCart, cartItem];
 
       localStorage.setItem("hotelCart", JSON.stringify(updatedCart));
@@ -280,19 +294,77 @@ const RoomDetailContent = () => {
     );
   }, [checkIn, checkOut]);
 
+  const handleCheckIn = (value: string) => {
+    setCheckIn(value);
+
+    if (value >= checkOut) {
+      setCheckOut(addDays(value, 1));
+    }
+  };
+
+  const openGallery = (index = 0) => {
+    setActivePhoto(index);
+    setShowAllPhotos(true);
+  };
+
+  const nextPhoto = () => {
+    setActivePhoto((current) => (current + 1) % roomImages.length);
+  };
+
+  const previousPhoto = () => {
+    setActivePhoto(
+      (current) => (current - 1 + roomImages.length) % roomImages.length,
+    );
+  };
+
+  const toggleFavorite = (id: number) => {
+    const updated = favorites.includes(id)
+      ? favorites.filter((item) => item !== id)
+      : [...favorites, id];
+
+    setFavorites(updated);
+    saveWishlist(updated);
+  };
+
   useEffect(() => {
     const queryCheckIn = searchParams.get("checkIn");
     const queryCheckOut = searchParams.get("checkOut");
     const queryAdults = searchParams.get("adults");
     const queryChildren = searchParams.get("children");
-    const queryRooms = searchParams.get("rooms");
 
     if (queryCheckIn) setCheckIn(queryCheckIn);
     if (queryCheckOut) setCheckOut(queryCheckOut);
-    if (queryAdults) setAdults(Number(queryAdults));
-    if (queryChildren) setChildren(Number(queryChildren));
-    if (queryRooms) setRoomCount(Number(queryRooms));
-  }, [searchParams]);
+
+    const capacity = room?.guests ?? 2;
+
+    const requestedAdults = Math.max(1, Number(queryAdults) || 2);
+    const requestedChildren = Math.max(0, Number(queryChildren) || 0);
+
+    const validAdults = Math.min(requestedAdults, capacity);
+    const validChildren = Math.min(
+      requestedChildren,
+      Math.max(0, capacity - validAdults),
+    );
+
+    setAdults(validAdults);
+    setChildren(validChildren);
+  }, [searchParams, room?.guests]);
+
+  useEffect(() => {
+    // Load the saved wishlist
+    setFavorites(getWishlist());
+
+    // Listen for wishlist changes from other components
+    const handleWishlistUpdate = () => {
+      setFavorites(getWishlist());
+    };
+
+    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+    return () => {
+      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     if (!room) return;
@@ -340,56 +412,7 @@ const RoomDetailContent = () => {
     .filter((item) => String(item.id) !== String(room.id))
     .slice(0, 4);
 
-  const totalPrice = room.price * nights * roomCount;
-
-  const handleCheckIn = (value: string) => {
-    setCheckIn(value);
-
-    if (value >= checkOut) {
-      setCheckOut(addDays(value, 1));
-    }
-  };
-
-  const openGallery = (index = 0) => {
-    setActivePhoto(index);
-    setShowAllPhotos(true);
-  };
-
-  const nextPhoto = () => {
-    setActivePhoto((current) => (current + 1) % roomImages.length);
-  };
-
-  const previousPhoto = () => {
-    setActivePhoto(
-      (current) => (current - 1 + roomImages.length) % roomImages.length,
-    );
-  };
-
-  const toggleFavorite = (id: number) => {
-    const updated = favorites.includes(id)
-      ? favorites.filter((item) => item !== id)
-      : [...favorites, id];
-
-    setFavorites(updated);
-    saveWishlist(updated);
-  };
-
-  useEffect(() => {
-    // Load the saved wishlist
-    setFavorites(getWishlist());
-
-    // Listen for wishlist changes from other components
-    const handleWishlistUpdate = () => {
-      setFavorites(getWishlist());
-    };
-
-    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
-
-    return () => {
-      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
-    };
-  }, []);
-
+  const totalPrice = room.price * nights;
   return (
     <main>
       {/* PAGE INTRO */}
@@ -1048,8 +1071,6 @@ const RoomDetailContent = () => {
                       <p className="text-xs font-medium">
                         {adults + children}{" "}
                         {adults + children === 1 ? "Guest" : "Guests"}
-                        <span className="mx-2 text-[var(--muted)]">·</span>
-                        {roomCount} {roomCount === 1 ? "Room" : "Rooms"}
                       </p>
 
                       <p className="mt-1 text-[10px] text-[var(--muted)]">
@@ -1095,7 +1116,7 @@ const RoomDetailContent = () => {
                       <div>
                         <p className="text-xs font-medium">Adults</p>
                         <p className="mt-1 text-[10px] text-[var(--muted)]">
-                          Maximum {room.guests} guests per room
+                          Age 18 or above
                         </p>
                       </div>
 
@@ -1116,17 +1137,8 @@ const RoomDetailContent = () => {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            setAdults(
-                              Math.min(
-                                room.guests * roomCount - children,
-                                adults + 1,
-                              ),
-                            )
-                          }
-                          disabled={
-                            adults + children >= room.guests * roomCount
-                          }
+                          onClick={() => setAdults(adults + 1)}
+                          disabled={adults + children >= room.guests}
                           aria-label="Add adult"
                           className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1161,58 +1173,9 @@ const RoomDetailContent = () => {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            setChildren(
-                              Math.min(
-                                room.guests * roomCount - adults,
-                                children + 1,
-                              ),
-                            )
-                          }
-                          disabled={
-                            adults + children >= room.guests * roomCount
-                          }
+                          onClick={() => setChildren(children + 1)}
+                          disabled={adults + children >= room.guests}
                           aria-label="Add child"
-                          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
-                        >
-                          <Plus size={14} />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* ROOMS */}
-                    <div className="flex items-center justify-between py-5">
-                      <div>
-                        <p className="text-xs font-medium">Rooms</p>
-                        <p className="mt-1 text-[10px] text-[var(--muted)]">
-                          Up to 5 rooms
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setRoomCount(Math.max(1, roomCount - 1))
-                          }
-                          disabled={roomCount <= 1}
-                          aria-label="Remove room"
-                          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <Minus size={14} />
-                        </button>
-
-                        <span className="w-5 text-center text-sm tabular-nums">
-                          {roomCount}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setRoomCount(Math.min(5, roomCount + 1))
-                          }
-                          disabled={roomCount >= 5}
-                          aria-label="Add room"
                           className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           <Plus size={14} />
@@ -1251,21 +1214,6 @@ const RoomDetailContent = () => {
                     </span>
                   </div>
 
-                  {roomCount > 1 && (
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-[var(--muted)]">
-                        {roomCount} rooms
-                      </span>
-
-                      <span>
-                        ₹
-                        {(room.price * nights * roomCount).toLocaleString(
-                          "en-IN",
-                        )}
-                      </span>
-                    </div>
-                  )}
-
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--muted)]">Guests</span>
 
@@ -1286,8 +1234,7 @@ const RoomDetailContent = () => {
                   </p>
 
                   <p className="mt-2 text-[10px] text-[var(--muted)]">
-                    {nights} {nights === 1 ? "night" : "nights"} · {roomCount}{" "}
-                    {roomCount === 1 ? "room" : "rooms"}
+                    {nights} {nights === 1 ? "night" : "nights"} · 1 room
                   </p>
                 </div>
 
