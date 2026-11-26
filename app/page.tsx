@@ -35,6 +35,27 @@ const cormorant = Cormorant_Garamond({
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
+const roomUnavailablePeriods: Record<
+  number,
+  { checkIn: string; checkOut: string }[]
+> = {
+  // Example:
+  // 1: [
+  //   { checkIn: "2026-12-10", checkOut: "2026-12-13" },
+  // ],
+  // 2: [
+  //   { checkIn: "2026-12-15", checkOut: "2026-12-18" },
+  // ],
+};
+
+const isRoomAvailable = (roomId: number, checkIn: string, checkOut: string) => {
+  const unavailablePeriods = roomUnavailablePeriods[roomId] || [];
+
+  return !unavailablePeriods.some(
+    (period) => checkIn < period.checkOut && checkOut > period.checkIn,
+  );
+};
+
 const HomePage = () => {
   const [destination, setDestination] = useState("");
   const [activeCategory, setActiveCategory] = useState("Dining");
@@ -139,90 +160,97 @@ const HomePage = () => {
   });
 
   const handleBookingSearch = () => {
-    // Close all dropdowns
-    setShowDestinations(false);
-    setShowDates(false);
-    setShowOccupancy(false);
+    setSearchError("");
 
-    const errors: string[] = [];
-
-    // 1. Validate destination
-    if (!destination.trim()) {
-      errors.push("Please select your destination.");
+    // Basic validation
+    if (!destination) {
+      setSearchError("Please select a destination.");
+      return;
     }
 
-    // 2. Validate dates
     if (!checkIn || !checkOut) {
-      errors.push("Please select both check-in and check-out dates.");
-    } else if (checkOut <= checkIn) {
-      errors.push("Your check-out date must be after your check-in date.");
+      setSearchError("Please select your check-in and check-out dates.");
+      return;
     }
 
-    // 3. Validate occupancy
+    if (checkIn >= checkOut) {
+      setSearchError("Check-out date must be after check-in date.");
+      return;
+    }
+
     if (adults < 1) {
-      errors.push("At least one adult is required.");
+      setSearchError("At least one adult is required.");
+      return;
     }
 
     if (roomCount < 1) {
-      errors.push("Please select at least one room.");
+      setSearchError("Please select at least one room.");
+      return;
     }
 
     const totalGuests = adults + children;
 
-    if (totalGuests < 1) {
-      errors.push("Please select at least one guest.");
-    }
+    // Find rooms at the selected destination
+    const locationRooms = rooms.filter((room) => room.location === destination);
 
-    // Check rooms for the selected destination
-    const locationRooms = destination.trim()
-      ? rooms.filter(
-          (room) =>
-            room.location.toLowerCase() === destination.trim().toLowerCase(),
-        )
-      : [];
-
-    // Check whether any room can accommodate the guests
-    const guestsPerRoom =
-      roomCount > 0 ? Math.ceil(totalGuests / roomCount) : 0;
-
-    const capacityRooms = locationRooms.filter(
-      (room) => room.guests >= guestsPerRoom,
-    );
-
-    // 4. Check destination availability
-    if (destination.trim() && locationRooms.length === 0) {
-      errors.push(
-        `We currently don't have any listed rooms in ${destination}. Please explore another destination.`,
+    if (locationRooms.length === 0) {
+      setSearchError(
+        `We currently have no listed rooms in ${destination}. Please choose another destination.`,
       );
-    }
-
-    // 5. Check guest capacity
-    if (
-      locationRooms.length > 0 &&
-      guestsPerRoom > 0 &&
-      capacityRooms.length === 0
-    ) {
-      const maxCapacity = Math.max(...locationRooms.map((room) => room.guests));
-
-      errors.push(
-        `We have rooms in ${destination}, but they can accommodate a maximum of ${maxCapacity} guests per room. Please reduce the number of guests or select more rooms.`,
-      );
-    }
-
-    // Show all relevant errors together
-    if (errors.length > 0) {
-      setSearchError(errors.join(" "));
       return;
     }
 
-    // Select the most suitable room
-    const matchingRooms = capacityRooms.sort(
-      (a, b) => a.guests - b.guests || a.price - b.price,
+    // Check total listed rooms and their combined guest capacity
+    const capacityRooms = [...locationRooms].sort(
+      (a, b) => b.guests - a.guests,
     );
 
-    const selectedRoom = matchingRooms[0];
+    const totalLocationRooms = capacityRooms.length;
 
-    // Prepare booking information
+    const maximumCapacity = capacityRooms
+      .slice(0, roomCount)
+      .reduce((total, room) => total + room.guests, 0);
+
+    if (totalLocationRooms < roomCount || maximumCapacity < totalGuests) {
+      const locationMaximumCapacity = capacityRooms.reduce(
+        (total, room) => total + room.guests,
+        0,
+      );
+
+      setSearchError(
+        `We currently have ${totalLocationRooms} listed room${
+          totalLocationRooms === 1 ? "" : "s"
+        } in ${destination}, with a maximum combined capacity of ${locationMaximumCapacity} guests. Your search requires ${roomCount} rooms for ${totalGuests} guests. Please adjust your guest or room count, or choose another destination.`,
+      );
+      return;
+    }
+
+    // Check room availability for the selected dates
+    const availableRooms = locationRooms
+      .filter((room) => isRoomAvailable(room.id, checkIn, checkOut))
+      .sort((a, b) => b.guests - a.guests);
+
+    const availableRoomCount = availableRooms.length;
+
+    const availableCapacity = availableRooms
+      .slice(0, roomCount)
+      .reduce((total, room) => total + room.guests, 0);
+
+    if (availableRoomCount < roomCount || availableCapacity < totalGuests) {
+      const maximumAvailableCapacity = availableRooms.reduce(
+        (total, room) => total + room.guests,
+        0,
+      );
+
+      setSearchError(
+        `Only ${availableRoomCount} room${
+          availableRoomCount === 1 ? " is" : "s are"
+        } currently available in ${destination} for your selected dates, accommodating up to ${maximumAvailableCapacity} guests. Your search requires ${roomCount} rooms for ${totalGuests} guests. Please adjust your guest or room count, try different dates, or choose another destination.`,
+      );
+      return;
+    }
+
+    // Navigate to the Rooms page with the selected search details
     const searchParams = new URLSearchParams({
       destination,
       checkIn,
@@ -233,10 +261,7 @@ const HomePage = () => {
       rooms: String(roomCount),
     });
 
-    setSearchError("");
-    setShowMobileSearchPanel(false);
-
-    router.push(`/rooms/${selectedRoom.id}?${searchParams.toString()}`);
+    router.push(`/rooms?${searchParams.toString()}`);
   };
 
   useEffect(() => {
@@ -668,14 +693,14 @@ const HomePage = () => {
                     {[
                       {
                         label: "Adults",
-                        description: "Age 13 or above",
+                        description: "Age 18 or above",
                         value: adults,
                         setValue: setAdults,
                         min: 1,
                       },
                       {
                         label: "Children",
-                        description: "Age 0–12",
+                        description: "Age 0–17",
                         value: children,
                         setValue: setChildren,
                         min: 0,
@@ -977,14 +1002,14 @@ const HomePage = () => {
                       {[
                         {
                           label: "Adults",
-                          description: "Age 13 or above",
+                          description: "Age 18 or above",
                           value: adults,
                           setValue: setAdults,
                           min: 1,
                         },
                         {
                           label: "Children",
-                          description: "Age 0–12",
+                          description: "Age 0–17",
                           value: children,
                           setValue: setChildren,
                           min: 0,

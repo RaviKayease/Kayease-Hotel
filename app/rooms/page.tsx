@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
 import Link from "next/link";
 import {
@@ -35,10 +36,56 @@ const cormorant = Cormorant_Garamond({
 
 const sectionHeadingClass = `${cormorant.className} text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-[var(--foreground)]`;
 
+// Frontend demo availability data
+// Checkout dates are exclusive.
+const roomUnavailablePeriods: Record<
+  number,
+  { checkIn: string; checkOut: string }[]
+> = {
+  // Example:
+  // 1: [
+  //   { checkIn: "2026-12-10", checkOut: "2026-12-13" },
+  // ],
+  //
+  // 2: [
+  //   { checkIn: "2026-12-15", checkOut: "2026-12-18" },
+  // ],
+};
+
+const isRoomAvailable = (roomId: number, checkIn: string, checkOut: string) => {
+  const unavailablePeriods = roomUnavailablePeriods[roomId] || [];
+
+  return !unavailablePeriods.some(
+    (period) => checkIn < period.checkOut && checkOut > period.checkIn,
+  );
+};
+
 const RoomsPage = () => {
+  const searchParams = useSearchParams();
+
+  const searchedDestination = searchParams.get("destination") || "";
+
+  const searchCheckIn = searchParams.get("checkIn") || "";
+  const searchCheckOut = searchParams.get("checkOut") || "";
+
+  const searchAdults = Number(searchParams.get("adults")) || 0;
+  const searchChildren = Number(searchParams.get("children")) || 0;
+
+  const searchGuests = Number(searchParams.get("guests")) || 0;
+  const searchRoomCount = Number(searchParams.get("rooms")) || 1;
+
+  const hasGuestSearch = searchParams.has("guests");
+  const hasDateSearch = Boolean(searchCheckIn && searchCheckOut);
+
+  const guestsPerRoom = hasGuestSearch
+    ? Math.ceil(searchGuests / searchRoomCount)
+    : 1;
+
   const [activeCategory, setActiveCategory] = useState("All Rooms");
   const [favorites, setFavorites] = useState<number[]>([]);
-  const [activeLocation, setActiveLocation] = useState("All Locations");
+  const [activeLocation, setActiveLocation] = useState(
+    searchedDestination || "All Locations",
+  );
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -58,26 +105,41 @@ const RoomsPage = () => {
   const filterRef = useRef<HTMLDivElement | null>(null);
 
   const filteredRooms = rooms.filter((room) => {
+    // Category
     const matchesCategory =
       activeCategory === "All Rooms" || room.category === activeCategory;
 
+    // Location
     const matchesLocation =
       activeLocation === "All Locations" || room.location === activeLocation;
 
+    // Price
     const matchesPrice =
       (minPrice === "" || room.price >= minPrice) &&
       (maxPrice === "" || room.price <= maxPrice);
 
+    // Rating
     const matchesRating = room.rating >= minRating;
 
+    // Manual guest filter
     const matchesGuests = room.guests >= minGuests;
+
+    // Homepage booking guest capacity
+    const matchesBookingGuests =
+      !hasGuestSearch || room.guests >= guestsPerRoom;
+
+    // Homepage booking date availability
+    const matchesDates =
+      !hasDateSearch || isRoomAvailable(room.id, searchCheckIn, searchCheckOut);
 
     return (
       matchesCategory &&
       matchesLocation &&
       matchesPrice &&
       matchesRating &&
-      matchesGuests
+      matchesGuests &&
+      matchesBookingGuests &&
+      matchesDates
     );
   });
 
@@ -87,14 +149,14 @@ const RoomsPage = () => {
     Number(minRating > 0) +
     Number(minGuests > 1);
 
-  const resetFilters = () => {
-    setActiveCategory("All Rooms");
-    setActiveLocation("All Locations");
-    setMinPrice(MIN_ROOM_PRICE);
-    setMaxPrice(MAX_ROOM_PRICE);
-    setMinRating(0);
-    setMinGuests(1);
-  };
+ const resetFilters = () => {
+   setActiveCategory("All Rooms");
+   setActiveLocation(searchedDestination || "All Locations");
+   setMinPrice(MIN_ROOM_PRICE);
+   setMaxPrice(MAX_ROOM_PRICE);
+   setMinRating(0);
+   setMinGuests(1);
+ };
 
   const toggleFavorite = (id: number) => {
     const updated = favorites.includes(id)
@@ -152,6 +214,10 @@ const RoomsPage = () => {
       window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
     };
   }, []);
+
+  useEffect(() => {
+    setActiveLocation(searchedDestination || "All Locations");
+  }, [searchedDestination]);
 
   return (
     <main>
@@ -1036,13 +1102,28 @@ const RoomsPage = () => {
             </article>
           ))}
         </div>
-
         {filteredRooms.length === 0 && (
-          <div className="py-20 text-center">
-            <p className={`${cormorant.className} text-4xl`}>No rooms found</p>
-            <p className="mt-3 text-xs text-[var(--foreground)]/55">
-              Explore another category.
+          <div className="py-24 text-center">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--primary)]/10">
+              <BedDouble size={24} className="text-[var(--primary)]" />
+            </div>
+
+            <h3 className={`${cormorant.className} text-4xl`}>
+              No Rooms Available
+            </h3>
+
+            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[var(--foreground)]/55">
+              We couldn't find rooms matching your destination, dates, and guest
+              requirements. Try adjusting your search or exploring another
+              location.
             </p>
+
+            <button
+              onClick={resetFilters}
+              className="mt-6 rounded-xl bg-[var(--primary)] px-6 py-3 text-xs font-semibold text-white transition hover:brightness-90"
+            >
+              Reset Filters
+            </button>
           </div>
         )}
       </section>
