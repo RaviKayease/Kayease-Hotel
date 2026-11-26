@@ -162,7 +162,6 @@ const WishlistPage = () => {
                   </span>
 
                   {/* REMOVE BUTTON */}
-                  {/* REMOVE BUTTON */}
                   <button
                     type="button"
                     onClick={() => removeFromWishlist(room.id)}
