@@ -102,7 +102,8 @@ const RoomsPage = () => {
   const [minGuests, setMinGuests] = useState(1);
 
   const locationRef = useRef<HTMLDivElement | null>(null);
-  const filterRef = useRef<HTMLDivElement | null>(null);
+  const desktopFilterRef = useRef<HTMLDivElement | null>(null);
+  const mobileFilterRef = useRef<HTMLDivElement | null>(null);
 
   const filteredRooms = rooms.filter((room) => {
     // Category
@@ -149,14 +150,14 @@ const RoomsPage = () => {
     Number(minRating > 0) +
     Number(minGuests > 1);
 
- const resetFilters = () => {
-   setActiveCategory("All Rooms");
-   setActiveLocation(searchedDestination || "All Locations");
-   setMinPrice(MIN_ROOM_PRICE);
-   setMaxPrice(MAX_ROOM_PRICE);
-   setMinRating(0);
-   setMinGuests(1);
- };
+  const resetFilters = () => {
+    setActiveCategory("All Rooms");
+    setActiveLocation(searchedDestination || "All Locations");
+    setMinPrice(MIN_ROOM_PRICE);
+    setMaxPrice(MAX_ROOM_PRICE);
+    setMinRating(0);
+    setMinGuests(1);
+  };
 
   const toggleFavorite = (id: number) => {
     const updated = favorites.includes(id)
@@ -186,9 +187,20 @@ const RoomsPage = () => {
 
   useEffect(() => {
     const handleFilterClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      const clickedInsideDesktop = desktopFilterRef.current?.contains(target);
+
+      const clickedInsideMobile = mobileFilterRef.current?.contains(target);
+
+      const clickedFiltersButton = (event.target as HTMLElement).closest(
+        "[data-filter-trigger]",
+      );
+
       if (
-        filterRef.current &&
-        !filterRef.current.contains(event.target as Node)
+        !clickedInsideDesktop &&
+        !clickedInsideMobile &&
+        !clickedFiltersButton
       ) {
         setIsFilterOpen(false);
       }
@@ -355,6 +367,7 @@ const RoomsPage = () => {
                 <div className="w-full flex-1 lg:flex-none">
                   {/* Filters Button */}
                   <button
+                    data-filter-trigger
                     onClick={() => setIsFilterOpen(true)}
                     className="flex h-[48px] w-full shrink-0 items-center justify-between gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-xs font-medium text-[var(--foreground)] transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
@@ -371,7 +384,7 @@ const RoomsPage = () => {
 
               {/* Filter Bottom Sheet */}
               <div
-                ref={filterRef}
+                ref={desktopFilterRef}
                 className={`hidden xl:block absolute left-0 right-0 top-[-35px] z-30 w-full origin-right overflow-hidden transition-transform duration-500 ease-in-out ${
                   isFilterOpen ? "scale-x-100" : "scale-x-0"
                 }`}
@@ -660,7 +673,7 @@ const RoomsPage = () => {
                   onClick={() => setIsFilterOpen(false)}
                 >
                   <div
-                    ref={filterRef}
+                    ref={mobileFilterRef}
                     role="dialog"
                     aria-modal="true"
                     aria-label="Room filters"
