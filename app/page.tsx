@@ -261,7 +261,7 @@ const HomePage = () => {
       rooms: String(roomCount),
     });
 
-    router.push(`/rooms?${searchParams.toString()}`);
+    router.push(`/rooms?${searchParams.toString()}#room-collection`);
   };
 
   useEffect(() => {
