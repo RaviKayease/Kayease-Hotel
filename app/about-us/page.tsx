@@ -35,14 +35,14 @@ export const metadata: Metadata = {
   description: aboutDescription,
 
   alternates: {
-    canonical: `${SITE_URL}/about`,
+    canonical: `${SITE_URL}/about-us`,
   },
 
   openGraph: {
     type: "website",
     title: `About Us | ${BRAND_NAME}`,
     description: aboutDescription,
-    url: `${SITE_URL}/about`,
+    url: `${SITE_URL}/about-us`,
     images: aboutImageUrl
       ? [
           {
