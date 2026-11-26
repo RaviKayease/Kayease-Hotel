@@ -216,7 +216,7 @@ export const rooms = [
     image:
       "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
     images: [
-      "https://thepointsguy.global.sslfastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+      "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",

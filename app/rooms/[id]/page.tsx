@@ -96,7 +96,6 @@ const RoomDetailContent = () => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewError, setReviewError] = useState("");
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const [reservationSubmitted, setReservationSubmitted] = useState(false);
   const searchParams = useSearchParams();
 
   const averageReviewRating = useMemo(() => {
