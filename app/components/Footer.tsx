@@ -15,7 +15,7 @@ const quickLinks = [
   { name: "Rooms", href: "/rooms" },
   { name: "About Us", href: "/about-us" },
   { name: "Contact Us", href: "/contact-us" },
-  { name: "Blog", href: "/blogs" },
+  { name: "Blogs", href: "/blogs" },
 ];
 
 const supportLinks = [

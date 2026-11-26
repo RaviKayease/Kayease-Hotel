@@ -3,56 +3,56 @@ const path = require("path");
 
 const images = [
   // ============================================
-  // 1. THE ART OF SLOW TRAVEL
+  // 1. BOOKING GUIDE HERO
   // ============================================
   {
-    name: "SlowTravel.jpg",
-    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600&q=90",
+    name: "BookingGuideHero.jpg",
+    url: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2400&q=90",
   },
 
   // ============================================
-  // 2. A WEEKEND IN KYOTO
+  // 2. STEP 1 - THE DISCOVERY
   // ============================================
   {
-    name: "Kyoto.jpg",
-    url: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1600&q=90",
+    name: "Discovery.jpg",
+    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85",
   },
 
   // ============================================
-  // 3. THE BEAUTY OF BOUTIQUE STAYS
+  // 3. STEP 2 - THE PLANNING
   // ============================================
   {
-    name: "BoutiqueStays.jpg",
-    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=90",
+    name: "Planning.jpg",
+    url: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1600&q=85",
   },
 
   // ============================================
-  // 4. MEDITERRANEAN COAST
+  // 4. STEP 3 - THE DETAILS
   // ============================================
   {
-    name: "MediterraneanCoast.jpg",
-    url: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1600&q=90",
+    name: "Details.jpg",
+    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85",
   },
 
   // ============================================
-  // 5. LITTLE LUXURIES
+  // 5. STEP 4 - THE BEGINNING
   // ============================================
   {
-    name: "LittleLuxuries.jpg",
-    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=90",
+    name: "Beginning.jpg",
+    url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85",
   },
 
   // ============================================
-  // 6. GETTING LOST IN NEW PLACES
+  // 6. BOOKING ESSENTIALS
   // ============================================
   {
-    name: "NewPlaces.jpg",
-    url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=90",
+    name: "BookingEssentials.jpg",
+    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85",
   },
 ];
 
 async function downloadImages() {
-  const folder = path.join(process.cwd(), "public", "BlogsPageImages");
+  const folder = path.join(process.cwd(), "public", "BookingGuidePageImages");
 
   fs.mkdirSync(folder, { recursive: true });
 
@@ -80,7 +80,7 @@ async function downloadImages() {
     }
   }
 
-  console.log("Blogs page image download completed!");
+  console.log("Booking Guide page image download completed!");
 }
 
 downloadImages();

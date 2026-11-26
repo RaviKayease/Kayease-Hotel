@@ -1,7 +1,6 @@
 export const bookingGuidePageData = {
   hero: {
-    image:
-      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2400&q=90",
+    image: "/BookingGuidePageImages/BookingGuideHero.jpg",
     imageAlt: "Beautiful secluded holiday cabin surrounded by nature",
     eyebrow: "Everything you need to know",
     title: "The art of",
@@ -15,8 +14,7 @@ export const bookingGuidePageData = {
     highlightedHeading: "One beautiful escape.",
     steps: [
       {
-        image:
-          "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85",
+        image: "/BookingGuidePageImages/Discovery.jpg",
         imageAlt: "Beautiful destination surrounded by mountains and nature",
         imageLabel: "The discovery",
         eyebrow: "First things first",
@@ -26,8 +24,7 @@ export const bookingGuidePageData = {
           "Begin with a little inspiration. Browse through our collection of stays, explore the destinations and discover a place that feels just right for your next getaway.",
       },
       {
-        image:
-          "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1600&q=85",
+        image: "/BookingGuidePageImages/Planning.jpg",
         imageAlt:
           "Peaceful luxury accommodation overlooking a scenic landscape",
         imageLabel: "The planning",
@@ -38,8 +35,7 @@ export const bookingGuidePageData = {
           "Pick the dates that work for you, enter the number of guests and explore the availability. Your getaway begins to take shape, one detail at a time.",
       },
       {
-        image:
-          "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85",
+        image: "/BookingGuidePageImages/Details.jpg",
         imageAlt: "Elegant interior of a carefully designed accommodation",
         imageLabel: "The details",
         eyebrow: "A moment to review",
@@ -49,8 +45,7 @@ export const bookingGuidePageData = {
           "Take a final look at your selected stay, travel dates, guest information and booking conditions. Make sure everything is exactly as you want it.",
       },
       {
-        image:
-          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85",
+        image: "/BookingGuidePageImages/Beginning.jpg",
         imageAlt: "Beautiful scenic destination ready to be explored",
         imageLabel: "The beginning",
         eyebrow: "And just like that",
@@ -63,8 +58,7 @@ export const bookingGuidePageData = {
   },
 
   essentials: {
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85",
+    image: "/BookingGuidePageImages/BookingEssentials.jpg",
     imageAlt: "Beautifully designed and welcoming holiday accommodation",
     imageEyebrow: "A little attention goes a long way",
     imageTitle: "The details make the difference.",
