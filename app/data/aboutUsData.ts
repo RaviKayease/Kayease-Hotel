@@ -1,8 +1,6 @@
-/* =========================================================
-   1. HERO SECTION
-   Main page heading, introductory description, and
-   the three images displayed in the opening gallery.
-========================================================= */
+// =========================================================
+// 1. HERO SECTION
+// =========================================================
 
 export const aboutUsHero = {
   heading: "Beautiful Stays",
@@ -13,30 +11,25 @@ export const aboutUsHero = {
   stayHighlights: [
     {
       title: "Thoughtful Living",
-      image:
-        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
+      image: "/AboutUsPageImages/ThoughtfulLiving.jpg",
       alt: "Elegant luxury hotel suite",
     },
     {
       title: "Remarkable Destinations",
-      image:
-        "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85",
+      image: "/AboutUsPageImages/RemarkableDestinations.jpg",
       alt: "Beautiful architectural hotel exterior",
     },
     {
       title: "Meaningful Experiences",
-      image:
-        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85",
+      image: "/AboutUsPageImages/MeaningfulExperiences.jpg",
       alt: "Sophisticated luxury hotel living space",
     },
   ],
 };
 
-/* =========================================================
-   2. OUR STORY SECTION
-   Includes the story introduction, belief statement,
-   main story image, image caption, and approach content.
-========================================================= */
+// =========================================================
+// 2. OUR STORY SECTION
+// =========================================================
 
 export const aboutUsStory = {
   heading: "Where every stay becomes",
@@ -52,7 +45,7 @@ export const aboutUsStory = {
 
   // Main Story Image
   mainImage: {
-    src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90",
+    src: "/AboutUsPageImages/OurStory.jpg",
     alt: "Luxury resort surrounded by tropical nature",
   },
 
@@ -66,17 +59,15 @@ export const aboutUsStory = {
       "We bring beautiful places and thoughtful hospitality together to make every journey feel special.",
 
     image: {
-      src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=85",
+      src: "/AboutUsPageImages/OurApproach.jpg",
       alt: "Elegant and thoughtfully designed hotel interior",
     },
   },
 };
 
-/* =========================================================
-   3. BRAND PHILOSOPHY / OUR VALUES SECTION
-   Contains the section heading and the values that
-   communicate the hotel's hospitality philosophy.
-========================================================= */
+// =========================================================
+// 3. BRAND PHILOSOPHY / OUR VALUES SECTION
+// =========================================================
 
 export const aboutUsValues = {
   heading: "Hospitality is found in",
@@ -104,12 +95,9 @@ export const aboutUsValues = {
   ],
 };
 
-/* =========================================================
-   4. OUR EXPERIENCE SECTION
-   Contains the section heading and experience gallery.
-   The first experience is displayed as the featured item,
-   while the remaining experiences appear as supporting cards.
-========================================================= */
+// =========================================================
+// 4. OUR EXPERIENCE SECTION
+// =========================================================
 
 export const aboutUsExperiences = {
   heading: "More than a destination.",
@@ -122,8 +110,7 @@ export const aboutUsExperiences = {
       description:
         "Discover thoughtfully selected spaces where beautiful design meets everyday comfort.",
 
-      image:
-        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
+      image: "/AboutUsPageImages/BeautifulSpaces.jpg",
 
       alt: "Beautifully designed hotel accommodation",
     },
@@ -133,8 +120,7 @@ export const aboutUsExperiences = {
       description:
         "From peaceful mornings to unforgettable evenings, make room for moments that matter.",
 
-      image:
-        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85",
+      image: "/AboutUsPageImages/MemorableMoments.jpg",
 
       alt: "Memorable hotel and resort experience",
     },
@@ -144,19 +130,16 @@ export const aboutUsExperiences = {
       description:
         "Explore inspiring surroundings and discover places that make you want to stay a little longer.",
 
-      image:
-        "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=85",
+      image: "/AboutUsPageImages/DestinationsToDiscover.jpg",
 
       alt: "Beautiful destination surrounded by nature",
     },
   ],
 };
 
-/* =========================================================
-   5. BRAND STATEMENT SECTION
-   Full-width background image, main statement, and
-   supporting description communicating the brand promise.
-========================================================= */
+// =========================================================
+// 5. BRAND STATEMENT SECTION
+// =========================================================
 
 export const aboutUsBrandStatement = {
   heading: "Not just a destination.",
@@ -166,16 +149,14 @@ export const aboutUsBrandStatement = {
     "Wherever life takes you, we believe there is always room for a little more beauty, comfort, and discovery.",
 
   backgroundImage: {
-    src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=2000&q=85",
+    src: "/AboutUsPageImages/BrandStatement.jpg",
     alt: "Peaceful ocean landscape",
   },
 };
 
-/* =========================================================
-   6. FINAL CALL TO ACTION SECTION
-   Closing heading encouraging visitors to explore
-   the hotel's available stays.
-========================================================= */
+// =========================================================
+// 6. FINAL CALL TO ACTION SECTION
+// =========================================================
 
 export const aboutUsFinalSection = {
   heading: "Your next beautiful",

@@ -2,97 +2,61 @@ const fs = require("fs");
 const path = require("path");
 
 const images = [
-  // ROOMS PAGE HERO
+  // ============================================
+  // 1. HERO SECTION
+  // ============================================
   {
-    name: "RoomsHero.webp",
-    url: "https://cdn.prod.website-files.com/62e545b3db35992e653f9087/6967cdf0c4492e27096c53a1_oneandonly-aesthesis-athens-greece-boutique-hotel-31.webp",
+    name: "ThoughtfulLiving.jpg",
+    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
+  },
+  {
+    name: "RemarkableDestinations.jpg",
+    url: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&q=85",
+  },
+  {
+    name: "MeaningfulExperiences.jpg",
+    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=85",
   },
 
-  // ROOM CARD IMAGES
+  // ============================================
+  // 2. OUR STORY SECTION
+  // ============================================
   {
-    name: "GardenDeluxe.jpg",
-    url: "https://www.velora-hotel.com/elegant-hotel-room-with-luxury-bedding.jpg",
+    name: "OurStory.jpg",
+    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=90",
   },
   {
-    name: "HeritageDeluxe.jpg",
-    url: "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2019/09/05/1507/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.jpg/Parisi-Udvar-Budapest-P093-King-Bed-Guestroom.16x9.jpg?imwidth=2560",
-  },
-  {
-    name: "PremiumRetreat.webp",
-    url: "https://www.gizapalace.com/images/site-specific/accommodation/rooms/deluxe-adapted/gallery/adapted-deluxe-king-S360-desktop.webp",
-  },
-  {
-    name: "ExecutivePremium.webp",
-    url: "https://media.alotea.com/the-st-regis-washington-dc-washington-cover.webp",
-  },
-  {
-    name: "HeritageSuite.jpg",
-    url: "https://static-new.lhw.com/HotelImages/Final/LW1325/lw1325_l2885084_720x450.jpg",
-  },
-  {
-    name: "SignatureSuite.png",
-    url: "https://www.americanexpress.com/content/dam/amex/en-au/credit-cards/membership-benefits/the-platinum-card/accor/You_might_also_like_Section_FHR_Mobile.png",
-  },
-  {
-    name: "RoyalResidence.jpg",
-    url: "https://toc.h-cdn.co/assets/16/27/4000x2657/1-credit-the-peninsula-new-york.jpg",
-  },
-  {
-    name: "MaharajaRetreat.jpg",
-    url: "https://thepointsguy.global.ssl.fastly.net/us/originals/2024/07/GDX-CGI-ROOM.jpg?width=2048",
+    name: "OurApproach.jpg",
+    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=85",
   },
 
-  // SHARED ROOM GALLERY IMAGES
+  // ============================================
+  // 3. OUR EXPERIENCE SECTION
+  // ============================================
   {
-    name: "GalleryHeritage.jpg",
-    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600",
+    name: "BeautifulSpaces.jpg",
+    url: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&q=85",
   },
   {
-    name: "GalleryInterior.jpg",
-    url: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600",
+    name: "MemorableMoments.jpg",
+    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85",
   },
   {
-    name: "GalleryBedroom.jpg",
-    url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600",
-  },
-  {
-    name: "GalleryLuxury.jpg",
-    url: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600",
-  },
-  {
-    name: "GalleryRetreat.jpg",
-    url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600",
-  },
-  {
-    name: "GalleryLounge.jpg",
-    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600",
-  },
-  {
-    name: "GallerySuite.jpg",
-    url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600",
-  },
-  {
-    name: "GalleryResidence.jpg",
-    url: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600",
+    name: "DestinationsToDiscover.jpg",
+    url: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=85",
   },
 
-  // GUEST EXPERIENCE IMAGES
+  // ============================================
+  // 4. BRAND STATEMENT SECTION
+  // ============================================
   {
-    name: "GuestExperience.jpg",
-    url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1400",
-  },
-  {
-    name: "GuestDining.webp",
-    url: "https://resizer.otstatic.com/v2/photos/xlarge/2/43573935.webp",
-  },
-  {
-    name: "GuestMoments.jpg",
-    url: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1000",
+    name: "BrandStatement.jpg",
+    url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=2000&q=85",
   },
 ];
 
 async function downloadImages() {
-  const folder = path.join(process.cwd(), "public", "RoomsPageImages");
+  const folder = path.join(process.cwd(), "public", "AboutUsPageImages");
 
   fs.mkdirSync(folder, { recursive: true });
 
@@ -120,7 +84,7 @@ async function downloadImages() {
     }
   }
 
-  console.log("Rooms page image download completed!");
+  console.log("About Us page image download completed!");
 }
 
 downloadImages();
