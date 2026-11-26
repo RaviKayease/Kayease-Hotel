@@ -27,6 +27,7 @@ import {
   homeNewsletterData,
   editorialHotelsData,
 } from "./data/homePageData";
+import { formatCurrency } from "./components/Currency";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -1240,7 +1241,7 @@ const HomePage = () => {
                   <p
                     className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
                   >
-                    ₹{editorialHotelsData[0].price.toLocaleString("en-IN")}
+                    {formatCurrency(editorialHotelsData[0].price)}
                   </p>
                   <p className="text-[10px] text-white/65">Per night</p>
                 </div>
@@ -1454,7 +1455,7 @@ const HomePage = () => {
                           <span
                             className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
                           >
-                            ₹{room.price.toLocaleString("en-IN")}
+                            {formatCurrency(room.price)}
                           </span>
 
                           <span className="text-[10px] text-[var(--foreground)]/50">

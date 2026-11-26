@@ -16,6 +16,7 @@ import {
 import { rooms } from "../data/roomsPageData";
 import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 import { wishlistPageContent } from "@/app/data/wishlistData";
+import { formatCurrency } from "../components/Currency";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -241,7 +242,7 @@ const WishlistPage = () => {
                         <span
                           className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
                         >
-                          ₹{room.price.toLocaleString("en-IN")}
+                          {formatCurrency(room.price)}
                         </span>
 
                         <span className="text-[10px] text-[var(--foreground)]/50">

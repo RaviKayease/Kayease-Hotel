@@ -13,6 +13,7 @@ import {
   Trash2,
   Users,
 } from "lucide-react";
+import { formatCurrency } from "../components/Currency";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -391,8 +392,7 @@ const CartPage = () => {
                     <div className="mt-6 flex items-end justify-between border-t border-[var(--border)] pt-4">
                       <div>
                         <p className="text-[9px] uppercase tracking-wider text-[var(--muted)]">
-                          ₹{item.pricePerNight.toLocaleString("en-IN")} per room
-                          / night
+                          {formatCurrency(item.pricePerNight)} per room / night
                         </p>
 
                         <p className="mt-1 text-[9px] text-[var(--muted)]">
@@ -401,7 +401,7 @@ const CartPage = () => {
                       </div>
 
                       <p className={`${cormorant.className} text-3xl`}>
-                        ₹{item.totalPrice.toLocaleString("en-IN")}
+                        {formatCurrency(item.totalPrice)}
                       </p>
                     </div>
                   </div>
@@ -446,7 +446,7 @@ const CartPage = () => {
                   <span className="text-[var(--muted)]">
                     Estimated subtotal
                   </span>
-                  <span>₹{subtotal.toLocaleString("en-IN")}</span>
+                  <span>{formatCurrency(subtotal)}</span>
                 </div>
               </div>
 
@@ -461,7 +461,7 @@ const CartPage = () => {
                 </div>
 
                 <p className={`${cormorant.className} text-4xl`}>
-                  ₹{subtotal.toLocaleString("en-IN")}
+                  {formatCurrency(subtotal)}
                 </p>
               </div>
 

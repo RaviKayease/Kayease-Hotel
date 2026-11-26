@@ -28,6 +28,7 @@ import {
 import { getWishlist, saveWishlist } from "@/app/utils/wishlist";
 import { rooms } from "../../data/roomsPageData";
 import { detailedRoomPageContent } from "@/app/data/roomDetailContentData";
+import { formatCurrency } from "@/app/components/Currency";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -451,7 +452,7 @@ const RoomDetailContent = () => {
 
           <div className="lg:text-right">
             <p className={`${cormorant.className} text-4xl`}>
-              ₹{room.price.toLocaleString("en-IN")}
+              {formatCurrency(room.price)}
               <span className="ml-2 font-sans text-xs text-[var(--muted)]">
                 / night
               </span>
@@ -802,7 +803,7 @@ const RoomDetailContent = () => {
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <p className={`${cormorant.className} text-5xl leading-none`}>
-                    ₹{room.price.toLocaleString("en-IN")}
+                    {formatCurrency(room.price)}
                   </p>
 
                   <p className="mt-2 text-[10px] text-[var(--muted)]">
@@ -1205,13 +1206,11 @@ const RoomDetailContent = () => {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3 text-xs">
                     <span className="text-[var(--muted)]">
-                      ₹{room.price.toLocaleString("en-IN")} × {nights}{" "}
+                      {formatCurrency(room.price)} × {nights}{" "}
                       {nights === 1 ? "night" : "nights"}
                     </span>
 
-                    <span>
-                      ₹{(room.price * nights).toLocaleString("en-IN")}
-                    </span>
+                    <span>{formatCurrency(room.price * nights)}</span>
                   </div>
 
                   <div className="flex items-center justify-between text-xs">
@@ -1239,7 +1238,7 @@ const RoomDetailContent = () => {
                 </div>
 
                 <p className={`${cormorant.className} text-4xl leading-none`}>
-                  ₹{totalPrice.toLocaleString("en-IN")}
+                  {formatCurrency(totalPrice)}
                 </p>
               </div>
 
@@ -1405,7 +1404,7 @@ const RoomDetailContent = () => {
                       <span
                         className={`${cormorant.className} text-3xl font-semibold sm:text-4xl`}
                       >
-                        ₹{room.price.toLocaleString("en-IN")}
+                        {formatCurrency(room.price)}
                       </span>
 
                       <span className="text-[10px] text-[var(--foreground)]/50">
