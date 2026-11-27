@@ -31,5 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+
+    // Contact Us Page
+    {
+      url: `${SITE_URL}/contact-us`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
