@@ -60,5 +60,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+
+    // Booking Guide Page
+    {
+      url: `${SITE_URL}/booking-guide`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
