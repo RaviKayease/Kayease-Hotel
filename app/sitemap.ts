@@ -53,5 +53,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+
+    // FAQs Page
+    {
+      url: `${SITE_URL}/faqs`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
