@@ -67,5 +67,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+
+    // Terms and Conditions Page
+    {
+      url: `${SITE_URL}/terms-and-conditions`,
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 }
