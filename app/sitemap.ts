@@ -40,6 +40,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
 
+    // Blogs Listing Page
+    {
+      url: `${SITE_URL}/blogs`,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+
     // Individual Blog Article Pages
     ...blogPosts.map((post) => ({
       url: `${SITE_URL}/blogs/${post.slug}`,
